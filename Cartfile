@@ -7,3 +7,4 @@ github "PromiseKit/CoreLocation" ~> 3.0
 github "PromiseKit/Foundation" ~> 3.0
 github "PromiseKit/MapKit" ~> 3.0.3
 github "ReactiveCocoa/ReactiveSwift" ~> 6.0
+github "ashleymills/Reachability.swift"

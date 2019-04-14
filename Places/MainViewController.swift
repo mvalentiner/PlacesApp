@@ -57,12 +57,10 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		let userLocationButton = makeButtonItem(with: MKUserTrackingButton(mapView: mapView), andRoundedCorners: [.layerMinXMaxYCorner,.layerMaxXMaxYCorner])
 		buttonBarView.insertArrangedSubview(userLocationButton, at: 1)
 
-		//** Location
-		// Initialize the locationManager.
+		//** Initialize the locationManager.
 		locationManager.delegate = self
 		locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
 		locationManager.distanceFilter = 10.0
-		
 		if CLLocationManager.locationServicesEnabled() {
 			locationManager.requestWhenInUseAuthorization()
 		}
@@ -71,23 +69,25 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 			showLocationServicesRequestDialog()
 		}
 
+		initializeMapView()
+
 		// Bind action to model
 		annotations.bindTo { self.updateMap() }
 
 //		createAndShowProgressHUD()
 
-//		SR.reachabilityService.setReachableHandler { (reachability) in
-//			guard let window = self.view.window,
-//				let rootViewController = window.rootViewController,
-//				let navigationController = rootViewController as? UINavigationController,
-//				navigationController.topViewController == self else {
-//					return
-//			}
-//			if let presentedViewController = self.presentedViewController {
-//				presentedViewController.dismiss(animated: true)
-//			}
-//			self.updateMapAnnotations()
-//		}
+		SR.reachabilityService.setReachableHandler { (reachability) in
+			guard let window = self.view.window,
+				let rootViewController = window.rootViewController,
+				let navigationController = rootViewController as? UINavigationController,
+				navigationController.topViewController == self else {
+					return
+			}
+			if let presentedViewController = self.presentedViewController {
+				presentedViewController.dismiss(animated: true)
+			}
+			self.requestMapPlacesAndUpdateAnnotations()
+		}
 	}
 
 	// ButtonBar helper function
@@ -143,13 +143,27 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		self.progressView = progressView
 	}
 
+	private func initializeMapView() {
+		guard let userLocation = locationManager.location else {
+			return
+		}
+		// Center on the user's initial location on the map.
+		let initialSpan = MKCoordinateSpan.init(latitudeDelta: 0.1, longitudeDelta: 0.1)
+		let initialRegion = MKCoordinateRegion(center: userLocation.coordinate, span: initialSpan)
+		mapView.region = initialRegion	// this causes mapView(_:regionDidChangeAnimated:) to get called
+		mapView.centerCoordinate = userLocation.coordinate
+		mapView.delegate = self
+		mapView.showsUserLocation = true
+		mapView.userTrackingMode = MKUserTrackingMode.none
+	}
+
 	// MARK: CLLocationManagerDelegate methods
 
 	internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		if status == CLAuthorizationStatus.authorizedAlways || status == CLAuthorizationStatus.authorizedWhenInUse {
 			// we are authorized.
 			locationManager.startMonitoringSignificantLocationChanges()
-			mapView.showsUserLocation = true
+			initializeMapView()
 		}
 		else if status == CLAuthorizationStatus.denied {
 			showLocationServicesRequestDialog()
@@ -219,11 +233,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		guard hasFirstLocation == true else {
 			hasFirstLocation = true
 
-			let initialSpan = MKCoordinateSpan.init(latitudeDelta: 0.2, longitudeDelta: 0.2)
-			let initialRegion = MKCoordinateRegion(center: updatedUserLocation.coordinate, span: initialSpan)
-			mapView.region = initialRegion	// this causes mapView(_:regionDidChangeAnimated:) to get called
-			mapView.centerCoordinate = updatedUserLocation.coordinate
-			mapView.userTrackingMode = MKUserTrackingMode.follow
+			initializeMapView()
 
 			lastRegion = mapView.region
 			userLocation = updatedUserLocation.coordinate
@@ -249,20 +259,20 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		mapView.removeAnnotations(annotations.value)
 		annotations.value.removeAll(keepingCapacity: true)
 
-//		guard SR.reachabilityService.isReachable == true else {
-//			DispatchQueue.main.async {
-//				if let progressView = self._progressView {
-//					self._progressView = nil
-//					progressView.hide(animated: true)
-//				}
-//				let alertController = UIAlertController(title: "Network", message: "Network is unavailable",
-//					preferredStyle:UIAlertController.Style.alert)
-//				let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:nil)
-//				alertController.addAction(okAction)
-//				self.present(alertController, animated: true, completion: {})
-//			}
-//			return
-//		}
+		guard SR.reachabilityService.isReachable == true else {
+			DispatchQueue.main.async {
+				if let progressView = self.progressView {
+					self.progressView = nil
+					progressView.hide(animated: true)
+				}
+				let alertController = UIAlertController(title: "Network", message: "Network is unavailable",
+					preferredStyle:UIAlertController.Style.alert)
+				let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:nil)
+				alertController.addAction(okAction)
+				self.present(alertController, animated: true, completion: {})
+			}
+			return
+		}
 
 //		var maximumNumberOfPhotos = 100
 //		let maxDimension = Int(max(UIScreen.main.bounds.width, UIScreen.main.bounds.height))
