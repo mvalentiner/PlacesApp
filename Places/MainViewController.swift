@@ -11,7 +11,6 @@ import MapKit
 import PromiseKit
 import PMKCoreLocation
 import ReactiveSwift
-import Result
 import UIKit
 
 class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
