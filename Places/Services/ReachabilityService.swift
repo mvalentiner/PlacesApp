@@ -58,6 +58,7 @@ extension ReachabilityService {
 class ReachabilityServiceImplementation : ReachabilityService {
 	static func register() {
 		SR.add(service: ReachabilityServiceImplementation())
+		SR.add(service: LazyService(serviceName: ReachabilityServiceName.name) { ReachabilityServiceImplementation() })
 	}
 
 	internal let reachability : Reachability = {

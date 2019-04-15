@@ -10,15 +10,36 @@ protocol Service : class {
 	var serviceName : String { get }
 }
 
+class LazyService : Service {
+	internal let serviceName : String
+	internal lazy var serviceGetter : (() -> Service) = {
+			if self.service == nil {
+    			self.service = self.implementationGetter()
+			}
+			return self.service!
+		}
+	private var implementationGetter : (() -> Service)
+	private var service : Service? = nil
+
+	init(serviceName : String, serviceGetter : @escaping (() -> Service)) {
+		self.serviceName = serviceName
+		self.implementationGetter = serviceGetter
+	}
+}
+
 struct ServiceRegistry {
-	private static var serviceDictionary : [String : Service] = [:]
+	private static var serviceDictionary : [String : LazyService] = [:]
+	
+	internal func add(service: LazyService) {
+		ServiceRegistry.serviceDictionary[service.serviceName] = service
+	}
 	
 	internal func add(service: Service) {
-		ServiceRegistry.serviceDictionary[service.serviceName] = service
+		ServiceRegistry.serviceDictionary[service.serviceName] = LazyService(serviceName: service.serviceName, serviceGetter: { service })
 	}
 
 	private func get(serviceWithName name: String) -> Service? {
-		return ServiceRegistry.serviceDictionary[name]
+		return ServiceRegistry.serviceDictionary[name]?.serviceGetter()
 	}
 
 	internal func serviceWith(name: String) -> Service {
