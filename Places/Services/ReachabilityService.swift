@@ -12,7 +12,7 @@ fileprivate struct ReachabilityServiceName {
 	static let name = "ReachabilityService"
 }
 
-extension ServiceRegistry {
+extension ServiceRegistryImplementation {
 	var reachabilityService : ReachabilityService {
 		get {
 			return serviceWith(name: ReachabilityServiceName.name) as! ReachabilityService
@@ -20,7 +20,7 @@ extension ServiceRegistry {
 	}
 }
 
-protocol ReachabilityService : Service {
+protocol ReachabilityService : SOAService {
 	var isReachable: Bool { get }
 	var reachability : Reachability { get }
 
@@ -57,12 +57,12 @@ extension ReachabilityService {
 
 class ReachabilityServiceImplementation : ReachabilityService {
 	static func register() {
-		SR.add(service: ReachabilityServiceImplementation())
-		SR.add(service: LazyService(serviceName: ReachabilityServiceName.name) { ReachabilityServiceImplementation() })
+//		ServiceRegistry.add(service: ReachabilityServiceImplementation())
+		ServiceRegistry.add(service: SOALazyService(serviceName: ReachabilityServiceName.name) { ReachabilityServiceImplementation() })
 	}
 
 	internal let reachability : Reachability = {
-		let googlePublicDNS = "www.google.com"	//"8.8.8.8"
+		let googlePublicDNS = "8.8.8.8"	//"www.google.com"
 		return Reachability(hostname: googlePublicDNS)!	// Intentional forced unwrap
 	}()
 }

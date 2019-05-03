@@ -9,13 +9,17 @@
 import PromiseKit
 import UIKit
 
-//** PlacesServiceName
-internal struct PlacesServiceName {
+/// PlacesService maintains a list of PlaceSources.
+///		When places are requested, getPlaces(forRegion:) delegates to all active PlaceSources to return places from their source.
+
+
+/// PlacesServiceName
+fileprivate struct PlacesServiceName {
 	static let serviceName = "PlacesService"
 }
 
-//** ServiceRegistry extension
-extension ServiceRegistry {
+/// ServiceRegistryImplementation extension to provide convenience property for accessing the service.
+extension ServiceRegistryImplementation {
 	var placesService : PlacesService {
 		get {
 			return serviceWith(name: PlacesServiceName.serviceName) as! PlacesService	// Intentional force unwrapping
@@ -23,15 +27,15 @@ extension ServiceRegistry {
 	}
 }
 
-//** PlacesService Interface
-protocol PlacesService : Service {
-	func getPlaces(forRegion : CoordinateRect, completionHandler : @escaping ([Place]) -> Void)
-	func getPlaceDetail(forUID : PlaceUID, completionHandler : @escaping (PlaceDetail?) -> Void)
+/// PlacesService Interface
+protocol PlacesService : SOAService {
+	func getPlaces(forRegion: CoordinateRect, onCompletionForEach: @escaping (Place) -> Void)
+	func getPlaceDetail(forUID: PlaceUID, completionHandler: @escaping (PlaceDetail?) -> Void)
 
 	var placeSources : [PlaceSourceUID : PlaceSource] { get }
 }
 
-//** PlacesService Service requirement
+/// PlacesService Service protocol requirement
 extension PlacesService {
 	var serviceName : String {
 		get {
@@ -40,46 +44,15 @@ extension PlacesService {
 	}
 }
 
-//** PlacesService default implementation
+/// PlacesService default implementation
 extension PlacesService {
-	func getPlaces(forRegion region: CoordinateRect, completionHandler : @escaping ([Place]) -> Void) {
+	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach: @escaping (Place) -> Void) {
 		placeSources.values.forEach { (placeSource) in
-			placeSource.getPlaces(forRegion: region, completionHandler: { (places) in
-				completionHandler(places)
-			})
+			placeSource.getPlaces(forRegion: region) { (place) in
+				onCompletionForEach(place)
+			}
 		}
 	}
-
-//			firstly {
-//				placeSource.getPlaces(forRegion: region)
-//			}.done { (places) in
-//				completionHandler(places)
-//			}.catch { error in
-//			}
-
-//typealias Photo = Place
-//
-//	func getPhotos() -> Promise<Photo> {
-//		let photos : [Photo] = ...
-//		photos.forEach { photo in
-//			return Promise<Photo>.value(photo)
-//		}
-//	}
-//
-//func foo {
-//	firstly {
-//		getPhotos()
-//	}.done { place in
-//		self.persist(place)
-//	}
-//}
-//
-//func getPhotos(completionHandler : @escaping (Photo) -> Void) {
-//	let photos : [Photo] = ...
-//	photos.forEach { photo in
-//		completionHandler(photo)
-//	}
-//}
 
 	func getPlaceDetail(forUID placeUID: PlaceUID, completionHandler : @escaping (PlaceDetail?) -> Void) {
 		let placeSourceUID = placeUID.placeSourceUID
@@ -92,10 +65,10 @@ extension PlacesService {
 	}
 }
 
-//** PlacesServiceImplementation
+/// PlacesServiceImplementation
 internal class PlacesServiceImplementation : PlacesService {
 	static func register(placeSources : [PlaceSource]) {
-		SR.add(service: PlacesServiceImplementation(placeSources: placeSources))
+		ServiceRegistry.add(service: PlacesServiceImplementation(placeSources: placeSources))
 	}
 	
 	internal var placeSources : [PlaceSourceUID : PlaceSource] = [:]

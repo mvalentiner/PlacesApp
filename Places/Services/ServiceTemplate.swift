@@ -8,13 +8,13 @@
 
 import Foundation
 
-//** Template for implementing services.  Replace "ServiceTemplate" with the service name.
+/// Template for implementing services.  Replace "ServiceTemplate" with the service name.
 
 private struct ServiceTemplateName {
 	static let serviceName = "ServiceTemplate"
 }
 
-extension ServiceRegistry {
+extension ServiceRegistryImplementation {
 	var serviceTemplate : ServiceTemplate {
 		get {
 			return serviceWith(name: ServiceTemplateName.serviceName) as! ServiceTemplate	// Intentional force unwrapping
@@ -22,7 +22,7 @@ extension ServiceRegistry {
 	}
 }
 
-protocol ServiceTemplate : Service {
+protocol ServiceTemplate : SOAService {
 	func exampleServiceFunction()
 }
 
@@ -38,7 +38,13 @@ extension ServiceTemplate {
 }
 
 internal class ServiceTemplateImplementation : ServiceTemplate {
+	// Only define one register function.
 	static func register() {
-		SR.add(service: ServiceTemplateImplementation())
+		ServiceTemplateImplementation().register()
 	}
+
+	// Register the service as a lazy service.
+//	static func register() {
+//		ServiceRegistry.add(service: SOALazyService(serviceName: ServiceTemplateName.serviceName, serviceGetter: { ServiceTemplateImplementation() }))
+//	}
 }

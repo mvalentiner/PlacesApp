@@ -53,7 +53,7 @@ class NetworkDataRequestTests: XCTestCase {
 		wait(for: [expectation], timeout: 10.0)
 	}
 
-	//** testDataRequest_BadDecode_Fail
+	/// testDataRequest_BadDecode_Fail
 	func testDataRequest_BadDecode_Fail() {
 		struct BadAppStoreInfo : Decodable {
 			internal let version : String
@@ -91,7 +91,7 @@ class NetworkDataRequestTests: XCTestCase {
 		wait(for: [expectation], timeout: 10.0)
 	}
 
-	//** testDataRequest_BadEndpoint_Fail
+	/// testDataRequest_BadEndpoint_Fail
 	func testDataRequest_BadEndpoint_Fail() {
 		class BadEndpointTestDataRequest : UnauthenticatedDataRequest {
 			typealias RequestedDataType = GoodAppStoreInfo

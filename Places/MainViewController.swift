@@ -14,6 +14,11 @@ import ReactiveSwift
 import UIKit
 
 class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+	// MARK: Dependencies
+	// Services are "injected" here.
+	let placesService = ServiceRegistry.placesService
+	let reachabilityService = ServiceRegistry.reachabilityService
+
 	// MARK: UI
 	@IBOutlet weak var mapView : MKMapView!
 	private var progressView : MBProgressHUD?
@@ -33,12 +38,12 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 	private func isLocationServicesEnabled() -> Promise<Bool> {
 		return Promise<Bool>.value(CLLocationManager.locationServicesEnabled())
 	}
-
+	
 	// MARK: UIViewController overrides
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		//** UI
+		/// UI
 		// Create the buttonBarView container view.
 		let buttonBarView = UIStackView()
 		buttonBarView.axis = .vertical
@@ -57,7 +62,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		let userLocationButton = makeButtonItem(with: MKUserTrackingButton(mapView: mapView), andRoundedCorners: [.layerMinXMaxYCorner,.layerMaxXMaxYCorner])
 		buttonBarView.insertArrangedSubview(userLocationButton, at: 1)
 
-		//** Initialize the locationManager.
+		/// Initialize the locationManager.
 		locationManager.delegate = self
 		locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
 		locationManager.distanceFilter = 10.0
@@ -76,7 +81,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 
 //		createAndShowProgressHUD()
 
-		SR.reachabilityService.setReachableHandler { (reachability) in
+		self.reachabilityService.setReachableHandler { (reachability) in
 			guard let window = self.view.window,
 				let rootViewController = window.rootViewController,
 				let navigationController = rootViewController as? UINavigationController,
@@ -259,7 +264,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		mapView.removeAnnotations(annotations.value)
 		annotations.value.removeAll(keepingCapacity: true)
 
-		guard SR.reachabilityService.isReachable == true else {
+		guard self.reachabilityService.isReachable == true else {
 			DispatchQueue.main.async {
 				if let progressView = self.progressView {
 					self.progressView = nil
@@ -289,11 +294,8 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 			longitude:(mapView.centerCoordinate.longitude - mapView.region.span.longitudeDelta))
 
 		let rect = CoordinateRect(topRight: topRight, bottomLeft: bottomLeft)
-		SR.placesService.getPlaces(forRegion: rect) { places in
-			let annotations = places.map { place -> PlaceAnnotation in
-				return PlaceAnnotation(withPlace: place, andDelegate: self)
-			}
-			self.annotations.value.append(contentsOf: annotations)
+		self.placesService.getPlaces(forRegion: rect) { place in
+			self.annotations.value.append(PlaceAnnotation(withPlace: place, andDelegate: self))
 		}
 	}
 

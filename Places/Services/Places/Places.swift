@@ -32,8 +32,15 @@ typealias PlaceSourceUID = String
 
 protocol PlaceSource {
 	var placeSourceUID : PlaceSourceUID { get }
+		// placeSourceUID is used internally to the PlacesService classes and not exposed through the PlaceService interface.
+
 	var placeSourceName : String  { get }
+		// placeSourceName is a user facing name for the PlaceSource.
+
 //	func getPlaces(forRegion : CoordinateRect) -> Promise<[Place]>
-	func getPlaces(forRegion : CoordinateRect, completionHandler : ([Place]) -> Void)
-	func getPlaceDetail(forUID : PlaceUID, completionHandler : (PlaceDetail?) -> Void)
+	func getPlaces(forRegion : CoordinateRect, onCompletionForEach : @escaping (Place) -> Void)
+		// Given a region, get the places from PlaceSource located in the region.
+
+	func getPlaceDetail(forUID : PlaceUID, completionHandler : @escaping (PlaceDetail?) -> Void)
+		// Given a PlaceUID, get its PlaceDetails.
 }

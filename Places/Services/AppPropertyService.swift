@@ -12,7 +12,7 @@ internal struct AppPropertiesServiceName {
 	static let name = "AppPropertiesService"
 }
 
-extension ServiceRegistry {
+extension ServiceRegistryImplementation {
 	var appPropertiesService : AppPropertiesService {
 		get {
 			return serviceWith(name: AppPropertiesServiceName.name) as! AppPropertiesService	// Intentional forced unwrapping
@@ -20,7 +20,7 @@ extension ServiceRegistry {
 	}
 }
 
-protocol AppPropertiesService : Service {
+protocol AppPropertiesService : SOAService {
 	var appAppStoreURL : String { get }
 	var appBuildNumber : String { get }
 	var appStoreId : String { get }
@@ -83,6 +83,6 @@ extension AppPropertiesService {
 
 internal class AppPropertiesServiceImplementation : AppPropertiesService {
 	static func register() {
-		SR.add(service: AppPropertiesServiceImplementation())
+		AppPropertiesServiceImplementation().register()
 	}
 }

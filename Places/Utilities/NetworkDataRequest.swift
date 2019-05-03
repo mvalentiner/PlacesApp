@@ -12,7 +12,7 @@ import PromiseKit
 import PMKFoundation
 import UIKit
 
-//** Result type returned from DataRequests
+/// Result type returned from DataRequests
 enum DataRequestResult<RequestedDataType> {
 	case success(RequestedDataType)
 	case failure(DataRequestError, Data?)
@@ -26,7 +26,7 @@ enum DataRequestResult<RequestedDataType> {
 	}
 }
 
-//** Error types for DataRequestResult
+/// Error types for DataRequestResult
 enum DataRequestError: Error {
 	case decodeError
 	case sessionDataTaskError(Error)
@@ -35,7 +35,7 @@ enum DataRequestError: Error {
 	}
 }
 
-//** UnauthenticatedDataRequest - generic http request to request json data of associated type <RequestedDataType>
+/// UnauthenticatedDataRequest - generic http request to request json data of associated type <RequestedDataType>
 protocol UnauthenticatedDataRequest : class {
 	// 1) Define the type of data being requested.
 	associatedtype RequestedDataType : Decodable
@@ -70,4 +70,8 @@ extension UnauthenticatedDataRequest {
 			try JSONDecoder().decode(RequestedDataType.self, from: data)
 		}
 	}
+}
+
+/// UnauthenticatedJSONRequest - generic http request to request json data of associated type <RequestedDataType>
+protocol UnauthenticatedJSONRequest : UnauthenticatedDataRequest where RequestedDataType == JSON {
 }
