@@ -11,7 +11,7 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-	// Even though serviceRegistry is not referenced in this file, this declaration causes ServiceRegistry to be instantiated
+	// This declaration causes ServiceRegistry to be instantiated
 	// and services to be registered prior to application(_ application:, didFinishLaunchingWithOptions:) being called.
 	private let serviceRegistry : ServiceRegistryImplementation = {
 		AppPropertiesServiceImplementation.register()
@@ -27,10 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func applicationDidBecomeActive(_ application: UIApplication) {
-		ServiceRegistry.reachabilityService.startMonitoring()
+		serviceRegistry.reachabilityService.startMonitoring()
 	}
 
 	func applicationWillResignActive(_ application: UIApplication) {
-		ServiceRegistry.reachabilityService.stopMonitoring()
+		serviceRegistry.reachabilityService.stopMonitoring()
 	}
 }

@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mfH-fF-YNw">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mfH-fF-YNw" customClass="MapView" customModule="Places" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="711"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="I75-cq-ZCS"/>

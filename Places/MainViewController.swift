@@ -8,59 +8,46 @@
 
 import MBProgressHUD
 import MapKit
-import PromiseKit
-import PMKCoreLocation
 import ReactiveSwift
 import UIKit
 
 class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-	// MARK: Dependencies
-	// Services are "injected" here.
-	let placesService = ServiceRegistry.placesService
-	let reachabilityService = ServiceRegistry.reachabilityService
+	// MARK: Dependencies - Services are "injected" here.
+	private let placesService = ServiceRegistry.placesService
+	private let reachabilityService = ServiceRegistry.reachabilityService
+	private let locationManager = CLLocationManager()
 
 	// MARK: UI
-	@IBOutlet weak var mapView : MKMapView!
+	@IBOutlet private weak var mapView : MapView!
 	private var progressView : MBProgressHUD?
-
-	// MARK: Model
-	private var annotations = MutableProperty<[PlaceAnnotation]>([])
 
 	// MARK: State
 	private var hasFirstLocation = false // This is used to make sure mapView(_:didUpdate:) is called before doing anything in mapView(_:regionDidChangeAnimated:)
-	private var lastRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0))
-	fileprivate var selectedAnnotation : PlaceAnnotation?
-	internal var userLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+	private var lastRequestedRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0))
 
-	// MARK: Location support
-	private let locationManager = CLLocationManager()
-
-	private func isLocationServicesEnabled() -> Promise<Bool> {
-		return Promise<Bool>.value(CLLocationManager.locationServicesEnabled())
-	}
-	
 	// MARK: UIViewController overrides
+	override func loadView() {
+		super.loadView()
+
+		mapView.delegate = self
+
+		// Bind action to model
+		mapView.placeAnnotations.bindTo {
+			self.progressView?.hide(animated: true)
+			self.progressView = nil
+			self.mapView.updateMap()
+		}
+
+		// Create the ButtonBar.
+		let infoButton = UIButton(type: .infoDark)
+		infoButton.addTarget(self, action: #selector(handleInfoButtonTap), for: .touchUpInside)
+		let buttonBarView = ButtonBarView(topButton: infoButton, bottomButton: MKUserTrackingButton(mapView: mapView))
+		view.addSubview(buttonBarView)
+		buttonBarView.anchorTo(top: view.safeAreaTopAnchor, right: view.safeAreaRightAnchor, topPadding: 48, rightPadding: 2)
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		/// UI
-		// Create the buttonBarView container view.
-		let buttonBarView = UIStackView()
-		buttonBarView.axis = .vertical
-		buttonBarView.distribution = .equalSpacing
-		buttonBarView.constrainTo(width: 44)
-		buttonBarView.constrainTo(height: 89)
-		view.addSubview(buttonBarView)
-		buttonBarView.anchorTo(top: view.safeAreaTopAnchor, right: view.safeAreaRightAnchor, topPadding: 32, rightPadding: 8)
-
-		// Create the buttons for the buttonBarView.
-		let button = UIButton(type: .infoDark)
-		button.addTarget(self, action: #selector(handleInfoButtonTap), for: .touchUpInside)
-		let infoButton = makeButtonItem(with: button, andRoundedCorners: [.layerMinXMinYCorner,.layerMaxXMinYCorner])
-		buttonBarView.insertArrangedSubview(infoButton, at: 0)
-
-		let userLocationButton = makeButtonItem(with: MKUserTrackingButton(mapView: mapView), andRoundedCorners: [.layerMinXMaxYCorner,.layerMaxXMaxYCorner])
-		buttonBarView.insertArrangedSubview(userLocationButton, at: 1)
 
 		/// Initialize the locationManager.
 		locationManager.delegate = self
@@ -74,10 +61,9 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 			showLocationServicesRequestDialog()
 		}
 
-		initializeMapView()
-
-		// Bind action to model
-		annotations.bindTo { self.updateMap() }
+		if let userLocation = locationManager.location {
+			mapView.centerMap(onLocation: userLocation)
+		}
 
 //		createAndShowProgressHUD()
 
@@ -93,28 +79,6 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 			}
 			self.requestMapPlacesAndUpdateAnnotations()
 		}
-	}
-
-	// ButtonBar helper function
-	private func makeButtonItem(with button: UIView, andRoundedCorners cornersMask: CACornerMask) -> UIView {
-		let containerView = UIView()
-		containerView.backgroundColor = .clear
-		containerView.constrainTo(height: 44)
-
-		let backgroundView = UIView()
-		backgroundView.alpha = 0.333
-		backgroundView.backgroundColor = .lightGray
-		backgroundView.clipsToBounds = true
-		backgroundView.constrainTo(height: 44)
-		backgroundView.layer.cornerRadius = 10
-		backgroundView.layer.maskedCorners = cornersMask
-
-		containerView.addSubview(backgroundView)
-		backgroundView.anchorTo(left: containerView.leftAnchor, top: containerView.topAnchor, right: containerView.rightAnchor, bottom: containerView.bottomAnchor)
-
-		containerView.addSubview(button)
-		button.anchorTo(left: containerView.leftAnchor, top: containerView.topAnchor, right: containerView.rightAnchor, bottom: containerView.bottomAnchor)
-		return containerView
 	}
 
 	@objc func handleInfoButtonTap() {
@@ -148,27 +112,16 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		self.progressView = progressView
 	}
 
-	private func initializeMapView() {
-		guard let userLocation = locationManager.location else {
-			return
-		}
-		// Center on the user's initial location on the map.
-		let initialSpan = MKCoordinateSpan.init(latitudeDelta: 0.1, longitudeDelta: 0.1)
-		let initialRegion = MKCoordinateRegion(center: userLocation.coordinate, span: initialSpan)
-		mapView.region = initialRegion	// this causes mapView(_:regionDidChangeAnimated:) to get called
-		mapView.centerCoordinate = userLocation.coordinate
-		mapView.delegate = self
-		mapView.showsUserLocation = true
-		mapView.userTrackingMode = MKUserTrackingMode.none
-	}
-
 	// MARK: CLLocationManagerDelegate methods
 
 	internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		if status == CLAuthorizationStatus.authorizedAlways || status == CLAuthorizationStatus.authorizedWhenInUse {
 			// we are authorized.
 			locationManager.startMonitoringSignificantLocationChanges()
-			initializeMapView()
+			guard let userLocation = locationManager.location else {
+				return
+			}
+			mapView.centerMap(onLocation: userLocation)
 		}
 		else if status == CLAuthorizationStatus.denied {
 			showLocationServicesRequestDialog()
@@ -203,15 +156,14 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 			// Wait until mapView(_:didUpdate:) has been called
 			return
 		}
-
-		guard self.isRegionChangeWithinTolerance(mapView, tolerance:0.3333) == true else {
+		guard self.isRegionChangeWithinTolerance(mapView, tolerance:0.334, withLastRegion: lastRequestedRegion) == false else {
 			return
 		}
 
 		requestMapPlacesAndUpdateAnnotations()
 	}
 
-	private func isRegionChangeWithinTolerance(_ mapView: MKMapView, tolerance: Double) -> Bool {
+	private func isRegionChangeWithinTolerance(_ mapView: MKMapView, tolerance: Double, withLastRegion lastRegion: MKCoordinateRegion) -> Bool {
 		let currentRegion = mapView.region
 		let currentRegionInViewCoords = mapView.convert(currentRegion, toRectTo: mapView)
 
@@ -235,84 +187,19 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 	}
 
 	internal func mapView(_ mapView: MKMapView, didUpdate updatedUserLocation: MKUserLocation) {
-		guard hasFirstLocation == true else {
-			hasFirstLocation = true
-
-			initializeMapView()
-
-			lastRegion = mapView.region
-			userLocation = updatedUserLocation.coordinate
+		guard let userLocation = updatedUserLocation.location else {
 			return
 		}
+		if hasFirstLocation == false {
+			hasFirstLocation = true
+			self.mapView.centerMap(onLocation: userLocation)
+		}
 
-		guard self.isRegionChangeWithinTolerance(mapView, tolerance:0.3333) == true else {
+		guard self.isRegionChangeWithinTolerance(mapView, tolerance:0.3333, withLastRegion: lastRequestedRegion) == false else {
 			return
 		}
 
 		requestMapPlacesAndUpdateAnnotations()
-	}
-
-	internal func requestMapPlacesAndUpdateAnnotations() {
-		guard didSelectAnnotation == false else {
-			// Don't get more annotations if the map is displaying an annotation.
-			return
-		}
-
-//		showProgressHUD()
-
-		lastRegion = mapView.region
-		mapView.removeAnnotations(annotations.value)
-		annotations.value.removeAll(keepingCapacity: true)
-
-		guard self.reachabilityService.isReachable == true else {
-			DispatchQueue.main.async {
-				if let progressView = self.progressView {
-					self.progressView = nil
-					progressView.hide(animated: true)
-				}
-				let alertController = UIAlertController(title: "Network", message: "Network is unavailable",
-					preferredStyle:UIAlertController.Style.alert)
-				let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:nil)
-				alertController.addAction(okAction)
-				self.present(alertController, animated: true, completion: {})
-			}
-			return
-		}
-
-//		var maximumNumberOfPhotos = 100
-//		let maxDimension = Int(max(UIScreen.main.bounds.width, UIScreen.main.bounds.height))
-//		if maxDimension > 768 {
-//			// http://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions
-//			maximumNumberOfPhotos = 204
-//		}
-
-		let topRight = CLLocationCoordinate2D(
-			latitude:(mapView.centerCoordinate.latitude + mapView.region.span.latitudeDelta),
-			longitude:(mapView.centerCoordinate.longitude + mapView.region.span.longitudeDelta))
-		let bottomLeft = CLLocationCoordinate2D(
-			latitude:(mapView.region.center.latitude - mapView.region.span.latitudeDelta),
-			longitude:(mapView.centerCoordinate.longitude - mapView.region.span.longitudeDelta))
-
-		let rect = CoordinateRect(topRight: topRight, bottomLeft: bottomLeft)
-		self.placesService.getPlaces(forRegion: rect) { place in
-			self.annotations.value.append(PlaceAnnotation(withPlace: place, andDelegate: self))
-		}
-	}
-
-	private func updateMap() {
-		DispatchQueue.main.async {
-			self.annotations.value.forEach { (annotation) in
-				self.mapView.addAnnotation(annotation)
-			}
-
-			self.mapView.setNeedsDisplay()
-
-//			if let progressView = self._progressView {
-//				self._progressView = nil
-//				progressView.hide(animated: true)
-//			}
-//			self._photosButton.isEnabled = self.annotations.value.isEmpty == false
-		}
 	}
 
     internal func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -320,15 +207,17 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 			// Don't return a view if the annotation is our location.
 			return nil
 		}
-
 		guard let placeAnnotation = annotation as? PlaceAnnotation else {
 			// If annotation is not a PlaceAnnotation, then we don't know what to do with it.
 			return nil
 		}
-
-		let annotationViewId = "placeAnnotationId"
-		let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationViewId) ??
-				MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationViewId)
+		let annotationView : MKAnnotationView = {
+			let annotationViewId = "placeAnnotationId"
+			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: annotationViewId) else {
+				return MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationViewId)
+			}
+			return view
+		}()
 		annotationView.annotation = annotation
 		annotationView.detailCalloutAccessoryView = nil
 
@@ -386,11 +275,45 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 
 		return annotationView
 	}
+
+
+	internal func requestMapPlacesAndUpdateAnnotations() {
+		guard didSelectAnnotation == false else {
+			// Don't get more annotations if the map is displaying an annotation.
+			return
+		}
+
+//		showProgressHUD()
+
+		lastRequestedRegion = mapView.region
+		mapView.removeAnnotations(mapView.placeAnnotations.value)
+		mapView.placeAnnotations.value.removeAll(keepingCapacity: true)
+
+//		guard self.reachabilityService.isReachable == true else {
+//			DispatchQueue.main.async {
+//				if let progressView = self.progressView {
+//					self.progressView = nil
+//					progressView.hide(animated: true)
+//				}
+//				let alertController = UIAlertController(title: "Network", message: "Network is unavailable",
+//					preferredStyle:UIAlertController.Style.alert)
+//				let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:nil)
+//				alertController.addAction(okAction)
+//				self.present(alertController, animated: true, completion: {})
+//			}
+//			return
+//		}
+
+		let visibleRect = mapView.visibleRect()
+		self.placesService.getPlaces(forRegion: visibleRect) { place in
+			self.mapView.placeAnnotations.value.append(PlaceAnnotation(withPlace: place, andDelegate: self))
+		}
+	}
 }
 
 extension MainViewController : PlaceAnnotationDelegate {
     internal func handleAnnotationPress(forAnnotation annotation: PlaceAnnotation) {
-		self.selectedAnnotation = annotation
+//		self.selectedAnnotation = annotation
 //TODO
 //		self.performSegue(withIdentifier: "segueToPhotoView", sender:self)
 	}

@@ -44,6 +44,8 @@
 		4C45F13622563B0700597821 /* Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9F22527A77000260F0 /* Querying.swift */; };
 		4C45F13722563B0700597821 /* NetworkDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA222527A77000260F0 /* NetworkDataRequest.swift */; };
 		4C45F13822563B0800597821 /* NetworkDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA222527A77000260F0 /* NetworkDataRequest.swift */; };
+		4C5793552292EC75009D838F /* ButtonBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5793542292EC75009D838F /* ButtonBarView.swift */; };
+		4C5793572292FB22009D838F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5793562292FB22009D838F /* MapView.swift */; };
 		4C778E7622636DEC00D682BE /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C778E7522636DEC00D682BE /* Reachability.framework */; };
 		4C778E7822636F7100D682BE /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C778E7722636F7100D682BE /* ReachabilityService.swift */; };
 		4C8AA9282278F43500FE83CB /* InterestingnessPlaceSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA9272278F43500FE83CB /* InterestingnessPlaceSource.swift */; };
@@ -114,6 +116,8 @@
 		4C3CCEAD22527A78000260F0 /* UIView+SafeArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+SafeArea.swift"; sourceTree = "<group>"; };
 		4C3CCEAE22527A78000260F0 /* MutableProperty+bindTo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MutableProperty+bindTo.swift"; sourceTree = "<group>"; };
 		4C45F1312256395600597821 /* PMKFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PMKFoundation.framework; path = Carthage/Build/iOS/PMKFoundation.framework; sourceTree = "<group>"; };
+		4C5793542292EC75009D838F /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
+		4C5793562292FB22009D838F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		4C778E7522636DEC00D682BE /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		4C778E7722636F7100D682BE /* ReachabilityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		4C8AA9272278F43500FE83CB /* InterestingnessPlaceSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestingnessPlaceSource.swift; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 				4C3CCE412252659F000260F0 /* LaunchScreen.storyboard */,
 				4CCDE170225283A60089BF7F /* Main.storyboard */,
 				4C3CCE3A2252659E000260F0 /* MainViewController.swift */,
+				4C5793542292EC75009D838F /* ButtonBarView.swift */,
+				4C5793562292FB22009D838F /* MapView.swift */,
 				4C3CCE91225279C0000260F0 /* MyPlayground.playground */,
 				4C3CCE8E22527974000260F0 /* PlaceAnnotation.swift */,
 				4C3CCEA322527A78000260F0 /* Services */,
@@ -487,7 +493,9 @@
 				4C3CCEB322527A78000260F0 /* NetworkDataRequest.swift in Sources */,
 				4C3CCE3B2252659E000260F0 /* MainViewController.swift in Sources */,
 				4C3CCE9022527974000260F0 /* PlaceAnnotation.swift in Sources */,
+				4C5793552292EC75009D838F /* ButtonBarView.swift in Sources */,
 				4C3CCE392252659E000260F0 /* AppDelegate.swift in Sources */,
+				4C5793572292FB22009D838F /* MapView.swift in Sources */,
 				4C3CCEB122527A78000260F0 /* JSON.swift in Sources */,
 				4C8AA92C2278FC4800FE83CB /* FlickrPhotoAnnotation.swift in Sources */,
 				4C3CCEB022527A78000260F0 /* Querying.swift in Sources */,
