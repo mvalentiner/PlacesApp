@@ -246,9 +246,11 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		lastRequestedRegion = mapView.region
 
 		let visibleRect = mapView.region.coordinateRect()
-		self.placesService.getPlaces(forRegion: visibleRect) { place in
+		self.placesService.getPlaces(forRegion: visibleRect) { result in
 // TODO: change the model to an array of Places not Annotations
-			self.mapView.placeAnnotations.value.append(PlaceAnnotation(withPlace: place, andDelegate: self))
+			if let place = try? result.get() {
+				self.mapView.placeAnnotations.value.append(PlaceAnnotation(withPlace: place, andDelegate: self))
+			}
 		}
 	}
 }

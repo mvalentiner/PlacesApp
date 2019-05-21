@@ -6,7 +6,6 @@
 //  Copyright © 2019 Michael Valentiner. All rights reserved.
 //
 
-import PromiseKit
 import UIKit
 
 /// PlacesService maintains a list of PlaceSources.
@@ -29,8 +28,8 @@ extension ServiceRegistryImplementation {
 
 /// PlacesService Interface
 protocol PlacesService : SOAService {
-	func getPlaces(forRegion: CoordinateRect, onCompletionForEach: @escaping (Place) -> Void)
-	func getPlaceDetail(forUID: PlaceUID, completionHandler: @escaping (PlaceDetail?) -> Void)
+	func getPlaces(forRegion: CoordinateRect, onCompletionForEach: @escaping (Result<Place, Error>) -> Void)
+	func getPlaceDetail(forUID: PlaceUID, completionHandler: @escaping (Result<PlaceDetail, Error>) -> Void)
 
 	var placeSources : [PlaceSourceUID : PlaceSource] { get }
 }
@@ -46,21 +45,21 @@ extension PlacesService {
 
 /// PlacesService default implementation
 extension PlacesService {
-	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach: @escaping (Place) -> Void) {
+	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach: @escaping (Result<Place, Error>) -> Void) {
 		placeSources.values.forEach { (placeSource) in
-			placeSource.getPlaces(forRegion: region) { (place) in
-				onCompletionForEach(place)
+			placeSource.getPlaces(forRegion: region) { (result) in
+				onCompletionForEach(result)
 			}
 		}
 	}
 
-	func getPlaceDetail(forUID placeUID: PlaceUID, completionHandler : @escaping (PlaceDetail?) -> Void) {
+	func getPlaceDetail(forUID placeUID: PlaceUID, completionHandler : @escaping (Result<PlaceDetail, Error>) -> Void) {
 		let placeSourceUID = placeUID.placeSourceUID
 		guard let placeSource = placeSources[placeSourceUID] else {
 			fatalError("Error: PlacesServiceImplementation misconfiguration. No PlaceSource found for \(placeSourceUID)")
 		}
-		placeSource.getPlaceDetail(forUID: placeUID) { (placeDetail) in
-			completionHandler(placeDetail)
+		placeSource.getPlaceDetail(forUID: placeUID) { (result) in
+			completionHandler(result)
 		}
 	}
 }

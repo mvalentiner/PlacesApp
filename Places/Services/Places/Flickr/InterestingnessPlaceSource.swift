@@ -22,20 +22,21 @@ struct InterestingnessPlaceSource : PlaceSource {
 	}
 
 	/// Given a region, get the places from PlaceSource located in the region.
-	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach : @escaping (Place) -> Void) {
+	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach : @escaping (Result<Place, Error>) -> Void) {
 		
 		Flickr().requestPhotoAnnotations(forSearchText: "", withLocationBottomLeft: region.bottomLeft, andLocationTopRight: region.topRight,
-			maximumNumberOfPhotos: 100, page: 0, completionHandler: { flickrPhotoInfo in
-			guard let flickrPhotoInfo = flickrPhotoInfo else {
+				maximumNumberOfPhotos: 100, page: 0, completionHandler: { result in
+			guard let flickrPhotoInfo = try? result.get() else {
+//				onCompletionForEach(Result(failure: result.error))
 				return
 			}
 			let placeUId = PlaceUID(placeSourceUID: self.placeSourceUID, nativePlaceId: flickrPhotoInfo.photoURLString)
 			let place = Place(uid: placeUId, location: flickrPhotoInfo.coordinate, title: flickrPhotoInfo.title, description: "", preview: flickrPhotoInfo.thumbnailImage)
-			onCompletionForEach(place)
+			onCompletionForEach(Result(success: place))
 		})
 	}
 
 	/// Given a PlaceUID, get its PlaceDetails.
-	func getPlaceDetail(forUID : PlaceUID, completionHandler : (PlaceDetail?) -> Void) {
+	func getPlaceDetail(forUID : PlaceUID, completionHandler : (Result<PlaceDetail, Error>) -> Void) {
 	}
 }

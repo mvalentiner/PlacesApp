@@ -23,7 +23,7 @@ class Flickr {
 
 	internal func requestPhotoAnnotations(forSearchText searchText: String, withLocationBottomLeft bottomLeft: CLLocationCoordinate2D,
 			andLocationTopRight topRight: CLLocationCoordinate2D, maximumNumberOfPhotos: Int, page: Int,
-			completionHandler: @escaping (FlickrPhotoInfo?) -> Void) {
+			completionHandler: @escaping (Swift.Result<FlickrPhotoInfo?, Error>) -> Void) {
 		_searchText = "-kid -kids -child -children " + searchText
 		_bottomLeft = bottomLeft
 		_topRight = topRight
@@ -42,7 +42,7 @@ class Flickr {
 		}
 	}
 
-	private func requestPhotoAnnotations(_ searchURLString: String, completionHandler: @escaping (FlickrPhotoInfo?) -> Void) {
+	private func requestPhotoAnnotations(_ searchURLString: String, completionHandler: @escaping (Swift.Result<FlickrPhotoInfo?, Error>) -> Void) {
 		let dataRequest = FlickrPhotoSearchRequest(endpointURL: searchURLString)
 		do {
 			_ = try dataRequest.load().done { photoJSON in
@@ -53,7 +53,7 @@ class Flickr {
 					return
 				}
 				guard photoJSONArray.isEmpty == false else {
-					completionHandler(nil)
+					completionHandler(Swift.Result(success: nil))
 					return
 				}
 				photoJSONArray.forEach({ (photoJSON) in
@@ -100,18 +100,18 @@ class Flickr {
 						}
 						let photoInfo = FlickrPhotoInfo(id: id, coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
 								title: title, thumbnailImage: thumbnail, photoURLString: photoURLString, image: nil)
-						completionHandler(photoInfo)
+						completionHandler(Swift.Result(success: photoInfo))
 					}
 				})
 			}.catch { error in
-				print("dataRequest.load() threw \(error)")
+				completionHandler(Swift.Result(failure: error))
 			}
 		} catch(let error) {
-			print("dataRequest.load() threw \(error)")
+			completionHandler(Swift.Result(failure: error))
 		}
 	}
 
-	func requestNextPage(_ completionHandler: @escaping (FlickrPhotoInfo?) -> Void) {
+	func requestNextPage(_ completionHandler: @escaping (Swift.Result<FlickrPhotoInfo?, Error>) -> Void) {
 		_page += 1
 		let searchURLString = buildSearchStringForLocationBottomLeft(_searchText, bottomLeft: _bottomLeft, topRight: _topRight,
 			numberOfPhotos:_maximumNumberOfPhotos, page: _page)

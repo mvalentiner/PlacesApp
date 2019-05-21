@@ -7,7 +7,6 @@
 //
 
 import MapKit
-import PromiseKit
 
 struct PlaceUID {
 	let placeSourceUID : PlaceSourceUID
@@ -37,10 +36,9 @@ protocol PlaceSource {
 	var placeSourceName : String  { get }
 		// placeSourceName is a user facing name for the PlaceSource.
 
-//	func getPlaces(forRegion : CoordinateRect) -> Promise<[Place]>
-	func getPlaces(forRegion : CoordinateRect, onCompletionForEach : @escaping (Place) -> Void)
+	func getPlaces(forRegion : CoordinateRect, onCompletionForEach : @escaping (Result<Place, Error>) -> Void)
 		// Given a region, get the places from PlaceSource located in the region.
 
-	func getPlaceDetail(forUID : PlaceUID, completionHandler : @escaping (PlaceDetail?) -> Void)
+	func getPlaceDetail(forUID : PlaceUID, completionHandler : @escaping (Result<PlaceDetail, Error>) -> Void)
 		// Given a PlaceUID, get its PlaceDetails.
 }
