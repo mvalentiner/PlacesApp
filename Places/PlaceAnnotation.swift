@@ -19,7 +19,7 @@ class PlaceAnnotation: NSObject, MKAnnotation {
 	// protocol MKAnnotation requirement
     internal let coordinate: CLLocationCoordinate2D
 	// protocol MKAnnotation optionals
-	internal let title: String?
+	internal var title: String?
 	internal let subtitle: String?
 	// Places
 	private let placeUID : PlaceUID

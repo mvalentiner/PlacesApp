@@ -46,6 +46,7 @@
 		4C45F13822563B0800597821 /* NetworkDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA222527A77000260F0 /* NetworkDataRequest.swift */; };
 		4C5793552292EC75009D838F /* ButtonBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5793542292EC75009D838F /* ButtonBarView.swift */; };
 		4C5793572292FB22009D838F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5793562292FB22009D838F /* MapView.swift */; };
+		4C5793592293627B009D838F /* MKCoordinateRegion+coordinateRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5793582293627B009D838F /* MKCoordinateRegion+coordinateRect.swift */; };
 		4C778E7622636DEC00D682BE /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C778E7522636DEC00D682BE /* Reachability.framework */; };
 		4C778E7822636F7100D682BE /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C778E7722636F7100D682BE /* ReachabilityService.swift */; };
 		4C8AA9282278F43500FE83CB /* InterestingnessPlaceSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA9272278F43500FE83CB /* InterestingnessPlaceSource.swift */; };
@@ -118,6 +119,7 @@
 		4C45F1312256395600597821 /* PMKFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PMKFoundation.framework; path = Carthage/Build/iOS/PMKFoundation.framework; sourceTree = "<group>"; };
 		4C5793542292EC75009D838F /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
 		4C5793562292FB22009D838F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		4C5793582293627B009D838F /* MKCoordinateRegion+coordinateRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateRegion+coordinateRect.swift"; sourceTree = "<group>"; };
 		4C778E7522636DEC00D682BE /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		4C778E7722636F7100D682BE /* ReachabilityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		4C8AA9272278F43500FE83CB /* InterestingnessPlaceSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestingnessPlaceSource.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				4C8AA92E227B6F4100FE83CB /* String+Formatting.swift */,
 				4C3CCEAB22527A78000260F0 /* UIView+Anchoring.swift */,
 				4C3CCEAD22527A78000260F0 /* UIView+SafeArea.swift */,
+				4C5793582293627B009D838F /* MKCoordinateRegion+coordinateRect.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				4C778E7822636F7100D682BE /* ReachabilityService.swift in Sources */,
 				4C3CCEB822527A78000260F0 /* PlacesService.swift in Sources */,
 				4C3CCEB222527A78000260F0 /* Merging.swift in Sources */,
+				4C5793592293627B009D838F /* MKCoordinateRegion+coordinateRect.swift in Sources */,
 				4C3CCEAF22527A78000260F0 /* Initialization.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
