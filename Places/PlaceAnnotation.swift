@@ -19,8 +19,8 @@ class PlaceAnnotation: NSObject, MKAnnotation {
 	// protocol MKAnnotation requirement
     internal let coordinate: CLLocationCoordinate2D
 	// protocol MKAnnotation optionals
-	internal var title: String?
-	internal let subtitle: String?
+	internal let title: String? = nil	// Don't set the title because we use a custom view to display it.
+	internal let subtitle: String? = nil
 	// Places
 	private let placeUID : PlaceUID
 	// Places optional
@@ -30,8 +30,6 @@ class PlaceAnnotation: NSObject, MKAnnotation {
 
 	init(withPlace place: Place, andDelegate delegate: PlaceAnnotationDelegate) {
 		self.coordinate = place.location
-		self.title = place.title
-		self.subtitle = place.description
 		self.placeUID = place.uid
 		self.delegate = delegate
 		self.image = place.preview
