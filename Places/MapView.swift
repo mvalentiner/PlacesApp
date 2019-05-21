@@ -12,7 +12,7 @@ import ReactiveSwift
 
 class MapView : MKMapView {
 
-	internal var placeAnnotations = MutableProperty<[PlaceAnnotation]>([])
+	private var placeAnnotations = MutableProperty<[PlaceAnnotation]>([])
 
 	internal required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
@@ -20,7 +20,8 @@ class MapView : MKMapView {
 		userTrackingMode = MKUserTrackingMode.none
 	}
 
-	open override func removeAnnotations(_ annotations: [MKAnnotation]) {
+	internal func removeAnnotations() {
+		super.removeAnnotations(placeAnnotations.value)
 		placeAnnotations.value.removeAll(keepingCapacity: true)
 	}
 
@@ -31,10 +32,10 @@ class MapView : MKMapView {
 		centerCoordinate = location.coordinate
 	}
 
-	internal func updateMap() {
+	internal func updateMap(withPlaces places: [Place], andAnnotationDelegate delegate: PlaceAnnotationDelegate) {
 		DispatchQueue.main.async {
-			self.placeAnnotations.value.forEach { (annotation) in
-				self.addAnnotation(annotation)
+			places.forEach { (place) in
+				self.addAnnotation(PlaceAnnotation(withPlace: place, andDelegate: delegate))
 			}
 			self.setNeedsDisplay()
 		}
@@ -43,9 +44,6 @@ class MapView : MKMapView {
 	private let smallestScreenDimension = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
 
 	internal func placeAnnotationView(for annotation: PlaceAnnotation) -> MKAnnotationView {
-		let title = annotation.title
-		annotation.title = nil
-	
 		let annotationView : MKAnnotationView = {
 			let annotationViewId = "placeAnnotationId"
 			guard let view = dequeueReusableAnnotationView(withIdentifier: annotationViewId) else {
@@ -71,7 +69,7 @@ class MapView : MKMapView {
 		// Build the view hierarchy.
 		let containerView = UIView()
 		var yOffset : CGFloat = 0.0
-		if let titleText = title, titleText != "" {
+		if let titleText = annotation.title, titleText != "" {
 			let textLabelHeight : CGFloat = 16.0
 			let textLabelFrame = CGRect(x: 0.0, y: 0.0, width: width, height: textLabelHeight)
 			let titleLabel = UILabel(frame: textLabelFrame)
@@ -88,7 +86,7 @@ class MapView : MKMapView {
 			let button = UIButton(type:UIButton.ButtonType.custom)
 			let buttonYOffset = yOffset
 			button.frame = CGRect(x: 0, y: buttonYOffset, width: width, height: buttonYOffset + height)
-//			button.addTarget(annotation, action: #selector(PhotoAnnotation.doButtonPress), for: UIControl.Event.touchUpInside)
+			button.addTarget(annotation, action: #selector(annotation.doButtonPress), for: UIControl.Event.touchUpInside)
 			button.setImage(image, for: UIControl.State())
 			containerView.addSubview(button)
 			yOffset += buttonYOffset

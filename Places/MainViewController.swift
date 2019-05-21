@@ -21,6 +21,9 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 	@IBOutlet private weak var mapView : MapView!
 	private var progressView : MBProgressHUD?
 
+	// MARK: Model
+	private var places = MutableProperty<[Place]>([])
+
 	// MARK: State
 	private var hasFirstLocation = false // This is used to make sure mapView(_:didUpdate:) is called before doing anything in mapView(_:regionDidChangeAnimated:)
 	private var lastRequestedRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0))
@@ -32,10 +35,10 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		mapView.delegate = self
 
 		// Bind action to model
-		mapView.placeAnnotations.bindTo {
+		places.bindTo {
 			self.progressView?.hide(animated: true)
 			self.progressView = nil
-			self.mapView.updateMap()
+			self.mapView.updateMap(withPlaces: self.places.value, andAnnotationDelegate: self)
 		}
 
 		// Create the ButtonBar.
@@ -241,15 +244,17 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 			return
 		}
 
-		mapView.removeAnnotations(mapView.placeAnnotations.value)
+		mapView.removeAnnotations()
 
 		lastRequestedRegion = mapView.region
 
 		let visibleRect = mapView.region.coordinateRect()
 		self.placesService.getPlaces(forRegion: visibleRect) { result in
-// TODO: change the model to an array of Places not Annotations
 			if let place = try? result.get() {
-				self.mapView.placeAnnotations.value.append(PlaceAnnotation(withPlace: place, andDelegate: self))
+				self.places.value.append(place)
+			}
+			else {
+				// TODO: handle error
 			}
 		}
 	}
