@@ -26,13 +26,17 @@ struct InterestingnessPlaceSource : PlaceSource {
 		
 		Flickr().requestPhotoAnnotations(forSearchText: "", withLocationBottomLeft: region.bottomLeft, andLocationTopRight: region.topRight,
 				maximumNumberOfPhotos: 100, page: 0, completionHandler: { result in
-			guard let flickrPhotoInfo = try? result.get() else {
-//				onCompletionForEach(Result(failure: result.error))
-				return
+			switch result {
+			case .failure(let error):
+				onCompletionForEach(.failure(error))
+			case .success(let flickrPhotoInfo):
+				guard let flickrPhotoInfo = flickrPhotoInfo else {
+					return
+				}
+				let placeUId = PlaceUID(placeSourceUID: self.placeSourceUID, nativePlaceId: flickrPhotoInfo.photoURLString)
+				let place = Place(uid: placeUId, location: flickrPhotoInfo.coordinate, title: flickrPhotoInfo.title, description: "", preview: flickrPhotoInfo.thumbnailImage)
+				onCompletionForEach(.success(place))
 			}
-			let placeUId = PlaceUID(placeSourceUID: self.placeSourceUID, nativePlaceId: flickrPhotoInfo.photoURLString)
-			let place = Place(uid: placeUId, location: flickrPhotoInfo.coordinate, title: flickrPhotoInfo.title, description: "", preview: flickrPhotoInfo.thumbnailImage)
-			onCompletionForEach(Result(success: place))
 		})
 	}
 

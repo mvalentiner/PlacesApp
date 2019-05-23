@@ -8,11 +8,10 @@
 
 import Foundation
 import MapKit
-import ReactiveSwift
 
 class MapView : MKMapView {
 
-	private var placeAnnotations = MutableProperty<[PlaceAnnotation]>([])
+	private var placeAnnotations : [PlaceAnnotation] = []
 
 	internal required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
@@ -21,8 +20,8 @@ class MapView : MKMapView {
 	}
 
 	internal func removeAnnotations() {
-		super.removeAnnotations(placeAnnotations.value)
-		placeAnnotations.value.removeAll(keepingCapacity: true)
+		super.removeAnnotations(placeAnnotations)
+		placeAnnotations.removeAll(keepingCapacity: true)
 	}
 
 	internal func centerMap(onLocation location: CLLocation) {

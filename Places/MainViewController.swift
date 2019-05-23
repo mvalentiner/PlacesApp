@@ -8,7 +8,7 @@
 
 import MBProgressHUD
 import MapKit
-import ReactiveSwift
+import PMKFoundation
 import UIKit
 
 class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
@@ -22,11 +22,15 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 	private var progressView : MBProgressHUD?
 
 	// MARK: Model
-	private var places = MutableProperty<[Place]>([])
+	private var places = Bindable<[Place]>([])
+		// An array of the Places we are showing on the map.
 
 	// MARK: State
-	private var hasFirstLocation = false // This is used to make sure mapView(_:didUpdate:) is called before doing anything in mapView(_:regionDidChangeAnimated:)
+	private var hasFirstLocation = false
+		// This is used to make sure mapView(_:didUpdate:) is called before doing anything in mapView(_:regionDidChangeAnimated:)
+
 	private var lastRequestedRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0))
+		// Used to prevent small changes with the position/size of the map causing a calls to the place source services.
 
 	// MARK: UIViewController overrides
 	override func loadView() {
@@ -35,13 +39,13 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		mapView.delegate = self
 
 		// Bind action to model
-		places.bindTo {
+		places.bind { newPlaces in
 			self.progressView?.hide(animated: true)
 			self.progressView = nil
-			self.mapView.updateMap(withPlaces: self.places.value, andAnnotationDelegate: self)
+			self.mapView.updateMap(withPlaces: newPlaces, andAnnotationDelegate: self)
 		}
 
-		// Create the ButtonBar.
+		// Create and position the ButtonBar.
 		let infoButton = UIButton(type: .infoDark)
 		infoButton.addTarget(self, action: #selector(handleInfoButtonTap), for: .touchUpInside)
 		let buttonBarView = ButtonBarView(topButton: infoButton, bottomButton: MKUserTrackingButton(mapView: mapView))
@@ -229,32 +233,31 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 
 //		showProgressHUD()
 
-		guard self.reachabilityService.isReachable == true else {
-			DispatchQueue.main.async {
-				if let progressView = self.progressView {
-					self.progressView = nil
-					progressView.hide(animated: true)
-				}
-				let alertController = UIAlertController(title: "Network", message: "Network is unavailable",
-					preferredStyle:UIAlertController.Style.alert)
-				let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:nil)
-				alertController.addAction(okAction)
-				self.present(alertController, animated: true, completion: {})
-			}
-			return
-		}
-
 		mapView.removeAnnotations()
 
 		lastRequestedRegion = mapView.region
 
 		let visibleRect = mapView.region.coordinateRect()
 		self.placesService.getPlaces(forRegion: visibleRect) { result in
-			if let place = try? result.get() {
+			switch result {
+			case .failure(let error):
+				let message : String = {
+					let message = "An error ocurred trying to reach the server."
+					guard let pmkHTTPError = error as? PMKFoundation.PMKHTTPError,
+						let errorDescription = pmkHTTPError.errorDescription,
+						let index = errorDescription.range(of: " for")?.lowerBound,
+							// Trim the message to make it nicer to present to the user.
+						let statusMessage = pmkHTTPError.errorDescription?.prefix(upTo: index) else {
+						return message
+					}
+					return "\(message)\n\(statusMessage)"
+				}()
+				let alertController = UIAlertController(title: "Error", message: message, preferredStyle:UIAlertController.Style.alert)
+				let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:nil)
+				alertController.addAction(okAction)
+				self.present(alertController, animated: true, completion: {})
+			case .success(let place):
 				self.places.value.append(place)
-			}
-			else {
-				// TODO: handle error
 			}
 		}
 	}

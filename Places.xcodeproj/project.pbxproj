@@ -20,7 +20,6 @@
 		4C3CCE8F22527974000260F0 /* LaunchScreen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C3CCE8D22527974000260F0 /* LaunchScreen.jpg */; };
 		4C3CCE9022527974000260F0 /* PlaceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE8E22527974000260F0 /* PlaceAnnotation.swift */; };
 		4C3CCE93225279CD000260F0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4C3CCE92225279CD000260F0 /* README.md */; };
-		4C3CCE9822527A3C000260F0 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3CCE9422527A3C000260F0 /* ReactiveSwift.framework */; };
 		4C3CCE9922527A3C000260F0 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3CCE9522527A3C000260F0 /* PromiseKit.framework */; };
 		4C3CCE9A22527A3C000260F0 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3CCE9622527A3C000260F0 /* MBProgressHUD.framework */; };
 		4C3CCEAF22527A78000260F0 /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
@@ -36,7 +35,6 @@
 		4C3CCEB922527A78000260F0 /* UIView+Anchoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEAB22527A78000260F0 /* UIView+Anchoring.swift */; };
 		4C3CCEBA22527A78000260F0 /* CoordinateRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEAC22527A78000260F0 /* CoordinateRect.swift */; };
 		4C3CCEBB22527A78000260F0 /* UIView+SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEAD22527A78000260F0 /* UIView+SafeArea.swift */; };
-		4C3CCEBC22527A78000260F0 /* MutableProperty+bindTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEAE22527A78000260F0 /* MutableProperty+bindTo.swift */; };
 		4C45F1322256395600597821 /* PMKFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C45F1312256395600597821 /* PMKFoundation.framework */; };
 		4C45F13322563B0700597821 /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
 		4C45F13422563B0700597821 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA022527A77000260F0 /* JSON.swift */; };
@@ -59,6 +57,7 @@
 		4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
 		4CCDE17D225295B20089BF7F /* Merging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA122527A77000260F0 /* Merging.swift */; };
 		4CCDE17E225295B20089BF7F /* Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9F22527A77000260F0 /* Querying.swift */; };
+		4CD99D5A229507F1009FA10C /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD99D59229507F1009FA10C /* Bindable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,7 +97,6 @@
 		4C3CCE8E22527974000260F0 /* PlaceAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceAnnotation.swift; sourceTree = "<group>"; };
 		4C3CCE91225279C0000260F0 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		4C3CCE92225279CD000260F0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4C3CCE9422527A3C000260F0 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
 		4C3CCE9522527A3C000260F0 /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
 		4C3CCE9622527A3C000260F0 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		4C3CCE9722527A3C000260F0 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 		4C3CCEAB22527A78000260F0 /* UIView+Anchoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Anchoring.swift"; sourceTree = "<group>"; };
 		4C3CCEAC22527A78000260F0 /* CoordinateRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateRect.swift; sourceTree = "<group>"; };
 		4C3CCEAD22527A78000260F0 /* UIView+SafeArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+SafeArea.swift"; sourceTree = "<group>"; };
-		4C3CCEAE22527A78000260F0 /* MutableProperty+bindTo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MutableProperty+bindTo.swift"; sourceTree = "<group>"; };
 		4C45F1312256395600597821 /* PMKFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PMKFoundation.framework; path = Carthage/Build/iOS/PMKFoundation.framework; sourceTree = "<group>"; };
 		4C5793542292EC75009D838F /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
 		4C5793562292FB22009D838F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -128,6 +125,7 @@
 		4C8AA92E227B6F4100FE83CB /* String+Formatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Formatting.swift"; sourceTree = "<group>"; };
 		4C8AA930227C8B3D00FE83CB /* FickrAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FickrAPIKey.swift; sourceTree = "<group>"; };
 		4CCDE171225283A60089BF7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4CD99D59229507F1009FA10C /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,7 +135,6 @@
 			files = (
 				4C3CCE9922527A3C000260F0 /* PromiseKit.framework in Frameworks */,
 				4C45F1322256395600597821 /* PMKFoundation.framework in Frameworks */,
-				4C3CCE9822527A3C000260F0 /* ReactiveSwift.framework in Frameworks */,
 				4C778E7622636DEC00D682BE /* Reachability.framework in Frameworks */,
 				4C3CCE9A22527A3C000260F0 /* MBProgressHUD.framework in Frameworks */,
 			);
@@ -193,6 +190,7 @@
 				4C3CCE412252659F000260F0 /* LaunchScreen.storyboard */,
 				4CCDE170225283A60089BF7F /* Main.storyboard */,
 				4C3CCE3A2252659E000260F0 /* MainViewController.swift */,
+				4CD99D59229507F1009FA10C /* Bindable.swift */,
 				4C5793542292EC75009D838F /* ButtonBarView.swift */,
 				4C5793562292FB22009D838F /* MapView.swift */,
 				4C3CCE91225279C0000260F0 /* MyPlayground.playground */,
@@ -231,7 +229,6 @@
 				4C45F1312256395600597821 /* PMKFoundation.framework */,
 				4C3CCE9622527A3C000260F0 /* MBProgressHUD.framework */,
 				4C3CCE9522527A3C000260F0 /* PromiseKit.framework */,
-				4C3CCE9422527A3C000260F0 /* ReactiveSwift.framework */,
 				4C3CCE9722527A3C000260F0 /* Result.framework */,
 			);
 			name = Frameworks;
@@ -283,7 +280,6 @@
 			isa = PBXGroup;
 			children = (
 				4C3CCEAC22527A78000260F0 /* CoordinateRect.swift */,
-				4C3CCEAE22527A78000260F0 /* MutableProperty+bindTo.swift */,
 				4C8AA92E227B6F4100FE83CB /* String+Formatting.swift */,
 				4C3CCEAB22527A78000260F0 /* UIView+Anchoring.swift */,
 				4C3CCEAD22527A78000260F0 /* UIView+SafeArea.swift */,
@@ -443,7 +439,6 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/MBProgressHUD.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PMKFoundation.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Reachability.framework",
 			);
@@ -453,7 +448,6 @@
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/MBProgressHUD.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PromiseKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ReactiveSwift.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PMKFoundation.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Reachability.framework",
 			);
@@ -503,7 +497,6 @@
 				4C8AA92C2278FC4800FE83CB /* FlickrPhotoAnnotation.swift in Sources */,
 				4C3CCEB022527A78000260F0 /* Querying.swift in Sources */,
 				4C8AA931227C8B3D00FE83CB /* FickrAPIKey.swift in Sources */,
-				4C3CCEBC22527A78000260F0 /* MutableProperty+bindTo.swift in Sources */,
 				4C3CCEB522527A78000260F0 /* SOAService.swift in Sources */,
 				4C3CCEB622527A78000260F0 /* Places.swift in Sources */,
 				4C3CCEBB22527A78000260F0 /* UIView+SafeArea.swift in Sources */,
@@ -512,6 +505,7 @@
 				4C3CCEB222527A78000260F0 /* Merging.swift in Sources */,
 				4C5793592293627B009D838F /* MKCoordinateRegion+coordinateRect.swift in Sources */,
 				4C3CCEAF22527A78000260F0 /* Initialization.swift in Sources */,
+				4CD99D5A229507F1009FA10C /* Bindable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -53,7 +53,7 @@ class Flickr {
 					return
 				}
 				guard photoJSONArray.isEmpty == false else {
-					completionHandler(Swift.Result(success: nil))
+					completionHandler(.success(nil))
 					return
 				}
 				photoJSONArray.forEach({ (photoJSON) in
@@ -100,14 +100,14 @@ class Flickr {
 						}
 						let photoInfo = FlickrPhotoInfo(id: id, coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
 								title: title, thumbnailImage: thumbnail, photoURLString: photoURLString, image: nil)
-						completionHandler(Swift.Result(success: photoInfo))
+						completionHandler(.success(photoInfo))
 					}
 				})
 			}.catch { error in
-				completionHandler(Swift.Result(failure: error))
+				completionHandler(.failure(error))
 			}
 		} catch(let error) {
-			completionHandler(Swift.Result(failure: error))
+			completionHandler(.failure(error))
 		}
 	}
 
