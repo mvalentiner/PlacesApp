@@ -28,8 +28,8 @@ extension ServiceRegistryImplementation {
 
 /// PlacesService Interface
 protocol PlacesService : SOAService {
-	func getPlaces(forRegion: CoordinateRect, onCompletionForEach: @escaping (Result<Place, Error>) -> Void)
-	func getPlaceDetail(forUID: PlaceUID, completionHandler: @escaping (Result<PlaceDetail, Error>) -> Void)
+	func getPlaces(forRegion: CoordinateRect, onCompletionForEach: @escaping (Result<Place?, Error>) -> Void)
+	func getPlaceDetail(forUID: PlaceUID, completionHandler: @escaping (Result<PlaceDetail?, Error>) -> Void)
 
 	var placeSources : [PlaceSourceUID : PlaceSource] { get }
 }
@@ -45,7 +45,7 @@ extension PlacesService {
 
 /// PlacesService default implementation
 extension PlacesService {
-	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach: @escaping (Result<Place, Error>) -> Void) {
+	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach: @escaping (Result<Place?, Error>) -> Void) {
 		placeSources.values.forEach { (placeSource) in
 			placeSource.getPlaces(forRegion: region) { (result) in
 				onCompletionForEach(result)
@@ -53,7 +53,7 @@ extension PlacesService {
 		}
 	}
 
-	func getPlaceDetail(forUID placeUID: PlaceUID, completionHandler : @escaping (Result<PlaceDetail, Error>) -> Void) {
+	func getPlaceDetail(forUID placeUID: PlaceUID, completionHandler : @escaping (Result<PlaceDetail?, Error>) -> Void) {
 		let placeSourceUID = placeUID.placeSourceUID
 		guard let placeSource = placeSources[placeSourceUID] else {
 			fatalError("Error: PlacesServiceImplementation misconfiguration. No PlaceSource found for \(placeSourceUID)")

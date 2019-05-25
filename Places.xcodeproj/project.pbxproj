@@ -42,6 +42,8 @@
 		4C45F13622563B0700597821 /* Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9F22527A77000260F0 /* Querying.swift */; };
 		4C45F13722563B0700597821 /* NetworkDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA222527A77000260F0 /* NetworkDataRequest.swift */; };
 		4C45F13822563B0800597821 /* NetworkDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA222527A77000260F0 /* NetworkDataRequest.swift */; };
+		4C4EAC7A2298110200CAF188 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4EAC792298110200CAF188 /* Coordinator.swift */; };
+		4C4EAC7C229813DE00CAF188 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4EAC7B229813DE00CAF188 /* Storyboarded.swift */; };
 		4C5793552292EC75009D838F /* ButtonBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5793542292EC75009D838F /* ButtonBarView.swift */; };
 		4C5793572292FB22009D838F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5793562292FB22009D838F /* MapView.swift */; };
 		4C5793592293627B009D838F /* MKCoordinateRegion+coordinateRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5793582293627B009D838F /* MKCoordinateRegion+coordinateRect.swift */; };
@@ -114,6 +116,8 @@
 		4C3CCEAC22527A78000260F0 /* CoordinateRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateRect.swift; sourceTree = "<group>"; };
 		4C3CCEAD22527A78000260F0 /* UIView+SafeArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+SafeArea.swift"; sourceTree = "<group>"; };
 		4C45F1312256395600597821 /* PMKFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PMKFoundation.framework; path = Carthage/Build/iOS/PMKFoundation.framework; sourceTree = "<group>"; };
+		4C4EAC792298110200CAF188 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		4C4EAC7B229813DE00CAF188 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		4C5793542292EC75009D838F /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
 		4C5793562292FB22009D838F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		4C5793582293627B009D838F /* MKCoordinateRegion+coordinateRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateRegion+coordinateRect.swift"; sourceTree = "<group>"; };
@@ -184,6 +188,8 @@
 			isa = PBXGroup;
 			children = (
 				4C3CCE382252659E000260F0 /* AppDelegate.swift */,
+				4C4EAC792298110200CAF188 /* Coordinator.swift */,
+				4C4EAC7B229813DE00CAF188 /* Storyboarded.swift */,
 				4C3CCE3F2252659F000260F0 /* Assets.xcassets */,
 				4C3CCE442252659F000260F0 /* Info.plist */,
 				4C3CCE8D22527974000260F0 /* LaunchScreen.jpg */,
@@ -488,6 +494,7 @@
 				4C8AA92F227B6F4200FE83CB /* String+Formatting.swift in Sources */,
 				4C3CCEB722527A78000260F0 /* ServiceTemplate.swift in Sources */,
 				4C3CCEB322527A78000260F0 /* NetworkDataRequest.swift in Sources */,
+				4C4EAC7A2298110200CAF188 /* Coordinator.swift in Sources */,
 				4C3CCE3B2252659E000260F0 /* MainViewController.swift in Sources */,
 				4C3CCE9022527974000260F0 /* PlaceAnnotation.swift in Sources */,
 				4C5793552292EC75009D838F /* ButtonBarView.swift in Sources */,
@@ -506,6 +513,7 @@
 				4C5793592293627B009D838F /* MKCoordinateRegion+coordinateRect.swift in Sources */,
 				4C3CCEAF22527A78000260F0 /* Initialization.swift in Sources */,
 				4CD99D5A229507F1009FA10C /* Bindable.swift in Sources */,
+				4C4EAC7C229813DE00CAF188 /* Storyboarded.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

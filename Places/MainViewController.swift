@@ -11,18 +11,19 @@ import MapKit
 import PMKFoundation
 import UIKit
 
-class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class MainViewController: UIViewController, Storyboarded, CLLocationManagerDelegate, MKMapViewDelegate {
 	// MARK: Dependencies - Services are "injected" here.
+	private let mainCoordinator = ServiceRegistry.mainCoordinator
 	private let placesService = ServiceRegistry.placesService
 	private let reachabilityService = ServiceRegistry.reachabilityService
 	private let locationManager = CLLocationManager()
 
 	// MARK: UI
 	@IBOutlet private weak var mapView : MapView!
-	private var progressView : MBProgressHUD?
+	private var activityIndicator : MBProgressHUD?
 
 	// MARK: Model
-	private var places = Bindable<[Place]>([])
+	private var places = Bindable<Set<Place>>([])
 		// An array of the Places we are showing on the map.
 
 	// MARK: State
@@ -40,8 +41,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 
 		// Bind action to model
 		places.bind { newPlaces in
-			self.progressView?.hide(animated: true)
-			self.progressView = nil
+			self.dismissActivityIndicator()
 			self.mapView.updateMap(withPlaces: newPlaces, andAnnotationDelegate: self)
 		}
 
@@ -72,8 +72,6 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 			mapView.centerMap(onLocation: userLocation)
 		}
 
-//		createAndShowProgressHUD()
-
 		self.reachabilityService.setReachableHandler { (reachability) in
 			guard let window = self.view.window,
 				let rootViewController = window.rootViewController,
@@ -87,10 +85,12 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 
 			self.requestMapPlacesAndUpdateAnnotations()
 		}
+		
+		self.requestMapPlacesAndUpdateAnnotations()
 	}
 
 	@objc func handleInfoButtonTap() {
-//		self.performSegue(withIdentifier: "segueToSettingsViewController", sender:self)
+		mainCoordinator.navigateToInfoScreen()
 	}
 
 	private func showLocationServicesRequestDialog() {
@@ -105,8 +105,8 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		self.present(alertController, animated: true)
 	}
 
-	private func showProgressHUD() {
-		guard self.progressView == nil else {
+	private func showActivityIndicator() {
+		guard self.activityIndicator == nil else {
 			return
 		}
 
@@ -117,7 +117,12 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		progressView.bezelView.backgroundColor = UIColor.darkGray
 		progressView.bezelView.isOpaque = false
 		progressView.removeFromSuperViewOnHide = true
-		self.progressView = progressView
+		self.activityIndicator = progressView
+	}
+
+	private func dismissActivityIndicator() {
+		self.activityIndicator?.hide(animated: true)
+		self.activityIndicator = nil
 	}
 
 	// MARK: CLLocationManagerDelegate methods
@@ -224,21 +229,18 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 		return mapView.placeAnnotationView(for: placeAnnotation)
 	}
 
-
 	internal func requestMapPlacesAndUpdateAnnotations() {
 		guard didSelectAnnotation == false else {
 			// Don't get more annotations if the map is displaying an annotation.
 			return
 		}
 
-//		showProgressHUD()
-
-		mapView.removeAnnotations()
-
+		showActivityIndicator()
 		lastRequestedRegion = mapView.region
 
 		let visibleRect = mapView.region.coordinateRect()
 		self.placesService.getPlaces(forRegion: visibleRect) { result in
+			self.dismissActivityIndicator()
 			switch result {
 			case .failure(let error):
 				let message : String = {
@@ -257,7 +259,10 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 				alertController.addAction(okAction)
 				self.present(alertController, animated: true, completion: {})
 			case .success(let place):
-				self.places.value.append(place)
+				guard let place = place else {
+					return
+				}
+				self.places.value.insert(place)
 			}
 		}
 	}
@@ -265,8 +270,6 @@ class MainViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 
 extension MainViewController : PlaceAnnotationDelegate {
     internal func handleAnnotationPress(forAnnotation annotation: PlaceAnnotation) {
-//		self.selectedAnnotation = annotation
-//TODO
-//		self.performSegue(withIdentifier: "segueToPhotoView", sender:self)
+		mainCoordinator.navigateToPlaceDetailsScreen(forPlace: annotation.place)
 	}
 }

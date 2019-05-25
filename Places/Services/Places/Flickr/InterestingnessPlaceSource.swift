@@ -11,7 +11,7 @@ import Foundation
 struct InterestingnessPlaceSource : PlaceSource {
 	var placeSourceUID : PlaceSourceUID {
 		get {
-			return "Interestingness"
+			return "INTR"
 		}
 	}
 
@@ -22,8 +22,7 @@ struct InterestingnessPlaceSource : PlaceSource {
 	}
 
 	/// Given a region, get the places from PlaceSource located in the region.
-	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach : @escaping (Result<Place, Error>) -> Void) {
-		
+	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach : @escaping (Result<Place?, Error>) -> Void) {
 		Flickr().requestPhotoAnnotations(forSearchText: "", withLocationBottomLeft: region.bottomLeft, andLocationTopRight: region.topRight,
 				maximumNumberOfPhotos: 100, page: 0, completionHandler: { result in
 			switch result {
@@ -31,6 +30,7 @@ struct InterestingnessPlaceSource : PlaceSource {
 				onCompletionForEach(.failure(error))
 			case .success(let flickrPhotoInfo):
 				guard let flickrPhotoInfo = flickrPhotoInfo else {
+					onCompletionForEach(.success(nil))
 					return
 				}
 				let placeUId = PlaceUID(placeSourceUID: self.placeSourceUID, nativePlaceId: flickrPhotoInfo.photoURLString)
@@ -41,6 +41,6 @@ struct InterestingnessPlaceSource : PlaceSource {
 	}
 
 	/// Given a PlaceUID, get its PlaceDetails.
-	func getPlaceDetail(forUID : PlaceUID, completionHandler : (Result<PlaceDetail, Error>) -> Void) {
+	func getPlaceDetail(forUID : PlaceUID, completionHandler : (Result<PlaceDetail?, Error>) -> Void) {
 	}
 }

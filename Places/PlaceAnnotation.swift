@@ -22,7 +22,7 @@ class PlaceAnnotation: NSObject, MKAnnotation {
 	internal let title: String? = nil	// Don't set the title because we use a custom view to display it.
 	internal let subtitle: String? = nil
 	// Places
-	private let placeUID : PlaceUID
+	internal let place : Place
 	// Places optional
 	internal let image: UIImage?
 	// Event handler
@@ -30,7 +30,7 @@ class PlaceAnnotation: NSObject, MKAnnotation {
 
 	init(withPlace place: Place, andDelegate delegate: PlaceAnnotationDelegate) {
 		self.coordinate = place.location
-		self.placeUID = place.uid
+		self.place = place
 		self.delegate = delegate
 		self.image = place.preview
 		super.init()

@@ -56,7 +56,7 @@ class Flickr {
 					completionHandler(.success(nil))
 					return
 				}
-				photoJSONArray.forEach({ (photoJSON) in
+				photoJSONArray.forEach { (photoJSON) in
 					guard let id = photoJSON["id"]?.stringValue else {
 						return
 					}
@@ -102,7 +102,7 @@ class Flickr {
 								title: title, thumbnailImage: thumbnail, photoURLString: photoURLString, image: nil)
 						completionHandler(.success(photoInfo))
 					}
-				})
+				}
 			}.catch { error in
 				completionHandler(.failure(error))
 			}
@@ -200,7 +200,7 @@ jsonFlickrApi({
 		let apiKey = "api_key=\(FickrAPIKey)"
 		let format = "format=json"
 		let boundingBox = stringWithFormat("bbox=%f,%f,%f,%f", args: bottomLeft.longitude, bottomLeft.latitude, topRight.longitude, topRight.latitude)
-		let extras = "extras=geo,media=photos,url_s,url_t,url_q,url_k,url_h,url_b,url_c,url_z&sort=interestingness-desc"
+		let extras = "extras=geo,media=photos,url_s,url_t,url_q,url_k,url_h,url_b,url_c,url_z"	//&sort=interestingness-desc"
 		let noJSONCallback = "nojsoncallback=1"
 		let perPage = "per_page=" + String(numberOfPhotos)
 		let page = "page=" + String(page)

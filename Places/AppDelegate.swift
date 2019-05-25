@@ -23,6 +23,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+		let rootViewController = UIViewController()
+		MainCoordinator.register(rootController: rootViewController)
+		let mainViewController = MainViewController.instantiate()
+		serviceRegistry.mainCoordinator.start(with: mainViewController)
+
+		// create a basic UIWindow and activate it
+		window = UIWindow(frame: UIScreen.main.bounds)
+		window?.rootViewController = mainViewController
+		window?.makeKeyAndVisible()
+
 		return true
 	}
 

@@ -11,17 +11,13 @@ import MapKit
 
 class MapView : MKMapView {
 
-	private var placeAnnotations : [PlaceAnnotation] = []
+	private var placeAnnotations : Set<PlaceAnnotation> = []
+		// The view model
 
 	internal required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 		showsUserLocation = true
 		userTrackingMode = MKUserTrackingMode.none
-	}
-
-	internal func removeAnnotations() {
-		super.removeAnnotations(placeAnnotations)
-		placeAnnotations.removeAll(keepingCapacity: true)
 	}
 
 	internal func centerMap(onLocation location: CLLocation) {
@@ -31,11 +27,25 @@ class MapView : MKMapView {
 		centerCoordinate = location.coordinate
 	}
 
-	internal func updateMap(withPlaces places: [Place], andAnnotationDelegate delegate: PlaceAnnotationDelegate) {
+	internal func updateMap(withPlaces places: Set<Place>, andAnnotationDelegate delegate: PlaceAnnotationDelegate) {
 		DispatchQueue.main.async {
-			places.forEach { (place) in
-				self.addAnnotation(PlaceAnnotation(withPlace: place, andDelegate: delegate))
+			// Remove all annotations from the map
+			super.removeAnnotations(Array(self.placeAnnotations))
+			
+			// Remove all annotations from the view model
+			self.placeAnnotations.removeAll(keepingCapacity: true)
+
+			guard places.isEmpty == false else {
+				return
 			}
+
+			// Re-populate the view model
+			places.forEach { (place) in
+				self.placeAnnotations.insert(PlaceAnnotation(withPlace: place, andDelegate: delegate))
+			}
+			
+			// Re-populate the map
+			self.addAnnotations(Array(self.placeAnnotations))
 			self.setNeedsDisplay()
 		}
 	}
