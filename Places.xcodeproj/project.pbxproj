@@ -101,7 +101,6 @@
 		4C3CCE92225279CD000260F0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4C3CCE9522527A3C000260F0 /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
 		4C3CCE9622527A3C000260F0 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
-		4C3CCE9722527A3C000260F0 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		4C3CCE9E22527A77000260F0 /* Initialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Initialization.swift; sourceTree = "<group>"; };
 		4C3CCE9F22527A77000260F0 /* Querying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Querying.swift; sourceTree = "<group>"; };
 		4C3CCEA022527A77000260F0 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
@@ -235,7 +234,6 @@
 				4C45F1312256395600597821 /* PMKFoundation.framework */,
 				4C3CCE9622527A3C000260F0 /* MBProgressHUD.framework */,
 				4C3CCE9522527A3C000260F0 /* PromiseKit.framework */,
-				4C3CCE9722527A3C000260F0 /* Result.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
