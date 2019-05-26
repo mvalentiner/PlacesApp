@@ -9,15 +9,38 @@
 import Foundation
 import MapKit
 
-class MapView : MKMapView {
-
-	private var placeAnnotations : Set<PlaceAnnotation> = []
+class MapView: MKMapView {
+	private var placeAnnotations = Bindable<Set<PlaceAnnotation>>([])
 		// The view model
 
 	internal required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 		showsUserLocation = true
 		userTrackingMode = MKUserTrackingMode.none
+
+		self.placeAnnotations.bind { (oldAnnotations, newAnnotations) in
+			DispatchQueue.main.async {
+				guard newAnnotations.isEmpty == false else {
+					// Remove all annotations form map.
+					super.removeAnnotations(Array(oldAnnotations))
+					self.setNeedsDisplay()
+					return
+				}
+				// Add new annotation to map.
+				let annotations = newAnnotations.subtracting(oldAnnotations)
+				self.addAnnotations(Array(annotations))
+				self.setNeedsDisplay()
+			}
+		}
+	}
+
+	internal func add(placeAnnotation annotation: PlaceAnnotation) {
+		// Add new annotation to our set of existing annotations.
+		self.placeAnnotations.value.insert(annotation)
+	}
+
+	internal func removeAllAnnotations() {
+		self.placeAnnotations.value.removeAll(keepingCapacity: true)
 	}
 
 	internal func centerMap(onLocation location: CLLocation) {
@@ -27,33 +50,10 @@ class MapView : MKMapView {
 		centerCoordinate = location.coordinate
 	}
 
-	internal func updateMap(withPlaces places: Set<Place>, andAnnotationDelegate delegate: PlaceAnnotationDelegate) {
-		DispatchQueue.main.async {
-			// Remove all annotations from the map
-			super.removeAnnotations(Array(self.placeAnnotations))
-			
-			// Remove all annotations from the view model
-			self.placeAnnotations.removeAll(keepingCapacity: true)
-
-			guard places.isEmpty == false else {
-				return
-			}
-
-			// Re-populate the view model
-			places.forEach { (place) in
-				self.placeAnnotations.insert(PlaceAnnotation(withPlace: place, andDelegate: delegate))
-			}
-			
-			// Re-populate the map
-			self.addAnnotations(Array(self.placeAnnotations))
-			self.setNeedsDisplay()
-		}
-	}
-
 	private let smallestScreenDimension = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
 
 	internal func placeAnnotationView(for annotation: PlaceAnnotation) -> MKAnnotationView {
-		let annotationView : MKAnnotationView = {
+		let annotationView: MKAnnotationView = {
 			let annotationViewId = "placeAnnotationId"
 			guard let view = dequeueReusableAnnotationView(withIdentifier: annotationViewId) else {
 				return MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationViewId)
@@ -77,9 +77,9 @@ class MapView : MKMapView {
 
 		// Build the view hierarchy.
 		let containerView = UIView()
-		var yOffset : CGFloat = 0.0
+		var yOffset: CGFloat = 0.0
 		if let titleText = annotation.title, titleText != "" {
-			let textLabelHeight : CGFloat = 16.0
+			let textLabelHeight: CGFloat = 16.0
 			let textLabelFrame = CGRect(x: 0.0, y: 0.0, width: width, height: textLabelHeight)
 			let titleLabel = UILabel(frame: textLabelFrame)
 			titleLabel.textAlignment = .center

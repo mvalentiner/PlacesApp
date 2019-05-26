@@ -22,7 +22,7 @@ class PlaceAnnotation: NSObject, MKAnnotation {
 	internal let title: String? = nil	// Don't set the title because we use a custom view to display it.
 	internal let subtitle: String? = nil
 	// Places
-	internal let place : Place
+	internal let place: Place
 	// Places optional
 	internal let image: UIImage?
 	// Event handler

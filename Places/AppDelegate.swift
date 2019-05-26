@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	// This declaration causes ServiceRegistry to be instantiated
 	// and services to be registered prior to application(_ application:, didFinishLaunchingWithOptions:) being called.
-	private let serviceRegistry : ServiceRegistryImplementation = {
+	private let serviceRegistry: ServiceRegistryImplementation = {
 		AppPropertiesServiceImplementation.register()
 		PlacesServiceImplementation.register(placeSources: [InterestingnessPlaceSource()])
 		ReachabilityServiceImplementation.register()

@@ -19,7 +19,7 @@ fileprivate struct PlacesServiceName {
 
 /// ServiceRegistryImplementation extension to provide convenience property for accessing the service.
 extension ServiceRegistryImplementation {
-	var placesService : PlacesService {
+	var placesService: PlacesService {
 		get {
 			return serviceWith(name: PlacesServiceName.serviceName) as! PlacesService	// Intentional force unwrapping
 		}
@@ -27,16 +27,16 @@ extension ServiceRegistryImplementation {
 }
 
 /// PlacesService Interface
-protocol PlacesService : SOAService {
+protocol PlacesService: SOAService {
 	func getPlaces(forRegion: CoordinateRect, onCompletionForEach: @escaping (Result<Place?, Error>) -> Void)
 	func getPlaceDetail(forUID: PlaceUID, completionHandler: @escaping (Result<PlaceDetail?, Error>) -> Void)
 
-	var placeSources : [PlaceSourceUID : PlaceSource] { get }
+	var placeSources: [PlaceSourceUID: PlaceSource] { get }
 }
 
 /// PlacesService Service protocol requirement
 extension PlacesService {
-	var serviceName : String {
+	var serviceName: String {
 		get {
 			return PlacesServiceName.serviceName
 		}
@@ -53,7 +53,7 @@ extension PlacesService {
 		}
 	}
 
-	func getPlaceDetail(forUID placeUID: PlaceUID, completionHandler : @escaping (Result<PlaceDetail?, Error>) -> Void) {
+	func getPlaceDetail(forUID placeUID: PlaceUID, completionHandler: @escaping (Result<PlaceDetail?, Error>) -> Void) {
 		let placeSourceUID = placeUID.placeSourceUID
 		guard let placeSource = placeSources[placeSourceUID] else {
 			fatalError("Error: PlacesServiceImplementation misconfiguration. No PlaceSource found for \(placeSourceUID)")
@@ -65,12 +65,12 @@ extension PlacesService {
 }
 
 /// PlacesServiceImplementation
-internal class PlacesServiceImplementation : PlacesService {
-	static func register(placeSources : [PlaceSource]) {
+internal class PlacesServiceImplementation: PlacesService {
+	static func register(placeSources: [PlaceSource]) {
 		ServiceRegistry.add(service: PlacesServiceImplementation(placeSources: placeSources))
 	}
 	
-	internal var placeSources : [PlaceSourceUID : PlaceSource] = [:]
+	internal var placeSources: [PlaceSourceUID : PlaceSource] = [:]
 
 	init(placeSources: [PlaceSource]) {
 		placeSources.forEach { (placeSource) in

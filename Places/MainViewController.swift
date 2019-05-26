@@ -19,12 +19,8 @@ class MainViewController: UIViewController, Storyboarded, CLLocationManagerDeleg
 	private let locationManager = CLLocationManager()
 
 	// MARK: UI
-	@IBOutlet private weak var mapView : MapView!
-	private var activityIndicator : MBProgressHUD?
-
-	// MARK: Model
-	private var places = Bindable<Set<Place>>([])
-		// An array of the Places we are showing on the map.
+	@IBOutlet private weak var mapView: MapView!
+	private var activityIndicator: MBProgressHUD?
 
 	// MARK: State
 	private var hasFirstLocation = false
@@ -38,12 +34,6 @@ class MainViewController: UIViewController, Storyboarded, CLLocationManagerDeleg
 		super.loadView()
 
 		mapView.delegate = self
-
-		// Bind action to model
-		places.bind { newPlaces in
-			self.dismissActivityIndicator()
-			self.mapView.updateMap(withPlaces: newPlaces, andAnnotationDelegate: self)
-		}
 
 		// Create and position the ButtonBar.
 		let infoButton = UIButton(type: .infoDark)
@@ -236,6 +226,7 @@ class MainViewController: UIViewController, Storyboarded, CLLocationManagerDeleg
 		}
 
 		showActivityIndicator()
+		mapView.removeAllAnnotations()
 		lastRequestedRegion = mapView.region
 
 		let visibleRect = mapView.region.coordinateRect()
@@ -243,7 +234,7 @@ class MainViewController: UIViewController, Storyboarded, CLLocationManagerDeleg
 			self.dismissActivityIndicator()
 			switch result {
 			case .failure(let error):
-				let message : String = {
+				let message: String = {
 					let message = "An error ocurred trying to reach the server."
 					guard let pmkHTTPError = error as? PMKFoundation.PMKHTTPError,
 						let errorDescription = pmkHTTPError.errorDescription,
@@ -262,13 +253,14 @@ class MainViewController: UIViewController, Storyboarded, CLLocationManagerDeleg
 				guard let place = place else {
 					return
 				}
-				self.places.value.insert(place)
+				let annotation = PlaceAnnotation(withPlace: place, andDelegate: self)
+				self.mapView.add(placeAnnotation: annotation)
 			}
 		}
 	}
 }
 
-extension MainViewController : PlaceAnnotationDelegate {
+extension MainViewController: PlaceAnnotationDelegate {
     internal func handleAnnotationPress(forAnnotation annotation: PlaceAnnotation) {
 		mainCoordinator.navigateToPlaceDetailsScreen(forPlace: annotation.place)
 	}

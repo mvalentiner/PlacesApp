@@ -14,14 +14,14 @@ private struct MainCoordinatorServiceName {
 }
 
 extension ServiceRegistryImplementation {
-	var mainCoordinator : MainCoordinatorService {
+	var mainCoordinator: MainCoordinatorService {
 		get {
 			return serviceWith(name: MainCoordinatorServiceName.serviceName) as! MainCoordinatorService	// Intentional force unwrapping
 		}
 	}
 }
 
-protocol MainCoordinatorService : SOAService {
+protocol MainCoordinatorService: SOAService {
 	var rootController: UIViewController { get }
 
 	func start(with viewController: UIViewController)
@@ -31,7 +31,7 @@ protocol MainCoordinatorService : SOAService {
 }
 
 extension MainCoordinatorService {
-	var serviceName : String {
+	var serviceName: String {
 		get {
 			return MainCoordinatorServiceName.serviceName
 		}

@@ -9,7 +9,7 @@
 import MapKit
 import UIKit
 
-class ButtonBarView : UIStackView {
+class ButtonBarView: UIStackView {
 
 	required init(topButton: UIView, bottomButton: UIView) {
 		super.init(frame: .zero)

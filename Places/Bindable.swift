@@ -15,10 +15,10 @@
 import Foundation
 
 struct Bindable<T> {
-	typealias Observation<T> = (T) -> Void
-		/// Observation is the signature of the function that gets called when this Bindable's value changes.
+	typealias Observation<T> = (_ oldValue: T, _ newValue: T) -> Void
+		/// Signature of the function that gets called when this Bindable's value changes report the oldValue and newValue.
 
-    private var observations : [Observation<T>] = []
+    private var observations: [Observation<T>] = []
     	// A list of all active Observations.
 
     internal init(_ value: T) {
@@ -31,7 +31,7 @@ struct Bindable<T> {
     	didSet {
     		/// When the value changes, tell all the observations and pass the new value.
     		observations.forEach { (observation) in
-				observation(value)
+				observation(oldValue, value)
 			}
     	}
 	}
