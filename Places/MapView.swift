@@ -48,6 +48,7 @@ class MapView: MKMapView {
 		let initialRegion = MKCoordinateRegion(center: location.coordinate, span: initialSpan)
 		region = initialRegion	// this causes mapView(_:regionDidChangeAnimated:) to get called
 		centerCoordinate = location.coordinate
+		userTrackingMode = MKUserTrackingMode.follow
 	}
 
 	private let smallestScreenDimension = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
