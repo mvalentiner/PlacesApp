@@ -42,7 +42,7 @@ extension UIView {
 		self.centerYAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
 	}
 
-	func anchorToXYCenterOfParent() {
+	func anchorToCenterOfParent() {
 		guard let parentView = superview else {
 			fatalError("\(#function), superview is nil")
 		}

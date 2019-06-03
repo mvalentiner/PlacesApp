@@ -9,17 +9,9 @@
 import Foundation
 
 struct InterestingnessPlaceSource : PlaceSource {
-	var placeSourceUID : PlaceSourceUID {
-		get {
-			return "INTR"
-		}
-	}
-
-	var placeSourceName : String {
-		get {
-			return "Interestingness"
-		}
-	}
+	static let uid = "INTR"
+	let placeSourceUID : PlaceSourceUID = InterestingnessPlaceSource.uid
+	let placeSourceName = "Interestingness"
 
 	/// Given a region, get the places from PlaceSource located in the region.
 	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach : @escaping (Result<Place?, Error>) -> Void) {

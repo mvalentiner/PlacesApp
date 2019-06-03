@@ -10,12 +10,11 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
 	// This declaration causes ServiceRegistry to be instantiated
 	// and services to be registered prior to application(_ application:, didFinishLaunchingWithOptions:) being called.
 	private let serviceRegistry: ServiceRegistryImplementation = {
 		AppPropertiesServiceImplementation.register()
-		PlacesServiceImplementation.register(placeSources: [InterestingnessPlaceSource()])
+		PlacesServiceImplementation.register(using: [InterestingnessPlaceSource()])
 		ReachabilityServiceImplementation.register()
 		return ServiceRegistry
 	}()
@@ -23,15 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+		// Instantiate the MainCoordinator as an SOA Service and give it it's rootViewController.
+		let rootViewController = UINavigationController()
+		MainCoordinator.register(using: rootViewController)
+		ServiceRegistry.mainCoordinator.present(MainViewController.instantiate())
 
-		let rootViewController = UIViewController()
-		MainCoordinator.register(rootController: rootViewController)
-		let mainViewController = MainViewController.instantiate()
-		serviceRegistry.mainCoordinator.start(with: mainViewController)
-
-		// create a basic UIWindow and activate it
+		// We don't instantiate the default view controller from Main.Storyboard, so create a UIWindow and activate it.
 		window = UIWindow(frame: UIScreen.main.bounds)
-		window?.rootViewController = mainViewController
+		window?.rootViewController = rootViewController
 		window?.makeKeyAndVisible()
 
 		return true

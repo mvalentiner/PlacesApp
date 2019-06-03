@@ -66,7 +66,7 @@ extension PlacesService {
 
 /// PlacesServiceImplementation
 internal class PlacesServiceImplementation: PlacesService {
-	static func register(placeSources: [PlaceSource]) {
+	static func register(using placeSources: [PlaceSource]) {
 		ServiceRegistry.add(service: PlacesServiceImplementation(placeSources: placeSources))
 	}
 	
