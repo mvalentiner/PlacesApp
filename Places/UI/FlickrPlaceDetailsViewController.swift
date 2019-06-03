@@ -24,7 +24,6 @@ class FlickrPlaceDetailsViewController : UIViewController, UIScrollViewDelegate 
 
 	override func loadView() {
 		super.loadView()
-
 		//	view hierarchy
 		//	- view
 		//		- scrollView
@@ -34,7 +33,6 @@ class FlickrPlaceDetailsViewController : UIViewController, UIScrollViewDelegate 
 		let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
 		self.view = {
 			let view = UIView(frame: frame)
-//			view.backgroundColor = .yellow
 			return view
 		}()
 
@@ -52,15 +50,15 @@ class FlickrPlaceDetailsViewController : UIViewController, UIScrollViewDelegate 
 
 		// Image view
 		self.imageView = {
-// TODO: remove
-			guard let image = UIImage(named: "IMG_7322.JPG") else {
-				fatalError("IMG_7322.JPG is missing from app bundle.")
-			}
 			let frame = CGRect(x: 0, y: -44, width: UIScreen.main.bounds.size.width, height: frame.size.height - 44)
 			let view = UIImageView(frame: frame)
-			view.image = image
 			view.contentMode = .scaleAspectFit
 			view.isUserInteractionEnabled = true
+//			// TODO:
+//			guard let image = UIImage(named: "AnimatedPlaceholder") else {
+//				fatalError("AnimatedPlaceholder.JPG is missing from app bundle.")
+//			}
+//			self.imageView.image = image
 			return view
 		}()
 		scrollView.contentSize = imageView.bounds.size
@@ -88,6 +86,13 @@ class FlickrPlaceDetailsViewController : UIViewController, UIScrollViewDelegate 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 		navigationController?.hidesBarsOnTap = true
+		navigationController?.isNavigationBarHidden = false
+
+// TODO: remove
+		guard let image = UIImage(named: "IMG_7322.JPG") else {
+			fatalError("IMG_7322.JPG is missing from app bundle.")
+		}
+		self.imageView.image = image
 	}
 
     override func viewWillDisappear(_ animated: Bool) {
