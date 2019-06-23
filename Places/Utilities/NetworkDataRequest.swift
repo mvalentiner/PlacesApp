@@ -17,11 +17,11 @@ enum DataRequestResult<RequestedDataType> {
 	case success(RequestedDataType)
 	case failure(DataRequestError, Data?)
 	// Constructs a .success wrapping a `value`.
-	internal init(success : RequestedDataType) {
+	internal init(success: RequestedDataType) {
 		self = .success(success)
 	}
 	// Constructs a .failure wrapping an `error`.
-	internal init(error : Error, data : Data? = nil) {
+	internal init(error: Error, data: Data? = nil) {
 		self = .failure(.sessionDataTaskError(error), data)
 	}
 }
@@ -36,11 +36,11 @@ enum DataRequestError: Error {
 }
 
 /// UnauthenticatedDataRequest - generic http request to request json data of associated type <RequestedDataType>
-protocol UnauthenticatedDataRequest : class {
+protocol UnauthenticatedDataRequest: class {
 	// 1) Define the type of data being requested.
-	associatedtype RequestedDataType : Decodable
+	associatedtype RequestedDataType: Decodable
 	// 2) Define the endpoint to call.
-	var endpointURL : String { get }
+	var endpointURL: String { get }
 	// 3) Request the data.
 	func load() throws -> Promise<RequestedDataType>
 
@@ -73,5 +73,5 @@ extension UnauthenticatedDataRequest {
 }
 
 /// UnauthenticatedJSONRequest - generic http request to request json data of associated type <RequestedDataType>
-protocol UnauthenticatedJSONRequest : UnauthenticatedDataRequest where RequestedDataType == JSON {
+protocol UnauthenticatedJSONRequest: UnauthenticatedDataRequest where RequestedDataType == JSON {
 }

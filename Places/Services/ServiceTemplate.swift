@@ -15,19 +15,19 @@ private struct ServiceTemplateName {
 }
 
 extension ServiceRegistryImplementation {
-	var serviceTemplate : ServiceTemplate {
+	var serviceTemplate: ServiceTemplate {
 		get {
 			return serviceWith(name: ServiceTemplateName.serviceName) as! ServiceTemplate	// Intentional force unwrapping
 		}
 	}
 }
 
-protocol ServiceTemplate : SOAService {
+protocol ServiceTemplate: SOAService {
 	func exampleServiceFunction()
 }
 
 extension ServiceTemplate {
-	var serviceName : String {
+	var serviceName: String {
 		get {
 			return ServiceTemplateName.serviceName
 		}
@@ -37,7 +37,7 @@ extension ServiceTemplate {
 	}
 }
 
-internal class ServiceTemplateImplementation : ServiceTemplate {
+internal class ServiceTemplateImplementation: ServiceTemplate {
 	// Only define one register function.
 	static func register() {
 		ServiceTemplateImplementation().register()

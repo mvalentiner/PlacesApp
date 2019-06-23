@@ -41,18 +41,22 @@ internal class MainCoordinator: MainCoordinatorService {
 	}
 
 	internal func navigateToInfoScreen() {
+//TODO: remove
+		// Mockup Place with PlaceDetails for testing.
+		guard let photoURL = Bundle.main.url(forResource: "IMG_7322", withExtension: "JPG") else {
+			fatalError("IMG_7322.JPG is missing from app bundle.")
+		}
 		navigateToPlaceDetailsScreen(for:
-			Place(
-				uid: PlaceUID(placeSourceUID: InterestingnessPlaceSource().placeSourceUID, nativePlaceId: ""),
+			InterestingnessPlaceSource.FlickrPlace(
+				uid: PlaceUID(placeSourceUID: InterestingnessPlaceSource.uid, nativePlaceId: ""),
 				location: CLLocationCoordinate2D(latitude: 0, longitude: 0),
 				title: "",
-				description: nil,
-				preview: nil
+				photoURL: photoURL.absoluteString
 			)
 		)
 	}
 
-	private let placeDetailsViewControllerRegistry : [PlaceSourceUID : (Place) -> UIViewController] = [
+	private let placeDetailsViewControllerRegistry: [PlaceSourceUID: (Place) -> UIViewController] = [
 		InterestingnessPlaceSource.uid : { place in FlickrPlaceDetailsViewController(for: place) }]
 
 	internal func navigateToPlaceDetailsScreen(for place: Place) {

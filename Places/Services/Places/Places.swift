@@ -10,19 +10,27 @@ import MapKit
 
 typealias PlaceSourceUID = String
 
-struct PlaceUID : Hashable {
-	let placeSourceUID : PlaceSourceUID
-	let nativePlaceId : String
+struct PlaceUID: Hashable {
+	let placeSourceUID: PlaceSourceUID
+	let nativePlaceId: String
 }
 
-struct Place : Hashable {
-	let uid : PlaceUID
-	let location : CLLocationCoordinate2D
-	let title : String
-	let description : String?
-	let preview : UIImage?
+class Place: Hashable {
+	let uid: PlaceUID
+	let location: CLLocationCoordinate2D
+	let title: String
+	let description: String?
+	let preview: UIImage?
 
-	static func == (lhs: Place, rhs: Place) -> Bool {
+	init(uid: PlaceUID, location: CLLocationCoordinate2D, title: String, description: String? = nil, preview: UIImage? = nil) {
+		self.uid = uid
+		self.location = location
+		self.title = title
+		self.description = description
+		self.preview = preview
+	}
+
+	static func ==(lhs: Place, rhs: Place) -> Bool {
 		return lhs.uid == rhs.uid
 	}
 	
@@ -32,22 +40,21 @@ struct Place : Hashable {
 }
 
 struct PlaceDetail {
-	let place : Place
-	let detail : String?
-	let images : [UIImage]?
+	let uid: PlaceUID
+	let detail: String?
+	let images: [UIImage]?
 }
 
-
 protocol PlaceSource {
-	var placeSourceUID : PlaceSourceUID { get }
+	var placeSourceUID: PlaceSourceUID { get }
 		// placeSourceUID is used internally to the PlacesService classes and not exposed through the PlaceService interface.
 
-	var placeSourceName : String  { get }
+	var placeSourceName: String  { get }
 		// placeSourceName is a user facing name for the PlaceSource.
 
-	func getPlaces(forRegion : CoordinateRect, onCompletionForEach : @escaping (Result<Place?, Error>) -> Void)
+	func getPlaces(forRegion: CoordinateRect, onCompletionForEach: @escaping (Result<Place?, Error>) -> Void)
 		// Given a region, get the places from PlaceSource located in the region.
 
-	func getPlaceDetail(forUID : PlaceUID, completionHandler : @escaping (Result<PlaceDetail?, Error>) -> Void)
+	func getPlaceDetail(for: Place, completionHandler: @escaping (Result<PlaceDetail?, Error>) -> Void)
 		// Given a PlaceUID, get its PlaceDetails.
 }

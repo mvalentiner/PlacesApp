@@ -13,18 +13,18 @@ fileprivate struct ReachabilityServiceName {
 }
 
 extension ServiceRegistryImplementation {
-	var reachabilityService : ReachabilityService {
+	var reachabilityService: ReachabilityService {
 		get {
 			return serviceWith(name: ReachabilityServiceName.name) as! ReachabilityService
 		}
 	}
 }
 
-protocol ReachabilityService : SOAService {
+protocol ReachabilityService: SOAService {
 	var isReachable: Bool { get }
-	var reachability : Reachability { get }
+	var reachability: Reachability { get }
 
-	func setReachableHandler(handler : @escaping (Reachability)-> Void)
+	func setReachableHandler(handler: @escaping (Reachability)-> Void)
 	func startMonitoring()
 	func stopMonitoring()
 }
@@ -42,7 +42,7 @@ extension ReachabilityService {
 		}
 	}
 	
-	func setReachableHandler(handler : @escaping (Reachability)-> Void){
+	func setReachableHandler(handler: @escaping (Reachability)-> Void){
 		reachability.whenReachable = handler
 	}
 
@@ -55,13 +55,13 @@ extension ReachabilityService {
 	}
 }
 
-class ReachabilityServiceImplementation : ReachabilityService {
+class ReachabilityServiceImplementation: ReachabilityService {
 	static func register() {
 //		ServiceRegistry.add(service: ReachabilityServiceImplementation())
 		ServiceRegistry.add(service: SOALazyService(serviceName: ReachabilityServiceName.name) { ReachabilityServiceImplementation() })
 	}
 
-	internal let reachability : Reachability = {
+	internal let reachability: Reachability = {
 		let googlePublicDNS = "8.8.8.8"	//"www.google.com"
 		return Reachability(hostname: googlePublicDNS)!	// Intentional forced unwrap
 	}()

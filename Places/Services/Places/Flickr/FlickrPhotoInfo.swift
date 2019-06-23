@@ -10,10 +10,10 @@ import Foundation
 import MapKit
 
 struct FlickrPhotoInfo {
-	let id : String
+	let id: String
     let coordinate: CLLocationCoordinate2D
 	let title: String
-	let thumbnailImage : UIImage
-	let photoURLString : String
-	var image : UIImage? = nil
+	let thumbnailImage: UIImage
+	let photoURLString: String
+	var image: UIImage? = nil
 }

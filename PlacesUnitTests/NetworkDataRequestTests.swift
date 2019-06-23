@@ -10,12 +10,12 @@ import XCTest
 @testable import Places
 
 class NetworkDataRequestTests: XCTestCase {
-	private enum CodingKeys : String, CodingKey {
+	private enum CodingKeys: String, CodingKey {
 		case results
 		case version
 	}
-	struct GoodAppStoreInfo : Decodable {
-		internal let version : String
+	struct GoodAppStoreInfo: Decodable {
+		internal let version: String
 		init(from decoder: Decoder) throws {
 			// {"results": [{"version":"2.2"},]}
 			let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -26,7 +26,7 @@ class NetworkDataRequestTests: XCTestCase {
 		}
 	}
 	func testDataRequest_Load_Success() {
-		class SuccessTestDataRequest : UnauthenticatedDataRequest {
+		class SuccessTestDataRequest: UnauthenticatedDataRequest {
 			typealias RequestedDataType = GoodAppStoreInfo
 			var endpointURL: String {
 				get { return "https://itunes.apple.com/lookup?bundleId=com.heliotropix.Photos-Near" }
@@ -55,8 +55,8 @@ class NetworkDataRequestTests: XCTestCase {
 
 	/// testDataRequest_BadDecode_Fail
 	func testDataRequest_BadDecode_Fail() {
-		struct BadAppStoreInfo : Decodable {
-			internal let version : String
+		struct BadAppStoreInfo: Decodable {
+			internal let version: String
 			init(from decoder: Decoder) throws {
 				// {"results": [{"version":"2.2"},]}
 				let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -64,7 +64,7 @@ class NetworkDataRequestTests: XCTestCase {
 				self.version = version
 			}
 		}
-		class BadDecodeTestDataRequest : UnauthenticatedDataRequest {
+		class BadDecodeTestDataRequest: UnauthenticatedDataRequest {
 			typealias RequestedDataType = BadAppStoreInfo
 			var endpointURL: String {
 				get { return "https://itunes.apple.com/lookup?bundleId=com.heliotropix.Photos-Near" }
@@ -93,7 +93,7 @@ class NetworkDataRequestTests: XCTestCase {
 
 	/// testDataRequest_BadEndpoint_Fail
 	func testDataRequest_BadEndpoint_Fail() {
-		class BadEndpointTestDataRequest : UnauthenticatedDataRequest {
+		class BadEndpointTestDataRequest: UnauthenticatedDataRequest {
 			typealias RequestedDataType = GoodAppStoreInfo
 			var endpointURL: String {
 				get { return "https://foo.bar" }

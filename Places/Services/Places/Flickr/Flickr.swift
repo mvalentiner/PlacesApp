@@ -35,9 +35,9 @@ class Flickr {
 		requestPhotoAnnotations(searchURLString, completionHandler: completionHandler)
 	}
 
-	class FlickrPhotoSearchRequest : UnauthenticatedJSONRequest {
-		internal var endpointURL : String
-		init(endpointURL : String) {
+	class FlickrPhotoSearchRequest: UnauthenticatedJSONRequest {
+		internal var endpointURL: String
+		init(endpointURL: String) {
 			self.endpointURL = endpointURL
 		}
 	}
@@ -69,8 +69,8 @@ class Flickr {
 					guard let title = photoJSON["title"]?.stringValue else {
 						return
 					}
-					guard let photoURLString : String = {
-						let photoURLString : String?
+					guard let photoURLString: String = {
+						let photoURLString: String?
 						if let urlString = photoJSON["url_k"]?.stringValue {
 							photoURLString = urlString
 						}
@@ -226,9 +226,9 @@ jsonFlickrApi({
 	}
 
 	private func requestThumbnail(_ photoDict: JSON, completionHandler: @escaping (UIImage?) -> Void) {
-		guard let thumbnailURL : URL = {
-			let thumbnailURLOptionalString : String?
-			if let urlString : String = photoDict["url_s"]?.stringValue {
+		guard let thumbnailURL: URL = {
+			let thumbnailURLOptionalString: String?
+			if let urlString: String = photoDict["url_s"]?.stringValue {
 				thumbnailURLOptionalString = urlString
 			}
 			else if let urlString: String = photoDict["url_t"]?.stringValue {
@@ -250,29 +250,24 @@ jsonFlickrApi({
 		}
 		firstly {
 			URLSession.shared.dataTask(.promise, with: URLRequest(url: thumbnailURL)).validate()
-		}.done { blob, response in
-			completionHandler(UIImage(data: blob))
+		}.done { data, response in
+			completionHandler(UIImage(data: data))
 		}.catch { _ in
 			completionHandler(nil)
 		}
 	}
 
-	internal func requestPhoto(forPhotoInfo photoInfo: FlickrPhotoInfo, completionHandler: @escaping (UIImage) -> Void) {
-		if let image = photoInfo.image {
-			completionHandler(image)
+	internal func requestPhoto(forURL urlString: String, completionHandler: @escaping (Swift.Result<UIImage?, Error>) -> Void) {
+		guard let url = URL(string: urlString) else {
 			return
 		}
-
-		guard let url = URL(string: photoInfo.photoURLString) else {
-			return
+		firstly {
+			URLSession.shared.dataTask(.promise, with: URLRequest(url: url)).validate()
+		}.done { (arg) in
+			let (data, _) = arg
+			completionHandler(.success(UIImage(data: data)))
+		}.catch { error in
+			completionHandler(.failure(error))
 		}
-
-		let request = URLRequest(url: url)
-		URLSession.shared.dataTask(with: request, completionHandler: { (data, _, _) in
-			guard let data = data, let image = UIImage(data: data) else {
-				return
-			}
-			completionHandler(image)
-		}).resume()
 	}
 }

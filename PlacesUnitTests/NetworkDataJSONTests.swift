@@ -12,7 +12,7 @@ import XCTest
 class NetworkDataJSONTests: XCTestCase {
 
     func testFlickrRequest() {
-		class SuccessFlickrDataRequest : UnauthenticatedDataRequest {
+		class SuccessFlickrDataRequest: UnauthenticatedDataRequest {
 			typealias RequestedDataType = [String : JSON]
 			var endpointURL: String {
 				get { return "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=3a95d51756054b5b3e1cf23ff6b9f945&format=json&extras=geo,media=photos,url_s,url_t,url_q,url_k,url_h,url_b,url_c,url_z&sort=interestingness-desc&nojsoncallback=1&per_page=4&page=0&" }

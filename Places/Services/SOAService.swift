@@ -13,7 +13,7 @@ let ServiceRegistry = ServiceRegistryImplementation()
 
 protocol SOAService {
 	// Every SOAService has a unique name.
-	var serviceName : String { get }
+	var serviceName: String { get }
 
 	// Every SOAService has a means to register itself with the ServiceRegistry.
 	func register()
@@ -27,12 +27,12 @@ extension SOAService {
 }
 
 // SOALazyService is a wrapper class around the actual service that defers instantiation of the service until it is first accessed.
-final class SOALazyService : SOAService {
+final class SOALazyService: SOAService {
 	// SOAService protocol name
-	internal let serviceName : String
+	internal let serviceName: String
 
 	// Accessor instantiates the service the first time this is called.
-	internal lazy var serviceGetter : (() -> SOAService) = {
+	internal lazy var serviceGetter: (() -> SOAService) = {
 		if self.service == nil {
 			self.service = self.implementationGetter()
 		}
@@ -40,22 +40,22 @@ final class SOALazyService : SOAService {
 	}
 
 	// Reference to the closure that instantiates the service.
-	private var implementationGetter : (() -> SOAService)
+	private var implementationGetter: (() -> SOAService)
 
 	// Reference to the instantiated service.
-	private var service : SOAService? = nil
+	private var service: SOAService? = nil
 
 	// Initializer takes a name and a closure that will instantiate the service.
-	internal init(serviceName : String, serviceGetter : @escaping (() -> SOAService)) {
+	internal init(serviceName: String, serviceGetter: @escaping (() -> SOAService)) {
 		self.serviceName = serviceName
 		self.implementationGetter = serviceGetter
 	}
 }
 
-// ServiceRegistryImplementation is wrapper around a static [name : SOALazyService] dictionary that adds type safety.
+// ServiceRegistryImplementation is wrapper around a static [name: SOALazyService] dictionary that adds type safety.
 // All services are managed as SOALazyService, whether they are lazy or not.
 struct ServiceRegistryImplementation {
-	private static var serviceDictionary : [String : SOALazyService] = [:]
+	private static var serviceDictionary: [String: SOALazyService] = [:]
 	
 	internal func add(service: SOALazyService) {
 		if ServiceRegistryImplementation.serviceDictionary[service.serviceName] != nil {

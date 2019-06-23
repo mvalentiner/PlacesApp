@@ -13,23 +13,23 @@ internal struct AppPropertiesServiceName {
 }
 
 extension ServiceRegistryImplementation {
-	var appPropertiesService : AppPropertiesService {
+	var appPropertiesService: AppPropertiesService {
 		get {
 			return serviceWith(name: AppPropertiesServiceName.name) as! AppPropertiesService	// Intentional forced unwrapping
 		}
 	}
 }
 
-protocol AppPropertiesService : SOAService {
-	var appAppStoreURL : String { get }
-	var appBuildNumber : String { get }
-	var appStoreId : String { get }
-	var appVersion : String { get }
+protocol AppPropertiesService: SOAService {
+	var appAppStoreURL: String { get }
+	var appBuildNumber: String { get }
+	var appStoreId: String { get }
+	var appVersion: String { get }
 }
 
 extension AppPropertiesService {
 	// MARK: Service protocol requirement
-	internal var serviceName : String {
+	internal var serviceName: String {
 		get {
 			return AppPropertiesServiceName.name
 		}
@@ -37,19 +37,19 @@ extension AppPropertiesService {
 
 	// MARK: AppPropertiesService service implementation
 
-	internal var appAppStoreURL : String {
+	internal var appAppStoreURL: String {
 		get {
 			return getPropertyListString(forKey: "AppAppStoreURL")
 		}
 	}
 
-    internal var appBuildNumber : String {
+    internal var appBuildNumber: String {
         get {
             return getPropertyListString(forKey: "CFBundleVersion")
         }
     }
 	
-	internal var appStoreId : String {
+	internal var appStoreId: String {
 		get {
 			let appStoreUrl = URL(string: getPropertyListString(forKey: "AppAppStoreURL"))
 			let idPath = appStoreUrl?.lastPathComponent
@@ -81,7 +81,7 @@ extension AppPropertiesService {
     }
 }
 
-internal class AppPropertiesServiceImplementation : AppPropertiesService {
+internal class AppPropertiesServiceImplementation: AppPropertiesService {
 	static func register() {
 		AppPropertiesServiceImplementation().register()
 	}

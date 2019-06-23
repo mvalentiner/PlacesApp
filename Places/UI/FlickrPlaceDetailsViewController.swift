@@ -8,10 +8,13 @@
 
 import UIKit
 
-class FlickrPlaceDetailsViewController : UIViewController, UIScrollViewDelegate {
+class FlickrPlaceDetailsViewController: UIViewController, UIScrollViewDelegate {
+	// Dependenices
+	let placeSource = ServiceRegistry.placesService.placeSources[InterestingnessPlaceSource.uid]
+	
 	private let place: Place
 	
-	private var imageView : UIImageView!
+	private var imageView: UIImageView!
 
 	init(for place: Place) {
 		self.place = place
@@ -65,7 +68,7 @@ class FlickrPlaceDetailsViewController : UIViewController, UIScrollViewDelegate 
 		scrollView.addSubview(imageView)
 
 		// Info overlay view
-		let overlayView : UIView = {
+		let overlayView: UIView = {
 			let view = UIView(frame: frame)
 			view.isHidden = true	// TODO: remove
 			return view
@@ -88,11 +91,20 @@ class FlickrPlaceDetailsViewController : UIViewController, UIScrollViewDelegate 
 		navigationController?.hidesBarsOnTap = true
 		navigationController?.isNavigationBarHidden = false
 
-// TODO: remove
-		guard let image = UIImage(named: "IMG_7322.JPG") else {
-			fatalError("IMG_7322.JPG is missing from app bundle.")
-		}
-		self.imageView.image = image
+		placeSource?.getPlaceDetail(for: place, completionHandler: { result in
+			switch result {
+			case .failure:
+				// TODO: handle error
+				break
+			case .success(let details):
+				guard let image = details?.images?[0] else {
+					// TODO: handle no image.
+					break
+				}
+				self.imageView.image = image
+				break
+			}
+		})
 	}
 
     override func viewWillDisappear(_ animated: Bool) {

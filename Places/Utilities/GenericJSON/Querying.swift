@@ -104,7 +104,7 @@ public extension JSON {
         
         let tail = path.dropFirst()
         
-        return tail.isEmpty ? value : value.queryKeyPath(tail)
+        return tail.isEmpty ? value: value.queryKeyPath(tail)
     }
     
 }

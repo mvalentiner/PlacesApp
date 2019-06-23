@@ -10,6 +10,6 @@ import CoreLocation
 import Foundation
 
 struct CoordinateRect {
-    var topRight : CLLocationCoordinate2D
-    var bottomLeft : CLLocationCoordinate2D
+    var topRight: CLLocationCoordinate2D
+    var bottomLeft: CLLocationCoordinate2D
 }
