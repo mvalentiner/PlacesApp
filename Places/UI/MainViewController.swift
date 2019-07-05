@@ -12,7 +12,7 @@ import PMKFoundation
 import UIKit
 
 class MainViewController: UIViewController, Storyboarded, CLLocationManagerDelegate, MKMapViewDelegate {
-	// MARK: Dependencies - Services are "injected" here.
+	// MARK: Dependencies - Services are "injected" here rather than via an initializer because this is a Storyboard based UIViewController.
 	private let mainCoordinator = ServiceRegistry.mainCoordinator
 	private let placesService = ServiceRegistry.placesService
 	private let reachabilityService = ServiceRegistry.reachabilityService
@@ -41,6 +41,9 @@ class MainViewController: UIViewController, Storyboarded, CLLocationManagerDeleg
 		let buttonBarView = ButtonBarView(topButton: infoButton, bottomButton: MKUserTrackingButton(mapView: mapView))
 		view.addSubview(buttonBarView)
 		buttonBarView.anchorTo(top: view.safeAreaTopAnchor, right: view.safeAreaRightAnchor, topPadding: 48, rightPadding: 2)
+		
+		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+		view.addGestureRecognizer(tapGestureRecognizer)
 	}
 
 	override func viewDidLoad() {
@@ -87,6 +90,12 @@ class MainViewController: UIViewController, Storyboarded, CLLocationManagerDeleg
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 		navigationController?.hidesBarsOnTap = false
+	}
+
+	@objc func handleTap(sender: UITapGestureRecognizer) {
+		if sender.state == .ended {
+			// handling code
+		}
 	}
 
 	@objc func handleInfoButtonTap() {

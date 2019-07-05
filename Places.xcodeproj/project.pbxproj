@@ -58,6 +58,8 @@
 		4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
 		4CCDE17D225295B20089BF7F /* Merging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA122527A77000260F0 /* Merging.swift */; };
 		4CCDE17E225295B20089BF7F /* Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9F22527A77000260F0 /* Querying.swift */; };
+		4CCE4E6F22BFB96E00C88CD9 /* PMKFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C45F1312256395600597821 /* PMKFoundation.framework */; };
+		4CCE4E7022BFB96E00C88CD9 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3CCE9522527A3C000260F0 /* PromiseKit.framework */; };
 		4CD99D5A229507F1009FA10C /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD99D59229507F1009FA10C /* Bindable.swift */; };
 		4CDC716D229C62E80072467A /* FlickrPlaceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC716C229C62E80072467A /* FlickrPlaceDetailsViewController.swift */; };
 		4CFC5424229D89D100C86B96 /* IMG_7322.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 4CFC5423229D89D100C86B96 /* IMG_7322.JPG */; };
@@ -159,6 +161,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CCE4E6F22BFB96E00C88CD9 /* PMKFoundation.framework in Frameworks */,
+				4CCE4E7022BFB96E00C88CD9 /* PromiseKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +369,7 @@
 				4C3CCE5B22526F3E000260F0 /* Sources */,
 				4C3CCE5D22526F3E000260F0 /* Frameworks */,
 				4C3CCE5E22526F3E000260F0 /* Resources */,
+				4CCE4E7122BFB9C500C88CD9 /* Copy Carthage Frameworks */,
 			);
 			buildRules = (
 			);
@@ -492,6 +497,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage outdated --xcode-warnings | 2>/dev/null\n";
+		};
+		4CCE4E7122BFB9C500C88CD9 /* Copy Carthage Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PMKFoundation.framework",
+			);
+			name = "Copy Carthage Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/PromiseKit.framework",
+				"$(DERIVED_FILE_DIR)/PMKFoundation.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\necho $(DERIVED_FILE_DIR)\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

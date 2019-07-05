@@ -57,7 +57,13 @@ internal class MainCoordinator: MainCoordinatorService {
 	}
 
 	private let placeDetailsViewControllerRegistry: [PlaceSourceUID: (Place) -> UIViewController] = [
-		InterestingnessPlaceSource.uid : { place in FlickrPlaceDetailsViewController(for: place) }]
+		InterestingnessPlaceSource.uid : { place in
+			guard let placeSource = ServiceRegistry.placesService.placeSources[InterestingnessPlaceSource.uid] as? InterestingnessPlaceSource else {
+				fatalError("Programmer Error: the app is not configured for InterestingnessPlaceSource")
+			}
+			return FlickrPlaceDetailsViewController(for: place, with: placeSource)
+		}
+	]
 
 	internal func navigateToPlaceDetailsScreen(for place: Place) {
 		guard let makePlaceDetailsViewController = placeDetailsViewControllerRegistry[place.uid.placeSourceUID] else {

@@ -10,14 +10,17 @@ import UIKit
 
 class FlickrPlaceDetailsViewController: UIViewController, UIScrollViewDelegate {
 	// Dependenices
-	let placeSource = ServiceRegistry.placesService.placeSources[InterestingnessPlaceSource.uid]
-	
+	let placeSource: InterestingnessPlaceSource
+
+	// Model
 	private let place: Place
-	
+
+	// UI
 	private var imageView: UIImageView!
 
-	init(for place: Place) {
+	init(for place: Place, with placeSource: InterestingnessPlaceSource) {
 		self.place = place
+		self.placeSource = placeSource
     	super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -91,7 +94,7 @@ class FlickrPlaceDetailsViewController: UIViewController, UIScrollViewDelegate {
 		navigationController?.hidesBarsOnTap = true
 		navigationController?.isNavigationBarHidden = false
 
-		placeSource?.getPlaceDetail(for: place, completionHandler: { result in
+		placeSource.getPlaceDetail(for: place, completionHandler: { result in
 			switch result {
 			case .failure:
 				// TODO: handle error
