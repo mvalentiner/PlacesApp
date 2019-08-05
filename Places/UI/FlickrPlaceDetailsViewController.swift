@@ -100,11 +100,13 @@ class FlickrPlaceDetailsViewController: UIViewController, UIScrollViewDelegate {
 				// TODO: handle error
 				break
 			case .success(let details):
-				guard let image = details?.images?[0] else {
-					// TODO: handle no image.
-					break
+				DispatchQueue.main.async {
+					guard let image = details?.images?[0] else {
+						// TODO: handle no image.
+						return
+					}
+					self.imageView.image = image
 				}
-				self.imageView.image = image
 				break
 			}
 		})

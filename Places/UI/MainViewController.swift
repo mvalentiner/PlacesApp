@@ -250,30 +250,32 @@ class MainViewController: UIViewController, Storyboarded, CLLocationManagerDeleg
 
 		let visibleRect = mapView.region.coordinateRect()
 		self.placesService.getPlaces(forRegion: visibleRect) { result in
-			self.dismissActivityIndicator()
-			switch result {
-			case .failure(let error):
-				let message: String = {
-					let message = "An error ocurred trying to reach the server."
-					guard let pmkHTTPError = error as? PMKFoundation.PMKHTTPError,
-						let errorDescription = pmkHTTPError.errorDescription,
-						let index = errorDescription.range(of: " for")?.lowerBound,
+			DispatchQueue.main.async {
+				self.dismissActivityIndicator()
+				switch result {
+				case .failure(let error):
+					let message: String = {
+						let message = "An error ocurred trying to reach the server."
+						guard let pmkHTTPError = error as? PMKFoundation.PMKHTTPError,
+							let errorDescription = pmkHTTPError.errorDescription,
 							// Trim the message to make it nicer to present to the user.
-						let statusMessage = pmkHTTPError.errorDescription?.prefix(upTo: index) else {
-						return message
+							let index = errorDescription.range(of: " for")?.lowerBound,
+							let statusMessage = pmkHTTPError.errorDescription?.prefix(upTo: index) else {
+							return message
+						}
+						return "\(message)\n\(statusMessage)"
+					}()
+					let alertController = UIAlertController(title: "Error", message: message, preferredStyle:UIAlertController.Style.alert)
+					let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:nil)
+					alertController.addAction(okAction)
+					self.present(alertController, animated: true, completion: {})
+				case .success(let place):
+					guard let place = place else {
+						return
 					}
-					return "\(message)\n\(statusMessage)"
-				}()
-				let alertController = UIAlertController(title: "Error", message: message, preferredStyle:UIAlertController.Style.alert)
-				let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:nil)
-				alertController.addAction(okAction)
-				self.present(alertController, animated: true, completion: {})
-			case .success(let place):
-				guard let place = place else {
-					return
+					let annotation = PlaceAnnotation(withPlace: place, andDelegate: self)
+					self.mapView.add(placeAnnotation: annotation)
 				}
-				let annotation = PlaceAnnotation(withPlace: place, andDelegate: self)
-				self.mapView.add(placeAnnotation: annotation)
 			}
 		}
 	}

@@ -8,7 +8,6 @@
 
 import Foundation
 import MapKit
-import PromiseKit
 
 
 // FickrAPIKey needs to be defined.
@@ -44,8 +43,11 @@ class Flickr {
 
 	private func requestPhotoAnnotations(_ searchURLString: String, completionHandler: @escaping (Swift.Result<FlickrPhotoInfo?, Error>) -> Void) {
 		let dataRequest = FlickrPhotoSearchRequest(endpointURL: searchURLString)
-		do {
-			_ = try dataRequest.load().done { photoJSON in
+		_ = dataRequest.load() { result in
+			switch result {
+			case .failure(_):
+				break
+			case .success(let photoJSON):
 				guard let photosValue = photoJSON["photos"], case JSON.object(let photosDict) = photosValue else {
 					return
 				}
@@ -93,7 +95,7 @@ class Flickr {
 					}() else {
 						return
 					}
-	
+
 					self.requestThumbnail(photoJSON) { thumbnail in
 						guard let thumbnail = thumbnail else {
 							return
@@ -103,11 +105,7 @@ class Flickr {
 						completionHandler(.success(photoInfo))
 					}
 				}
-			}.catch { error in
-				completionHandler(.failure(error))
 			}
-		} catch(let error) {
-			completionHandler(.failure(error))
 		}
 	}
 
@@ -225,8 +223,15 @@ jsonFlickrApi({
 		return nsString as String
 	}
 
+	class FlickrPhotoRequest: UnauthenticatedDataRequest {		
+		internal var endpointURL: String
+		init(endpointURL: String) {
+			self.endpointURL = endpointURL
+		}
+	}
+
 	private func requestThumbnail(_ photoDict: JSON, completionHandler: @escaping (UIImage?) -> Void) {
-		guard let thumbnailURL: URL = {
+		guard let thumbnailURL: String = {
 			let thumbnailURLOptionalString: String?
 			if let urlString: String = photoDict["url_s"]?.stringValue {
 				thumbnailURLOptionalString = urlString
@@ -240,34 +245,43 @@ jsonFlickrApi({
 			else {
 				thumbnailURLOptionalString = nil
 			}
-			guard let thumbnailURLString = thumbnailURLOptionalString, let thumbnailURL = URL(string:thumbnailURLString) else {
+			guard let thumbnailURLString = thumbnailURLOptionalString else {
 				return nil
 			}
-			return thumbnailURL
+			return thumbnailURLString
 		}() else {
 			completionHandler(nil)
 			return
 		}
-		firstly {
-			URLSession.shared.dataTask(.promise, with: URLRequest(url: thumbnailURL)).validate()
-		}.done { data, response in
-			completionHandler(UIImage(data: data))
-		}.catch { _ in
-			completionHandler(nil)
+
+		let photoRequest = FlickrPhotoRequest(endpointURL: thumbnailURL)
+		photoRequest.load() { result in
+			switch result {
+			case .failure(_):
+				completionHandler(nil)
+				break
+			case .success(let data):
+				guard let image = UIImage(data: data) else {
+					return completionHandler(nil)	// TODO: .failure
+				}
+				completionHandler(image)
+			}
 		}
 	}
 
 	internal func requestPhoto(forURL urlString: String, completionHandler: @escaping (Swift.Result<UIImage?, Error>) -> Void) {
-		guard let url = URL(string: urlString) else {
-			return
-		}
-		firstly {
-			URLSession.shared.dataTask(.promise, with: URLRequest(url: url)).validate()
-		}.done { (arg) in
-			let (data, _) = arg
-			completionHandler(.success(UIImage(data: data)))
-		}.catch { error in
-			completionHandler(.failure(error))
+		let photoRequest = FlickrPhotoRequest(endpointURL: urlString)
+		photoRequest.load() { result in
+			switch result {
+			case .failure(let error):
+				completionHandler(.failure(error))
+				break
+			case .success(let data):
+				guard let image = UIImage(data: data) else {
+					return completionHandler(.success(nil))	// TODO: .failure
+				}
+				completionHandler(.success(image))
+			}
 		}
 	}
 }
