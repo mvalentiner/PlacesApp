@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C1AB86923087F8C008CC085 /* TwitterBearerTokenRequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1AB86823087F8C008CC085 /* TwitterBearerTokenRequestTest.swift */; };
+		4C1AB86A231048E6008CC085 /* TwitterAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */; };
+		4C1AB86B23104909008CC085 /* TwitterAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFCD1C022F86C8F00ADBA21 /* TwitterAPIKey.swift */; };
+		4C24E44422FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */; };
 		4C3CCE392252659E000260F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE382252659E000260F0 /* AppDelegate.swift */; };
 		4C3CCE3B2252659E000260F0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE3A2252659E000260F0 /* MainViewController.swift */; };
 		4C3CCE402252659F000260F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C3CCE3F2252659F000260F0 /* Assets.xcassets */; };
@@ -20,7 +24,6 @@
 		4C3CCE8F22527974000260F0 /* LaunchScreen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C3CCE8D22527974000260F0 /* LaunchScreen.jpg */; };
 		4C3CCE9022527974000260F0 /* PlaceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE8E22527974000260F0 /* PlaceAnnotation.swift */; };
 		4C3CCE93225279CD000260F0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4C3CCE92225279CD000260F0 /* README.md */; };
-		4C3CCE9922527A3C000260F0 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3CCE9522527A3C000260F0 /* PromiseKit.framework */; };
 		4C3CCE9A22527A3C000260F0 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3CCE9622527A3C000260F0 /* MBProgressHUD.framework */; };
 		4C3CCEAF22527A78000260F0 /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
 		4C3CCEB022527A78000260F0 /* Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9F22527A77000260F0 /* Querying.swift */; };
@@ -35,7 +38,6 @@
 		4C3CCEB922527A78000260F0 /* UIView+Anchoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEAB22527A78000260F0 /* UIView+Anchoring.swift */; };
 		4C3CCEBA22527A78000260F0 /* CoordinateRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEAC22527A78000260F0 /* CoordinateRect.swift */; };
 		4C3CCEBB22527A78000260F0 /* UIView+SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEAD22527A78000260F0 /* UIView+SafeArea.swift */; };
-		4C45F1322256395600597821 /* PMKFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C45F1312256395600597821 /* PMKFoundation.framework */; };
 		4C45F13322563B0700597821 /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
 		4C45F13422563B0700597821 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA022527A77000260F0 /* JSON.swift */; };
 		4C45F13522563B0700597821 /* Merging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA122527A77000260F0 /* Merging.swift */; };
@@ -58,13 +60,12 @@
 		4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
 		4CCDE17D225295B20089BF7F /* Merging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA122527A77000260F0 /* Merging.swift */; };
 		4CCDE17E225295B20089BF7F /* Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9F22527A77000260F0 /* Querying.swift */; };
-		4CCE4E6F22BFB96E00C88CD9 /* PMKFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C45F1312256395600597821 /* PMKFoundation.framework */; };
-		4CCE4E7022BFB96E00C88CD9 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3CCE9522527A3C000260F0 /* PromiseKit.framework */; };
 		4CD99D5A229507F1009FA10C /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD99D59229507F1009FA10C /* Bindable.swift */; };
 		4CDC716D229C62E80072467A /* FlickrPlaceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC716C229C62E80072467A /* FlickrPlaceDetailsViewController.swift */; };
 		4CFC5424229D89D100C86B96 /* IMG_7322.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 4CFC5423229D89D100C86B96 /* IMG_7322.JPG */; };
 		4CFC542722A1878B00C86B96 /* FlickrPhotoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA92B2278FC4700FE83CB /* FlickrPhotoInfo.swift */; };
 		4CFC542922A53B5E00C86B96 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC542822A53B5E00C86B96 /* MainCoordinator.swift */; };
+		4CFCD1C122F86C8F00ADBA21 /* TwitterAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFCD1C022F86C8F00ADBA21 /* TwitterAPIKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C1AB86823087F8C008CC085 /* TwitterBearerTokenRequestTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterBearerTokenRequestTest.swift; sourceTree = "<group>"; };
+		4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterAuthenticatedRequest.swift; sourceTree = "<group>"; };
 		4C3CCE352252659E000260F0 /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3CCE382252659E000260F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C3CCE3A2252659E000260F0 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +139,7 @@
 		4CDC716C229C62E80072467A /* FlickrPlaceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPlaceDetailsViewController.swift; sourceTree = "<group>"; };
 		4CFC5423229D89D100C86B96 /* IMG_7322.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_7322.JPG; sourceTree = "<group>"; };
 		4CFC542822A53B5E00C86B96 /* MainCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		4CFCD1C022F86C8F00ADBA21 /* TwitterAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterAPIKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,8 +147,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C3CCE9922527A3C000260F0 /* PromiseKit.framework in Frameworks */,
-				4C45F1322256395600597821 /* PMKFoundation.framework in Frameworks */,
 				4C778E7622636DEC00D682BE /* Reachability.framework in Frameworks */,
 				4C3CCE9A22527A3C000260F0 /* MBProgressHUD.framework in Frameworks */,
 			);
@@ -161,8 +163,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CCE4E6F22BFB96E00C88CD9 /* PMKFoundation.framework in Frameworks */,
-				4CCE4E7022BFB96E00C88CD9 /* PromiseKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +219,7 @@
 		4C3CCE6422526F8C000260F0 /* PlacesUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				4C1AB86823087F8C008CC085 /* TwitterBearerTokenRequestTest.swift */,
 				4C3CCE6522526F8C000260F0 /* CodingTests.swift */,
 				4C3CCE6622526F8C000260F0 /* NetworkDataJSONTests.swift */,
 				4C3CCE6722526F8C000260F0 /* NetworkDataRequestTests.swift */,
@@ -273,6 +274,7 @@
 		4C3CCEA622527A78000260F0 /* Places */ = {
 			isa = PBXGroup;
 			children = (
+				4CFCD1BF22F86C0700ADBA21 /* Twitter */,
 				4C8AA92D2278FC4E00FE83CB /* Flickr */,
 				4C3CCEA722527A78000260F0 /* Places.swift */,
 				4C3CCEA922527A78000260F0 /* PlacesService.swift */,
@@ -320,6 +322,15 @@
 				4C3CCE8E22527974000260F0 /* PlaceAnnotation.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		4CFCD1BF22F86C0700ADBA21 /* Twitter */ = {
+			isa = PBXGroup;
+			children = (
+				4CFCD1C022F86C8F00ADBA21 /* TwitterAPIKey.swift */,
+				4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */,
+			);
+			path = Twitter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -463,8 +474,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/MBProgressHUD.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/PMKFoundation.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Reachability.framework",
 			);
 			name = "Copy Carthage Frameworks";
@@ -472,8 +481,6 @@
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/MBProgressHUD.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PromiseKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PMKFoundation.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Reachability.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,19 +513,15 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/PMKFoundation.framework",
 			);
 			name = "Copy Carthage Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/PromiseKit.framework",
-				"$(DERIVED_FILE_DIR)/PMKFoundation.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\necho $(DERIVED_FILE_DIR)\n";
+			shellScript = "#/usr/local/bin/carthage copy-frameworks\n#echo $(DERIVED_FILE_DIR)\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -539,10 +542,12 @@
 				4C4EAC7A2298110200CAF188 /* Coordinator.swift in Sources */,
 				4C3CCE3B2252659E000260F0 /* MainViewController.swift in Sources */,
 				4C3CCE9022527974000260F0 /* PlaceAnnotation.swift in Sources */,
+				4CFCD1C122F86C8F00ADBA21 /* TwitterAPIKey.swift in Sources */,
 				4C5793552292EC75009D838F /* ButtonBarView.swift in Sources */,
 				4CFC542922A53B5E00C86B96 /* MainCoordinator.swift in Sources */,
 				4C3CCE392252659E000260F0 /* AppDelegate.swift in Sources */,
 				4C5793572292FB22009D838F /* MapView.swift in Sources */,
+				4C24E44422FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift in Sources */,
 				4C3CCEB122527A78000260F0 /* JSON.swift in Sources */,
 				4CDC716D229C62E80072467A /* FlickrPlaceDetailsViewController.swift in Sources */,
 				4C3CCEB022527A78000260F0 /* Querying.swift in Sources */,
@@ -580,9 +585,12 @@
 				4CCDE17D225295B20089BF7F /* Merging.swift in Sources */,
 				4CCDE17E225295B20089BF7F /* Querying.swift in Sources */,
 				4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */,
+				4C1AB86A231048E6008CC085 /* TwitterAuthenticatedRequest.swift in Sources */,
+				4C1AB86B23104909008CC085 /* TwitterAPIKey.swift in Sources */,
 				4CCDE17B225292830089BF7F /* JSON.swift in Sources */,
 				4C3CCE6B22526F8C000260F0 /* NetworkDataRequestTests.swift in Sources */,
 				4C45F13822563B0800597821 /* NetworkDataRequest.swift in Sources */,
+				4C1AB86923087F8C008CC085 /* TwitterBearerTokenRequestTest.swift in Sources */,
 				4C3CCE5C22526F3E000260F0 /* PlacesTests.swift in Sources */,
 				4C3CCE6922526F8C000260F0 /* CodingTests.swift in Sources */,
 				4C3CCE6A22526F8C000260F0 /* NetworkDataJSONTests.swift in Sources */,

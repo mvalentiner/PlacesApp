@@ -12,6 +12,7 @@ import UIKit
 
 /// Error types for DataRequestResult
 enum DataRequestError: Error {
+	case badURLError
 	case badURLRequestError
 	case decodeDataError
 	case encodeDataError
@@ -29,134 +30,40 @@ enum DataRequestError: Error {
 	}
 }
 
-typealias DecodableRequestResult<RequestedDataType> = Result<RequestedDataType, DataRequestError>
-
-/// UnauthenticatedDataRequest - generic http request to request json data of associated type <RequestedDataType>
-protocol UnauthenticatedDecodableRequest: class {
-	// 1) Define the type of data being requested.
-	associatedtype RequestedDataType: Decodable
-	// 2) Define the endpoint to call.
-	var endpointURL: String { get }
-	// 3) Request the data.
-	func load(onCompletion: @escaping (DecodableRequestResult<RequestedDataType>) -> Void)
-
-	// Extension point
-	func makeRequest(for url: URL) -> URLRequest
-}
-
-extension UnauthenticatedDecodableRequest {
-	internal func load(onCompletion: @escaping (DecodableRequestResult<RequestedDataType>) -> Void) {
-        guard let url = URL(string: endpointURL) else {
-            fatalError(#function + "Could not make url from \(endpointURL)")
-        }
-		let request = makeRequest(for: url)
-		sendRequest(request, onCompletion: onCompletion)
-	}
-
-	internal func makeRequest(for url: URL) -> URLRequest {
-		return URLRequest(url: url)
-	}
-
-	internal func decode(_ data: Data) -> RequestedDataType? {
-		do {
-			let decodedData = try JSONDecoder().decode(RequestedDataType.self, from: data) // Decoding our data
-			return decodedData
-		}
-		catch {
-			return nil
-		}
-	}
-
-	internal func sendRequest(_ request: URLRequest, onCompletion: @escaping (DecodableRequestResult<RequestedDataType>) -> Void) {
-		// Issue the request
-		let session = URLSession(configuration: URLSessionConfiguration.ephemeral)
-		let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-			// Make sure we have a HTTPURLResponse
-			guard let httpResponse = response as? HTTPURLResponse else {
-				onCompletion(DecodableRequestResult<RequestedDataType>.failure(.badURLRequestError))
-				return
-			}
-
-			// Handle any error
-			if let error = error {
-				onCompletion(DecodableRequestResult<RequestedDataType>.failure(.sessionDataTaskError(error)))
-				return
-			}
-
-			// Ensure we got an acceptable http status
-			let statusCode = httpResponse.statusCode
-			guard self.shouldContinue(withHTTPStatusCode : statusCode) == true else {
-                onCompletion(DecodableRequestResult<RequestedDataType>.failure(.httpStatusError(statusCode)))
- 				return
-            }
-
-			// Ensure we received data
-			guard let data = data else {
-				onCompletion(DecodableRequestResult<RequestedDataType>.failure(.nilDataError))
-				return
-			}
-
-			// Decode the data
-            guard let decodedData = self.decode(data) else {
-				onCompletion(DecodableRequestResult<RequestedDataType>.failure(.decodeDataError))
-				return
-			}
-
-			// Success
-			onCompletion(DecodableRequestResult<RequestedDataType>.success(decodedData))
-		})
-		task.resume()
-	}
-
-	internal func shouldContinue(withHTTPStatusCode statusCode : Int) -> Bool {
-		guard statusCode < 300 else {
-			return false
-		}
-		
-		return true
-	}
-}
-
-/// UnauthenticatedJSONRequest - http request to request generic json data of associated type JSON
-protocol UnauthenticatedJSONRequest: UnauthenticatedDecodableRequest where RequestedDataType == JSON {
-}
-
 typealias DataRequestResult = Result<Data, DataRequestError>
 
-/// UnauthenticatedDownloadRequest - http request to request download data
-protocol UnauthenticatedDataRequest: class {
+/// UnauthenticatedDataRequest - http request to request data
+protocol UnauthenticatedDataRequest: class { 	// TODO: why : class?
 	// Define the endpoint to call.
 	var endpointURL: String { get }
 	// Request the data.
 	func load(onCompletion: @escaping (DataRequestResult) -> Void)
 
-	// Specify the save to location.
-	var saveLocation: URL { get }
-
-	// Extension point
+	// Extension point for subtypes
 	func makeRequest(for url: URL) -> URLRequest
+
+	func shouldContinue(withHTTPStatusCode statusCode : Int) -> Bool
 }
 
 extension UnauthenticatedDataRequest {
+	internal func makeRequest(for url: URL) -> URLRequest {
+		return URLRequest(url: url)
+	}
+
 	internal func load(onCompletion: @escaping (DataRequestResult) -> Void) {
+        _load(onCompletion: onCompletion)
+	}
+
+	internal func _load(onCompletion: @escaping (DataRequestResult) -> Void) {
         guard let url = URL(string: endpointURL) else {
-            fatalError(#function + "Could not make url from \(endpointURL)")
+			onCompletion(DataRequestResult.failure(.badURLError))
+			return
         }
 		let request = makeRequest(for: url)
 		sendRequest(request, onCompletion: onCompletion)
 	}
 
-	var saveLocation: URL {
-		get {
-			return try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-		}
-	}
-
-	internal func makeRequest(for url: URL) -> URLRequest {
-		return URLRequest(url: url)
-	}
-
-	internal func sendRequest(_ request: URLRequest, onCompletion: @escaping (DataRequestResult) -> Void) {
+	private func sendRequest(_ request: URLRequest, onCompletion: @escaping (DataRequestResult) -> Void) {
 		// Issue the request
 		let session = URLSession(configuration: URLSessionConfiguration.ephemeral)
 		let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
@@ -196,4 +103,46 @@ extension UnauthenticatedDataRequest {
 		}
 		return true
 	}
+}
+
+typealias DecodableRequestResult<RequestedDataType> = Result<RequestedDataType, DataRequestError>
+
+/// UnauthenticatedDataRequest - http request to request json of associated type <RequestedDataType> and return objects of <RequestedDataType>
+protocol UnauthenticatedDecodableRequest: UnauthenticatedDataRequest {
+	// Define the type of data being requested.
+	associatedtype RequestedDataType: Decodable
+}
+
+extension UnauthenticatedDecodableRequest {
+	internal func load(onCompletion: @escaping (DecodableRequestResult<RequestedDataType>) -> Void) {
+		_load { (dataRequestResult) in
+			switch dataRequestResult {
+			case .failure(let error):
+				onCompletion(DecodableRequestResult<RequestedDataType>.failure(error))
+				return
+			case .success(let data):
+				// Decode the data
+				guard let decodedData = self.decode(data) else {
+					onCompletion(DecodableRequestResult<RequestedDataType>.failure(.decodeDataError))
+					return
+				}
+				// Success
+				onCompletion(DecodableRequestResult<RequestedDataType>.success(decodedData))
+			}
+		}
+	}
+
+	internal func decode(_ data: Data) -> RequestedDataType? {
+		do {
+			let decodedData = try JSONDecoder().decode(RequestedDataType.self, from: data) // Decoding our data
+			return decodedData
+		}
+		catch {
+			return nil
+		}
+	}
+}
+
+/// UnauthenticatedJSONRequest - http request to request generic json data of associated type JSON
+protocol UnauthenticatedJSONRequest: UnauthenticatedDecodableRequest where RequestedDataType == JSON {
 }

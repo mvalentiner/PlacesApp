@@ -14,6 +14,7 @@ class NetworkDataRequestTests: XCTestCase {
 		case results
 		case version
 	}
+
 	struct GoodAppStoreInfo: Decodable {
 		internal let version: String
 		init(from decoder: Decoder) throws {
@@ -25,8 +26,9 @@ class NetworkDataRequestTests: XCTestCase {
 			self.version = version
 		}
 	}
+
 	func testDataRequest_Load_Success() {
-		class SuccessTestDataRequest: UnauthenticatedDataRequest {
+		class SuccessTestDataRequest: UnauthenticatedDecodableRequest {
 			typealias RequestedDataType = GoodAppStoreInfo
 			var endpointURL: String {
 				get { return "https://itunes.apple.com/lookup?bundleId=com.heliotropix.Photos-Near" }
@@ -34,20 +36,19 @@ class NetworkDataRequestTests: XCTestCase {
 		}
 
     	let expectation = XCTestExpectation(description: "Test NetworkDataRequestTests.testDataRequest_Load")
-		let dataRequest = SuccessTestDataRequest()
-		do {
-			_ = try dataRequest.load().done { appStoreInfo in
-				let versionNumber = Double(appStoreInfo.version)
-				XCTAssertTrue(versionNumber != nil)
-				expectation.fulfill()
-			}.catch { error in
+		SuccessTestDataRequest().load { (requestResult) in
+			switch requestResult {
+			case .failure(let error):
 				print("error = \(error)")
 				XCTAssertTrue(false)
 				expectation.fulfill()
+				break
+			case .success(let appStoreInfo):
+				let versionNumber = Double(appStoreInfo.version)
+				XCTAssertTrue(versionNumber != nil)
+				expectation.fulfill()
+				break
 			}
-		} catch (let error) {
-			XCTAssertTrue(false, "error = \(error)")
-			expectation.fulfill()
 		}
 
 		wait(for: [expectation], timeout: 10.0)
@@ -64,7 +65,8 @@ class NetworkDataRequestTests: XCTestCase {
 				self.version = version
 			}
 		}
-		class BadDecodeTestDataRequest: UnauthenticatedDataRequest {
+
+		class BadDecodeTestDataRequest: UnauthenticatedDecodableRequest {
 			typealias RequestedDataType = BadAppStoreInfo
 			var endpointURL: String {
 				get { return "https://itunes.apple.com/lookup?bundleId=com.heliotropix.Photos-Near" }
@@ -72,20 +74,18 @@ class NetworkDataRequestTests: XCTestCase {
 		}
 
     	let expectation = XCTestExpectation(description: "Test NetworkDataRequestTests.testDataRequest_Load")
-		let dataRequest = BadDecodeTestDataRequest()
-		do {
-			_ = try dataRequest.load().done { _ in
-				XCTAssertTrue(false)
-				expectation.fulfill()
-			}.catch { error in
+		BadDecodeTestDataRequest().load { (requestResult) in
+			switch requestResult {
+			case .failure(let error):
 				print("error = \(error)")
 				XCTAssertTrue(true)
 				expectation.fulfill()
+				break
+			case .success:
+				XCTAssertTrue(false)
+				expectation.fulfill()
+				break
 			}
-		} catch (let error) {
-			print("error = \(error)")
-			XCTAssertTrue(true)
-			expectation.fulfill()
 		}
 
 		wait(for: [expectation], timeout: 10.0)
@@ -93,7 +93,7 @@ class NetworkDataRequestTests: XCTestCase {
 
 	/// testDataRequest_BadEndpoint_Fail
 	func testDataRequest_BadEndpoint_Fail() {
-		class BadEndpointTestDataRequest: UnauthenticatedDataRequest {
+		class BadEndpointTestDataRequest: UnauthenticatedDecodableRequest {
 			typealias RequestedDataType = GoodAppStoreInfo
 			var endpointURL: String {
 				get { return "https://foo.bar" }
@@ -101,20 +101,18 @@ class NetworkDataRequestTests: XCTestCase {
 		}
 
     	let expectation = XCTestExpectation(description: "Test NetworkDataRequestTests.testDataRequest_Load")
-		let dataRequest = BadEndpointTestDataRequest()
-		do {
-			_ = try dataRequest.load().done { _ in
-				XCTAssertTrue(false)
-				expectation.fulfill()
-			}.catch { error in
+		BadEndpointTestDataRequest().load { (requestResult) in
+			switch requestResult {
+			case .failure(let error):
 				print("error = \(error)")
 				XCTAssertTrue(true)
 				expectation.fulfill()
+				break
+			case .success:
+				XCTAssertTrue(false)
+				expectation.fulfill()
+				break
 			}
-		} catch (let error) {
-			print("error = \(error)")
-			XCTAssertTrue(true)
-			expectation.fulfill()
 		}
 
 		wait(for: [expectation], timeout: 10.0)
