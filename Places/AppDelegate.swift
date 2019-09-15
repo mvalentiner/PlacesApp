@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Instantiate the MainCoordinator as an SOA Service and give it it's rootViewController.
 		let rootViewController = UINavigationController()
 		MainCoordinator.register(using: rootViewController)
-		ServiceRegistry.mainCoordinator.present(MainViewController.instantiate())
+		ServiceRegistry.mainCoordinator.presentMainViewController()
 
 		// We don't instantiate the default view controller from Main.Storyboard, so create a UIWindow and activate it.
 		window = UIWindow(frame: UIScreen.main.bounds)

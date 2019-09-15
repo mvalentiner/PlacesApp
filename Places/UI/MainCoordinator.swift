@@ -23,6 +23,7 @@ extension ServiceRegistryImplementation {
 }
 
 protocol MainCoordinatorService: Coordinator, SOAService {
+	func presentMainViewController()
 	func navigateToInfoScreen()
 	func navigateToPlaceDetailsScreen(for place: Place)
 }
@@ -38,6 +39,10 @@ internal class MainCoordinator: MainCoordinatorService {
 
 	init(rootController: UINavigationController) {
 		self.rootController = rootController
+	}
+
+	internal func presentMainViewController() {
+		ServiceRegistry.mainCoordinator.present(MainViewController.instantiate())
 	}
 
 	internal func navigateToInfoScreen() {
