@@ -19,6 +19,7 @@ enum DataRequestError: Error {
 	case httpStatusError(Int)
 	case nilDataError
 	case notAuthenticatedError
+	case serverError(JSON)
 	case sessionDataTaskError(Error)
 
 	internal init(error: Error) {
@@ -60,6 +61,7 @@ extension UnauthenticatedDataRequest {
 			return
         }
 		let request = makeRequest(for: url)
+		print(#function + "request = \(request)")
 		sendRequest(request, onCompletion: onCompletion)
 	}
 

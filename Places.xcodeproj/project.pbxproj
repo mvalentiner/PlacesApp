@@ -11,6 +11,11 @@
 		4C1AB86A231048E6008CC085 /* TwitterAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */; };
 		4C1AB86B23104909008CC085 /* TwitterAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFCD1C022F86C8F00ADBA21 /* TwitterAPIKey.swift */; };
 		4C24E44422FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */; };
+		4C347CA6231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CA5231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift */; };
+		4C347CA8231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */; };
+		4C347CA9231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */; };
+		4C347CAB231579E2007DC13F /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CAA231579E2007DC13F /* Twitter.swift */; };
+		4C347CAC231579E2007DC13F /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CAA231579E2007DC13F /* Twitter.swift */; };
 		4C3CCE392252659E000260F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE382252659E000260F0 /* AppDelegate.swift */; };
 		4C3CCE3B2252659E000260F0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE3A2252659E000260F0 /* MainViewController.swift */; };
 		4C3CCE402252659F000260F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C3CCE3F2252659F000260F0 /* Assets.xcassets */; };
@@ -88,6 +93,9 @@
 /* Begin PBXFileReference section */
 		4C1AB86823087F8C008CC085 /* TwitterBearerTokenRequestTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterBearerTokenRequestTest.swift; sourceTree = "<group>"; };
 		4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterAuthenticatedRequest.swift; sourceTree = "<group>"; };
+		4C347CA5231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterAuthenticatedRequestTest.swift; sourceTree = "<group>"; };
+		4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterBearerTokenRequest.swift; sourceTree = "<group>"; };
+		4C347CAA231579E2007DC13F /* Twitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Twitter.swift; sourceTree = "<group>"; };
 		4C3CCE352252659E000260F0 /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3CCE382252659E000260F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C3CCE3A2252659E000260F0 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -219,11 +227,12 @@
 		4C3CCE6422526F8C000260F0 /* PlacesUnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				4C1AB86823087F8C008CC085 /* TwitterBearerTokenRequestTest.swift */,
 				4C3CCE6522526F8C000260F0 /* CodingTests.swift */,
 				4C3CCE6622526F8C000260F0 /* NetworkDataJSONTests.swift */,
 				4C3CCE6722526F8C000260F0 /* NetworkDataRequestTests.swift */,
 				4C3CCE6822526F8C000260F0 /* PlacesUnitTests-Info.plist */,
+				4C347CA5231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift */,
+				4C1AB86823087F8C008CC085 /* TwitterBearerTokenRequestTest.swift */,
 			);
 			path = PlacesUnitTests;
 			sourceTree = SOURCE_ROOT;
@@ -329,6 +338,8 @@
 			children = (
 				4CFCD1C022F86C8F00ADBA21 /* TwitterAPIKey.swift */,
 				4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */,
+				4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */,
+				4C347CAA231579E2007DC13F /* Twitter.swift */,
 			);
 			path = Twitter;
 			sourceTree = "<group>";
@@ -543,6 +554,7 @@
 				4C3CCE3B2252659E000260F0 /* MainViewController.swift in Sources */,
 				4C3CCE9022527974000260F0 /* PlaceAnnotation.swift in Sources */,
 				4CFCD1C122F86C8F00ADBA21 /* TwitterAPIKey.swift in Sources */,
+				4C347CAB231579E2007DC13F /* Twitter.swift in Sources */,
 				4C5793552292EC75009D838F /* ButtonBarView.swift in Sources */,
 				4CFC542922A53B5E00C86B96 /* MainCoordinator.swift in Sources */,
 				4C3CCE392252659E000260F0 /* AppDelegate.swift in Sources */,
@@ -554,6 +566,7 @@
 				4C8AA931227C8B3D00FE83CB /* FickrAPIKey.swift in Sources */,
 				4C3CCEB522527A78000260F0 /* SOAService.swift in Sources */,
 				4C3CCEB622527A78000260F0 /* Places.swift in Sources */,
+				4C347CA8231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */,
 				4C3CCEBB22527A78000260F0 /* UIView+SafeArea.swift in Sources */,
 				4C778E7822636F7100D682BE /* ReachabilityService.swift in Sources */,
 				4C3CCEB822527A78000260F0 /* PlacesService.swift in Sources */,
@@ -582,13 +595,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C347CA6231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift in Sources */,
 				4CCDE17D225295B20089BF7F /* Merging.swift in Sources */,
 				4CCDE17E225295B20089BF7F /* Querying.swift in Sources */,
 				4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */,
 				4C1AB86A231048E6008CC085 /* TwitterAuthenticatedRequest.swift in Sources */,
 				4C1AB86B23104909008CC085 /* TwitterAPIKey.swift in Sources */,
 				4CCDE17B225292830089BF7F /* JSON.swift in Sources */,
+				4C347CAC231579E2007DC13F /* Twitter.swift in Sources */,
 				4C3CCE6B22526F8C000260F0 /* NetworkDataRequestTests.swift in Sources */,
+				4C347CA9231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */,
 				4C45F13822563B0800597821 /* NetworkDataRequest.swift in Sources */,
 				4C1AB86923087F8C008CC085 /* TwitterBearerTokenRequestTest.swift in Sources */,
 				4C3CCE5C22526F3E000260F0 /* PlacesTests.swift in Sources */,
