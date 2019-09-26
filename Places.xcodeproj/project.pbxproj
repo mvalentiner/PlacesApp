@@ -8,12 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		4C1AB86923087F8C008CC085 /* TwitterBearerTokenRequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1AB86823087F8C008CC085 /* TwitterBearerTokenRequestTest.swift */; };
-		4C1AB86A231048E6008CC085 /* TwitterAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */; };
+		4C1AB86A231048E6008CC085 /* TwitterAppUserAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24E44322FA0538005FAFE1 /* TwitterAppUserAuthenticatedRequest.swift */; };
 		4C1AB86B23104909008CC085 /* TwitterAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFCD1C022F86C8F00ADBA21 /* TwitterAPIKey.swift */; };
-		4C24E44422FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */; };
-		4C347CA6231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CA5231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift */; };
-		4C347CA8231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */; };
-		4C347CA9231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */; };
+		4C24E44422FA0538005FAFE1 /* TwitterAppUserAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24E44322FA0538005FAFE1 /* TwitterAppUserAuthenticatedRequest.swift */; };
+		4C347CA6231305E6007DC13F /* TwitterAppOnlyAuthenticatedRequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CA5231305E6007DC13F /* TwitterAppOnlyAuthenticatedRequestTest.swift */; };
 		4C347CAB231579E2007DC13F /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CAA231579E2007DC13F /* Twitter.swift */; };
 		4C347CAC231579E2007DC13F /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CAA231579E2007DC13F /* Twitter.swift */; };
 		4C3CCE392252659E000260F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE382252659E000260F0 /* AppDelegate.swift */; };
@@ -60,6 +58,9 @@
 		4C8AA92A2278FAD000FE83CB /* Flickr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA9292278FAD000FE83CB /* Flickr.swift */; };
 		4C8AA92F227B6F4200FE83CB /* String+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA92E227B6F4100FE83CB /* String+Formatting.swift */; };
 		4C8AA931227C8B3D00FE83CB /* FickrAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA930227C8B3D00FE83CB /* FickrAPIKey.swift */; };
+		4CC57215232DD5FC0071B52E /* TwitterAppOnlyAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC57214232DD5FC0071B52E /* TwitterAppOnlyAuthenticatedRequest.swift */; };
+		4CC57216232DD5FC0071B52E /* TwitterAppOnlyAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC57214232DD5FC0071B52E /* TwitterAppOnlyAuthenticatedRequest.swift */; };
+		4CC57219232DD86F0071B52E /* TwitterAppUserAuthenticatedRequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC57217232DD86F0071B52E /* TwitterAppUserAuthenticatedRequestTest.swift */; };
 		4CCDE172225283A60089BF7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CCDE170225283A60089BF7F /* Main.storyboard */; };
 		4CCDE17B225292830089BF7F /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA022527A77000260F0 /* JSON.swift */; };
 		4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
@@ -92,9 +93,8 @@
 
 /* Begin PBXFileReference section */
 		4C1AB86823087F8C008CC085 /* TwitterBearerTokenRequestTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterBearerTokenRequestTest.swift; sourceTree = "<group>"; };
-		4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterAuthenticatedRequest.swift; sourceTree = "<group>"; };
-		4C347CA5231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterAuthenticatedRequestTest.swift; sourceTree = "<group>"; };
-		4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterBearerTokenRequest.swift; sourceTree = "<group>"; };
+		4C24E44322FA0538005FAFE1 /* TwitterAppUserAuthenticatedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterAppUserAuthenticatedRequest.swift; sourceTree = "<group>"; };
+		4C347CA5231305E6007DC13F /* TwitterAppOnlyAuthenticatedRequestTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterAppOnlyAuthenticatedRequestTest.swift; sourceTree = "<group>"; };
 		4C347CAA231579E2007DC13F /* Twitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Twitter.swift; sourceTree = "<group>"; };
 		4C3CCE352252659E000260F0 /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3CCE382252659E000260F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +142,8 @@
 		4C8AA92B2278FC4700FE83CB /* FlickrPhotoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhotoInfo.swift; sourceTree = "<group>"; };
 		4C8AA92E227B6F4100FE83CB /* String+Formatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Formatting.swift"; sourceTree = "<group>"; };
 		4C8AA930227C8B3D00FE83CB /* FickrAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FickrAPIKey.swift; sourceTree = "<group>"; };
+		4CC57214232DD5FC0071B52E /* TwitterAppOnlyAuthenticatedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterAppOnlyAuthenticatedRequest.swift; sourceTree = "<group>"; };
+		4CC57217232DD86F0071B52E /* TwitterAppUserAuthenticatedRequestTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterAppUserAuthenticatedRequestTest.swift; sourceTree = "<group>"; };
 		4CCDE171225283A60089BF7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4CD99D59229507F1009FA10C /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		4CDC716C229C62E80072467A /* FlickrPlaceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPlaceDetailsViewController.swift; sourceTree = "<group>"; };
@@ -231,7 +233,8 @@
 				4C3CCE6622526F8C000260F0 /* NetworkDataJSONTests.swift */,
 				4C3CCE6722526F8C000260F0 /* NetworkDataRequestTests.swift */,
 				4C3CCE6822526F8C000260F0 /* PlacesUnitTests-Info.plist */,
-				4C347CA5231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift */,
+				4C347CA5231305E6007DC13F /* TwitterAppOnlyAuthenticatedRequestTest.swift */,
+				4CC57217232DD86F0071B52E /* TwitterAppUserAuthenticatedRequestTest.swift */,
 				4C1AB86823087F8C008CC085 /* TwitterBearerTokenRequestTest.swift */,
 			);
 			path = PlacesUnitTests;
@@ -337,8 +340,8 @@
 			isa = PBXGroup;
 			children = (
 				4CFCD1C022F86C8F00ADBA21 /* TwitterAPIKey.swift */,
-				4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */,
-				4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */,
+				4CC57214232DD5FC0071B52E /* TwitterAppOnlyAuthenticatedRequest.swift */,
+				4C24E44322FA0538005FAFE1 /* TwitterAppUserAuthenticatedRequest.swift */,
 				4C347CAA231579E2007DC13F /* Twitter.swift */,
 			);
 			path = Twitter;
@@ -555,18 +558,18 @@
 				4C3CCE9022527974000260F0 /* PlaceAnnotation.swift in Sources */,
 				4CFCD1C122F86C8F00ADBA21 /* TwitterAPIKey.swift in Sources */,
 				4C347CAB231579E2007DC13F /* Twitter.swift in Sources */,
+				4CC57215232DD5FC0071B52E /* TwitterAppOnlyAuthenticatedRequest.swift in Sources */,
 				4C5793552292EC75009D838F /* ButtonBarView.swift in Sources */,
 				4CFC542922A53B5E00C86B96 /* MainCoordinator.swift in Sources */,
 				4C3CCE392252659E000260F0 /* AppDelegate.swift in Sources */,
 				4C5793572292FB22009D838F /* MapView.swift in Sources */,
-				4C24E44422FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift in Sources */,
+				4C24E44422FA0538005FAFE1 /* TwitterAppUserAuthenticatedRequest.swift in Sources */,
 				4C3CCEB122527A78000260F0 /* JSON.swift in Sources */,
 				4CDC716D229C62E80072467A /* FlickrPlaceDetailsViewController.swift in Sources */,
 				4C3CCEB022527A78000260F0 /* Querying.swift in Sources */,
 				4C8AA931227C8B3D00FE83CB /* FickrAPIKey.swift in Sources */,
 				4C3CCEB522527A78000260F0 /* SOAService.swift in Sources */,
 				4C3CCEB622527A78000260F0 /* Places.swift in Sources */,
-				4C347CA8231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */,
 				4C3CCEBB22527A78000260F0 /* UIView+SafeArea.swift in Sources */,
 				4C778E7822636F7100D682BE /* ReachabilityService.swift in Sources */,
 				4C3CCEB822527A78000260F0 /* PlacesService.swift in Sources */,
@@ -595,16 +598,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C347CA6231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift in Sources */,
+				4C347CA6231305E6007DC13F /* TwitterAppOnlyAuthenticatedRequestTest.swift in Sources */,
 				4CCDE17D225295B20089BF7F /* Merging.swift in Sources */,
 				4CCDE17E225295B20089BF7F /* Querying.swift in Sources */,
 				4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */,
-				4C1AB86A231048E6008CC085 /* TwitterAuthenticatedRequest.swift in Sources */,
+				4C1AB86A231048E6008CC085 /* TwitterAppUserAuthenticatedRequest.swift in Sources */,
+				4CC57216232DD5FC0071B52E /* TwitterAppOnlyAuthenticatedRequest.swift in Sources */,
+				4CC57219232DD86F0071B52E /* TwitterAppUserAuthenticatedRequestTest.swift in Sources */,
 				4C1AB86B23104909008CC085 /* TwitterAPIKey.swift in Sources */,
 				4CCDE17B225292830089BF7F /* JSON.swift in Sources */,
 				4C347CAC231579E2007DC13F /* Twitter.swift in Sources */,
 				4C3CCE6B22526F8C000260F0 /* NetworkDataRequestTests.swift in Sources */,
-				4C347CA9231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */,
 				4C45F13822563B0800597821 /* NetworkDataRequest.swift in Sources */,
 				4C1AB86923087F8C008CC085 /* TwitterBearerTokenRequestTest.swift in Sources */,
 				4C3CCE5C22526F3E000260F0 /* PlacesTests.swift in Sources */,

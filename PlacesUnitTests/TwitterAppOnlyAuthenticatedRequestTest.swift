@@ -1,5 +1,5 @@
 //
-//  TwitterAuthenticatedRequestTest.swift
+//  TwitterAppOnlyAuthenticatedRequestTest.swift
 //  PlacesUnitTests
 //
 //  Created by Michael Valentiner on 8/25/19.
@@ -9,9 +9,9 @@
 import XCTest
 @testable import Places
 
-class TwitterAuthenticatedRequestTest: XCTestCase {
+class TwitterAppOnlyAuthenticatedRequestTest: XCTestCase {
 
-	class TwitterTestRequest: TwitterAuthenticatedRequest {
+	private class TwitterTestRequest: TwitterAppOnlyAuthenticatedRequest {
 //		var endpointURL: String = "https://api.twitter.com/1.1/geo/reverse_geocode.json?lat=37.781157&long=-122.398720&granularity=neighborhood"
 //		var endpointURL: String = "https://api.twitter.com/1.1/geo/search.json?query=Toronto"
 		var endpointURL: String = "https://api.twitter.com/1.1/geo/search.json?query=Toronto"
