@@ -8,6 +8,8 @@
 //	Inspired by https://www.hackingwithswift.com/articles/71/how-to-use-the-coordinator-pattern-in-ios-apps
 
 import CoreLocation
+import SwifteriOS
+import SwiftUI
 import UIKit
 
 private struct MainCoordinatorServiceName {
@@ -42,23 +44,12 @@ internal class MainCoordinator: MainCoordinatorService {
 	}
 
 	internal func presentMainViewController() {
-		ServiceRegistry.mainCoordinator.present(MainViewController.instantiate())
+		present(MainViewController.instantiate())
 	}
 
 	internal func navigateToInfoScreen() {
-//TODO: remove
-		// Mockup Place with PlaceDetails for testing.
-		guard let photoURL = Bundle.main.url(forResource: "IMG_7322", withExtension: "JPG") else {
-			fatalError("IMG_7322.JPG is missing from app bundle.")
-		}
-		navigateToPlaceDetailsScreen(for:
-			InterestingnessPlaceSource.FlickrPlace(
-				uid: PlaceUID(placeSourceUID: InterestingnessPlaceSource.uid, nativePlaceId: ""),
-				location: CLLocationCoordinate2D(latitude: 0, longitude: 0),
-				title: "",
-				photoURL: photoURL.absoluteString
-			)
-		)
+		let hostingController = UIHostingController(rootView: SettingsScreenView(with: self))
+		present(hostingController)
 	}
 
 	private let placeDetailsViewControllerRegistry: [PlaceSourceUID: (Place) -> UIViewController] = [

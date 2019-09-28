@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Places.xcodeproj">
+      location = "group:/Users/michael/Documents/dev/projects/iOS/PlacesApp/Places/Services/Places/Twitter/AuthViewController.swift">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

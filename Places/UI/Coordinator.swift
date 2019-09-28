@@ -14,10 +14,16 @@ protocol Coordinator {
 	var rootController: UINavigationController { get }
 
 	func present(_ viewController: UIViewController, animated: Bool)
+	
+	func popToRootController(animated: Bool)
 }
 
 extension Coordinator {
 	func present(_ viewController: UIViewController, animated: Bool = true) {
 		rootController.pushViewController(viewController, animated: animated)
+	}
+	
+	func popToRootController(animated: Bool = true) {
+		rootController.popToRootViewController(animated: animated)
 	}
 }

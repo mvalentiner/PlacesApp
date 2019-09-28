@@ -60,6 +60,9 @@
 		4C8AA92A2278FAD000FE83CB /* Flickr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA9292278FAD000FE83CB /* Flickr.swift */; };
 		4C8AA92F227B6F4200FE83CB /* String+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA92E227B6F4100FE83CB /* String+Formatting.swift */; };
 		4C8AA931227C8B3D00FE83CB /* FickrAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA930227C8B3D00FE83CB /* FickrAPIKey.swift */; };
+		4CB6A88F233EE824004EEFD8 /* SwifteriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB6A88E233EE824004EEFD8 /* SwifteriOS.framework */; };
+		4CB6A890233EE824004EEFD8 /* SwifteriOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB6A88E233EE824004EEFD8 /* SwifteriOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CB6A893233EE862004EEFD8 /* SettingsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6A892233EE862004EEFD8 /* SettingsScreenView.swift */; };
 		4CCDE172225283A60089BF7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CCDE170225283A60089BF7F /* Main.storyboard */; };
 		4CCDE17B225292830089BF7F /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA022527A77000260F0 /* JSON.swift */; };
 		4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
@@ -90,6 +93,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4CB6A891233EE825004EEFD8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4CB6A890233EE824004EEFD8 /* SwifteriOS.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		4C1AB86823087F8C008CC085 /* TwitterBearerTokenRequestTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterBearerTokenRequestTest.swift; sourceTree = "<group>"; };
 		4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterAuthenticatedRequest.swift; sourceTree = "<group>"; };
@@ -114,7 +131,6 @@
 		4C3CCE8D22527974000260F0 /* LaunchScreen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LaunchScreen.jpg; sourceTree = "<group>"; };
 		4C3CCE8E22527974000260F0 /* PlaceAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceAnnotation.swift; sourceTree = "<group>"; };
 		4C3CCE92225279CD000260F0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4C3CCE9522527A3C000260F0 /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
 		4C3CCE9622527A3C000260F0 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		4C3CCE9E22527A77000260F0 /* Initialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Initialization.swift; sourceTree = "<group>"; };
 		4C3CCE9F22527A77000260F0 /* Querying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Querying.swift; sourceTree = "<group>"; };
@@ -129,7 +145,6 @@
 		4C3CCEAB22527A78000260F0 /* UIView+Anchoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Anchoring.swift"; sourceTree = "<group>"; };
 		4C3CCEAC22527A78000260F0 /* CoordinateRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateRect.swift; sourceTree = "<group>"; };
 		4C3CCEAD22527A78000260F0 /* UIView+SafeArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+SafeArea.swift"; sourceTree = "<group>"; };
-		4C45F1312256395600597821 /* PMKFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PMKFoundation.framework; path = Carthage/Build/iOS/PMKFoundation.framework; sourceTree = "<group>"; };
 		4C4EAC792298110200CAF188 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		4C4EAC7B229813DE00CAF188 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		4C5793542292EC75009D838F /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
@@ -142,6 +157,8 @@
 		4C8AA92B2278FC4700FE83CB /* FlickrPhotoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhotoInfo.swift; sourceTree = "<group>"; };
 		4C8AA92E227B6F4100FE83CB /* String+Formatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Formatting.swift"; sourceTree = "<group>"; };
 		4C8AA930227C8B3D00FE83CB /* FickrAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FickrAPIKey.swift; sourceTree = "<group>"; };
+		4CB6A88E233EE824004EEFD8 /* SwifteriOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwifteriOS.framework; path = Carthage/Build/iOS/SwifteriOS.framework; sourceTree = "<group>"; };
+		4CB6A892233EE862004EEFD8 /* SettingsScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsScreenView.swift; sourceTree = "<group>"; };
 		4CCDE171225283A60089BF7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4CD99D59229507F1009FA10C /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		4CDC716C229C62E80072467A /* FlickrPlaceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPlaceDetailsViewController.swift; sourceTree = "<group>"; };
@@ -157,6 +174,7 @@
 			files = (
 				4C778E7622636DEC00D682BE /* Reachability.framework in Frameworks */,
 				4C3CCE9A22527A3C000260F0 /* MBProgressHUD.framework in Frameworks */,
+				4CB6A88F233EE824004EEFD8 /* SwifteriOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,10 +258,9 @@
 		4C3CCE85225276A8000260F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4C778E7522636DEC00D682BE /* Reachability.framework */,
-				4C45F1312256395600597821 /* PMKFoundation.framework */,
 				4C3CCE9622527A3C000260F0 /* MBProgressHUD.framework */,
-				4C3CCE9522527A3C000260F0 /* PromiseKit.framework */,
+				4C778E7522636DEC00D682BE /* Reachability.framework */,
+				4CB6A88E233EE824004EEFD8 /* SwifteriOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -321,14 +338,15 @@
 			children = (
 				4C5793542292EC75009D838F /* ButtonBarView.swift */,
 				4C4EAC792298110200CAF188 /* Coordinator.swift */,
-				4CFC542822A53B5E00C86B96 /* MainCoordinator.swift */,
 				4CDC716C229C62E80072467A /* FlickrPlaceDetailsViewController.swift */,
 				4C3CCE8D22527974000260F0 /* LaunchScreen.jpg */,
 				4C3CCE412252659F000260F0 /* LaunchScreen.storyboard */,
 				4CCDE170225283A60089BF7F /* Main.storyboard */,
+				4CFC542822A53B5E00C86B96 /* MainCoordinator.swift */,
 				4C3CCE3A2252659E000260F0 /* MainViewController.swift */,
 				4C5793562292FB22009D838F /* MapView.swift */,
 				4C3CCE8E22527974000260F0 /* PlaceAnnotation.swift */,
+				4CB6A892233EE862004EEFD8 /* SettingsScreenView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -356,6 +374,7 @@
 				4C3CCE332252659E000260F0 /* Resources */,
 				4C3CCE8B22527759000260F0 /* Copy Carthage Frameworks */,
 				4C3CCE8C225278B0000260F0 /* Check For Outdated Carthage Frameworks */,
+				4CB6A891233EE825004EEFD8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -561,6 +580,7 @@
 				4C5793572292FB22009D838F /* MapView.swift in Sources */,
 				4C24E44422FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift in Sources */,
 				4C3CCEB122527A78000260F0 /* JSON.swift in Sources */,
+				4CB6A893233EE862004EEFD8 /* SettingsScreenView.swift in Sources */,
 				4CDC716D229C62E80072467A /* FlickrPlaceDetailsViewController.swift in Sources */,
 				4C3CCEB022527A78000260F0 /* Querying.swift in Sources */,
 				4C8AA931227C8B3D00FE83CB /* FickrAPIKey.swift in Sources */,
@@ -775,6 +795,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Places/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -797,6 +818,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Places/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -61,7 +61,7 @@ extension UnauthenticatedDataRequest {
 			return
         }
 		let request = makeRequest(for: url)
-		print(#function + "request = \(request)")
+//		print(#function + "request = \(request)")
 		sendRequest(request, onCompletion: onCompletion)
 	}
 

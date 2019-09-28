@@ -6,6 +6,7 @@
 //  Copyright © 2019 Heliotropix, LLC. All rights reserved.
 //
 
+import SwifteriOS
 import UIKit
 
 @UIApplicationMain
@@ -41,5 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func applicationWillResignActive(_ application: UIApplication) {
 		serviceRegistry.reachabilityService.stopMonitoring()
+	}
+
+	func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+		return Swifter.handleOpenURL(url, callbackURL: url)
 	}
 }
