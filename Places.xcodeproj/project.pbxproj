@@ -60,9 +60,12 @@
 		4C8AA92A2278FAD000FE83CB /* Flickr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA9292278FAD000FE83CB /* Flickr.swift */; };
 		4C8AA92F227B6F4200FE83CB /* String+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA92E227B6F4100FE83CB /* String+Formatting.swift */; };
 		4C8AA931227C8B3D00FE83CB /* FickrAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA930227C8B3D00FE83CB /* FickrAPIKey.swift */; };
+		4C9B9E3123426EA200CC8591 /* SettingsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E3023426EA200CC8591 /* SettingsDataModel.swift */; };
+		4C9B9E3423427F4500CC8591 /* UserDefaultPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E3223426F6000CC8591 /* UserDefaultPropertyWrapper.swift */; };
 		4CB6A88F233EE824004EEFD8 /* SwifteriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB6A88E233EE824004EEFD8 /* SwifteriOS.framework */; };
 		4CB6A890233EE824004EEFD8 /* SwifteriOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB6A88E233EE824004EEFD8 /* SwifteriOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4CB6A893233EE862004EEFD8 /* SettingsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6A892233EE862004EEFD8 /* SettingsScreenView.swift */; };
+		4CB6A893233EE862004EEFD8 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6A892233EE862004EEFD8 /* SettingsScreen.swift */; };
+		4CB6A895233FA2A3004EEFD8 /* TwitterPlaceSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6A894233FA2A3004EEFD8 /* TwitterPlaceSource.swift */; };
 		4CCDE172225283A60089BF7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CCDE170225283A60089BF7F /* Main.storyboard */; };
 		4CCDE17B225292830089BF7F /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA022527A77000260F0 /* JSON.swift */; };
 		4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
@@ -157,8 +160,11 @@
 		4C8AA92B2278FC4700FE83CB /* FlickrPhotoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhotoInfo.swift; sourceTree = "<group>"; };
 		4C8AA92E227B6F4100FE83CB /* String+Formatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Formatting.swift"; sourceTree = "<group>"; };
 		4C8AA930227C8B3D00FE83CB /* FickrAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FickrAPIKey.swift; sourceTree = "<group>"; };
+		4C9B9E3023426EA200CC8591 /* SettingsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataModel.swift; sourceTree = "<group>"; };
+		4C9B9E3223426F6000CC8591 /* UserDefaultPropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultPropertyWrapper.swift; sourceTree = "<group>"; };
 		4CB6A88E233EE824004EEFD8 /* SwifteriOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwifteriOS.framework; path = Carthage/Build/iOS/SwifteriOS.framework; sourceTree = "<group>"; };
-		4CB6A892233EE862004EEFD8 /* SettingsScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsScreenView.swift; sourceTree = "<group>"; };
+		4CB6A892233EE862004EEFD8 /* SettingsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
+		4CB6A894233FA2A3004EEFD8 /* TwitterPlaceSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterPlaceSource.swift; sourceTree = "<group>"; };
 		4CCDE171225283A60089BF7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4CD99D59229507F1009FA10C /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		4CDC716C229C62E80072467A /* FlickrPlaceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPlaceDetailsViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +231,7 @@
 				4C3CCE3F2252659F000260F0 /* Assets.xcassets */,
 				4CFC5423229D89D100C86B96 /* IMG_7322.JPG */,
 				4C3CCE442252659F000260F0 /* Info.plist */,
+				4C9B9E2F23426E7700CC8591 /* Models */,
 				4C3CCEA322527A78000260F0 /* Services */,
 				4C3CCEAA22527A78000260F0 /* Types */,
 				4CDC716A229C60930072467A /* UI */,
@@ -318,6 +325,7 @@
 				4C8AA92E227B6F4100FE83CB /* String+Formatting.swift */,
 				4C3CCEAB22527A78000260F0 /* UIView+Anchoring.swift */,
 				4C3CCEAD22527A78000260F0 /* UIView+SafeArea.swift */,
+				4C9B9E3223426F6000CC8591 /* UserDefaultPropertyWrapper.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -333,6 +341,14 @@
 			path = Flickr;
 			sourceTree = "<group>";
 		};
+		4C9B9E2F23426E7700CC8591 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4C9B9E3023426EA200CC8591 /* SettingsDataModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		4CDC716A229C60930072467A /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -346,7 +362,7 @@
 				4C3CCE3A2252659E000260F0 /* MainViewController.swift */,
 				4C5793562292FB22009D838F /* MapView.swift */,
 				4C3CCE8E22527974000260F0 /* PlaceAnnotation.swift */,
-				4CB6A892233EE862004EEFD8 /* SettingsScreenView.swift */,
+				4CB6A892233EE862004EEFD8 /* SettingsScreen.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -358,6 +374,7 @@
 				4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */,
 				4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */,
 				4C347CAA231579E2007DC13F /* Twitter.swift */,
+				4CB6A894233FA2A3004EEFD8 /* TwitterPlaceSource.swift */,
 			);
 			path = Twitter;
 			sourceTree = "<group>";
@@ -564,10 +581,12 @@
 				4C3CCEBA22527A78000260F0 /* CoordinateRect.swift in Sources */,
 				4C8AA92A2278FAD000FE83CB /* Flickr.swift in Sources */,
 				4C3CCEB922527A78000260F0 /* UIView+Anchoring.swift in Sources */,
+				4CB6A895233FA2A3004EEFD8 /* TwitterPlaceSource.swift in Sources */,
 				4C3CCEB422527A78000260F0 /* AppPropertyService.swift in Sources */,
 				4C8AA92F227B6F4200FE83CB /* String+Formatting.swift in Sources */,
 				4CFC542722A1878B00C86B96 /* FlickrPhotoInfo.swift in Sources */,
 				4C3CCEB722527A78000260F0 /* ServiceTemplate.swift in Sources */,
+				4C9B9E3123426EA200CC8591 /* SettingsDataModel.swift in Sources */,
 				4C3CCEB322527A78000260F0 /* NetworkDataRequest.swift in Sources */,
 				4C4EAC7A2298110200CAF188 /* Coordinator.swift in Sources */,
 				4C3CCE3B2252659E000260F0 /* MainViewController.swift in Sources */,
@@ -578,9 +597,10 @@
 				4CFC542922A53B5E00C86B96 /* MainCoordinator.swift in Sources */,
 				4C3CCE392252659E000260F0 /* AppDelegate.swift in Sources */,
 				4C5793572292FB22009D838F /* MapView.swift in Sources */,
+				4C9B9E3423427F4500CC8591 /* UserDefaultPropertyWrapper.swift in Sources */,
 				4C24E44422FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift in Sources */,
 				4C3CCEB122527A78000260F0 /* JSON.swift in Sources */,
-				4CB6A893233EE862004EEFD8 /* SettingsScreenView.swift in Sources */,
+				4CB6A893233EE862004EEFD8 /* SettingsScreen.swift in Sources */,
 				4CDC716D229C62E80072467A /* FlickrPlaceDetailsViewController.swift in Sources */,
 				4C3CCEB022527A78000260F0 /* Querying.swift in Sources */,
 				4C8AA931227C8B3D00FE83CB /* FickrAPIKey.swift in Sources */,

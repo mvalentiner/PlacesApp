@@ -31,14 +31,15 @@ protocol MainCoordinatorService: Coordinator, SOAService {
 }
 
 internal class MainCoordinator: MainCoordinatorService {
+	/// SOAService
 	var serviceName: String = MainCoordinatorServiceName.serviceName
 	
 	static func register(using rootController: UINavigationController) {
 		MainCoordinator(rootController: rootController).register()
 	}
 
+	/// RootController
 	var rootController: UINavigationController
-
 	init(rootController: UINavigationController) {
 		self.rootController = rootController
 	}
@@ -47,8 +48,13 @@ internal class MainCoordinator: MainCoordinatorService {
 		present(MainViewController.instantiate())
 	}
 
+	/// SettingsDataModel
+	var settingsDataModel = SettingsDataModel()
+
+	/// Navigation
 	internal func navigateToInfoScreen() {
-		let hostingController = UIHostingController(rootView: SettingsScreenView(with: self))
+		let settingsScreenView = SettingsScreen(mainController: self).environmentObject(settingsDataModel)
+		let hostingController = UIHostingController(rootView: settingsScreenView)
 		present(hostingController)
 	}
 
