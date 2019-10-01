@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwifteriOS
 
 struct Twitter {
 	/*
@@ -33,4 +34,55 @@ struct Twitter {
 		}
 	}
 	internal static let invalidTokenError = Float(89.0)
+}
+
+private struct TwitterServiceName {
+	static let serviceName = "TwitterService"
+}
+
+extension ServiceRegistryImplementation {
+	var twitterService: TwitterService {
+		get {
+			return serviceWith(name: TwitterServiceName.serviceName) as! TwitterService	// Intentional force unwrapping
+		}
+	}
+}
+
+protocol TwitterService: SOAService {
+	func loginToTwitter(mainController: MainCoordinatorService)
+}
+
+extension TwitterService {
+	var serviceName: String {
+		get {
+			return TwitterServiceName.serviceName
+		}
+	}
+
+	func loginToTwitter(mainController: MainCoordinatorService) {
+
+		let failureHandler: (Error) -> Void = { error in
+//			self.alert(title: "Error", message: error.localizedDescription)
+			print("Error == \(error.localizedDescription)")
+		}
+		let swifter = Swifter(consumerKey: TwitterConsumerAPIKey, consumerSecret: TwitterConsumerAPISecretKey)
+//print("accessToken == \(String(describing: swifter.client.credential?.accessToken))")
+		let url = URL(string: "helioplaces://twitterAuthorizeSuccess")!
+		swifter.authorize(withCallback: url, presentingFrom: mainController.rootController.topViewController, success: { _, _ in
+//print("accessToken == \(String(describing: swifter.client.credential?.accessToken))")
+			mainController.popToRootController()
+		}, failure: failureHandler)
+	}
+}
+
+internal class TwitterServiceImplementation: TwitterService {
+//	// Only define one register function.
+//	static func register() {
+//		TwitterServiceImplementation().register()
+//	}
+
+	// Register the service as a lazy service.
+	static func register() {
+		ServiceRegistry.add(service: SOALazyService(serviceName: TwitterServiceName.serviceName, serviceGetter: { TwitterServiceImplementation() }))
+	}
 }

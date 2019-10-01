@@ -22,4 +22,6 @@ class SettingsDataModel: ObservableObject {
 			UserDefaults.standard.set(self.twitterIsActive, forKey: "twitterIsActive")
 		}
 	}
+	
+	var hasTwitterAccessToken: Bool = false
 }

@@ -39,7 +39,7 @@ class MainViewController: UIViewController, Storyboarded, CLLocationManagerDeleg
 		infoButton.addTarget(self, action: #selector(handleInfoButtonTap), for: .touchUpInside)
 		let buttonBarView = ButtonBarView(topButton: infoButton, bottomButton: MKUserTrackingButton(mapView: mapView))
 		view.addSubview(buttonBarView)
-		buttonBarView.anchorTo(top: view.safeAreaTopAnchor, right: view.safeAreaRightAnchor, topPadding: 48, rightPadding: 2)
+		buttonBarView.anchorTo(top: view.safeAreaTopAnchor, right: view.safeAreaRightAnchor, topPadding: 24, rightPadding: 8)
 		
 		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
 		view.addGestureRecognizer(tapGestureRecognizer)

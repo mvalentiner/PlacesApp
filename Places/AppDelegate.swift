@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		AppPropertiesServiceImplementation.register()
 		PlacesServiceImplementation.register(using: [InterestingnessPlaceSource()])
 		ReachabilityServiceImplementation.register()
+		TwitterServiceImplementation.register()
 		return ServiceRegistry
 	}()
 

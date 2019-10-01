@@ -28,6 +28,7 @@ protocol MainCoordinatorService: Coordinator, SOAService {
 	func presentMainViewController()
 	func navigateToInfoScreen()
 	func navigateToPlaceDetailsScreen(for place: Place)
+	func navigateToTwitterLogin()
 }
 
 internal class MainCoordinator: MainCoordinatorService {
@@ -73,5 +74,9 @@ internal class MainCoordinator: MainCoordinatorService {
 		}
 		let placeDetailsViewController = makePlaceDetailsViewController(place)
 		present(placeDetailsViewController)
+	}
+	
+	internal func navigateToTwitterLogin() {
+		ServiceRegistry.twitterService.loginToTwitter(mainController: self)
 	}
 }

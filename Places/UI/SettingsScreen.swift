@@ -6,7 +6,6 @@
 //  Copyright © 2019 Heliotropix, LLC. All rights reserved.
 //
 
-import SwifteriOS
 import SwiftUI
 
 struct SettingsScreen: View {
@@ -20,6 +19,7 @@ struct SettingsScreen: View {
 
 	var body: some View {
 		VStack {
+			Divider()
 			HStack {
 				Image("flickr")
 					.padding(.leading, 10)
@@ -30,31 +30,36 @@ struct SettingsScreen: View {
 				}
 				.padding(.trailing, 20)
 			}
+			Divider()
 			HStack {
 				Image("twitter")
 					.padding(.leading, 10)
-				Toggle(isOn: $settings.twitterIsActive) {
+				if settings.hasTwitterAccessToken {
+					Toggle(isOn: $settings.twitterIsActive) {
+						Text("Twitter")
+							.font(.headline)
+							.padding(.leading, 10)
+					}
+					.padding(.trailing, 20)
+				}
+				else {
 					Text("Twitter")
 						.font(.headline)
 						.padding(.leading, 10)
+					Spacer()
+					Button(action: {
+						self.mainController.navigateToTwitterLogin()
+					}) {
+						Text("Login")
+						.padding(.leading, 10)
+						.padding(.trailing, 20)
+					}
 				}
-				.padding(.trailing, 20)
 			}
+			Divider()
+			Spacer()
 		}
-	}
-
-	func didTouchUpInsideLoginButton() {
-		let failureHandler: (Error) -> Void = { error in
-//			self.alert(title: "Error", message: error.localizedDescription)
-			print("Error == \(error.localizedDescription)")
-		}
-		let swifter = Swifter(consumerKey: TwitterConsumerAPIKey, consumerSecret: TwitterConsumerAPISecretKey)
-//print("accessToken == \(String(describing: swifter.client.credential?.accessToken))")
-		let url = URL(string: "helioplaces://twitterAuthorizeSuccess")!
-		swifter.authorize(withCallback: url, presentingFrom: self.mainController.rootController.topViewController, success: { _, _ in
-//print("accessToken == \(String(describing: swifter.client.credential?.accessToken))")
-			self.mainController.popToRootController()
-		}, failure: failureHandler)
+		.padding(.top, 100)
 	}
 }
 
