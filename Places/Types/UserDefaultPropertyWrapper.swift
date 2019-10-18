@@ -9,7 +9,7 @@
 import Foundation
  
 @propertyWrapper
-struct UserDefault<T> {
+struct UserDefault<T: Codable> {
     let key: String
     let defaultValue: T
 
@@ -20,36 +20,30 @@ struct UserDefault<T> {
 
     var wrappedValue: T {
         get {
-            return UserDefaults.standard.object(forKey: key) as? T ?? defaultValue
+        	guard defaultValue is NSData ||
+				defaultValue is NSString ||
+				defaultValue is NSNumber ||
+				defaultValue is NSDate ||
+				defaultValue is NSArray ||
+				defaultValue is NSDictionary else {
+				guard let storedObject = UserDefaults.standard.object(forKey: key) as? Data else {
+					return defaultValue
+				}
+				return try! PropertyListDecoder().decode(T.self, from: storedObject)
+			}
+			return UserDefaults.standard.object(forKey: key) as? T ?? defaultValue
         }
         set {
+        	guard newValue is NSData ||
+				newValue is NSString ||
+				newValue is NSNumber ||
+				newValue is NSDate ||
+				newValue is NSArray ||
+				newValue is NSDictionary else {
+				UserDefaults.standard.set(try! PropertyListEncoder().encode(newValue), forKey: key)
+        		return
+			}
             UserDefaults.standard.set(newValue, forKey: key)
         }
     }
 }
-//
-//import Combine
-//import SwiftUI
-//
-//final class DataStore: BindableObject {
-//    let didChange = PassthroughSubject<DataStore, Never>()
-//
-//    @UserDefault(key: "Settings", defaultValue: [])
-//    var settings: [Settings] {
-//        didSet {
-//            didChange.send(self)
-//        }
-//    }
-//}
-//
-//import SwiftUI
-//
-//struct SettingsView : View {
-//    @EnvironmentObject var dataStore: DataStore
-//
-//    var body: some View {
-//        Toggle(isOn: $settings.space) {
-//            Text("(settings.space)")
-//        }
-//    }
-//}

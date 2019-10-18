@@ -8,7 +8,6 @@
 //	Inspired by https://www.hackingwithswift.com/articles/71/how-to-use-the-coordinator-pattern-in-ios-apps
 
 import CoreLocation
-import SwifteriOS
 import SwiftUI
 import UIKit
 
@@ -49,17 +48,18 @@ internal class MainCoordinator: MainCoordinatorService {
 		present(MainViewController.instantiate())
 	}
 
-	/// SettingsDataModel
-	var settingsDataModel = SettingsDataModel()
-
 	/// Navigation
 	internal func navigateToInfoScreen() {
-		let settingsScreenView = SettingsScreen(mainController: self).environmentObject(settingsDataModel)
+		let settingsModel = ServiceRegistry.appPropertiesService.settingsModel
+
+		settingsModel.hasTwitterAccessToken = ServiceRegistry.twitterService.isLoggedIn()
+
+		let settingsScreenView = SettingsScreen(mainController: self).environmentObject(settingsModel)
 		let hostingController = UIHostingController(rootView: settingsScreenView)
 		present(hostingController)
 	}
 
-	private let placeDetailsViewControllerRegistry: [PlaceSourceUID: (Place) -> UIViewController] = [
+	private let placeDetailsViewControllerRegistry: [PlaceSourceUId: (Place) -> UIViewController] = [
 		InterestingnessPlaceSource.uid : { place in
 			guard let placeSource = ServiceRegistry.placesService.placeSources[InterestingnessPlaceSource.uid] as? InterestingnessPlaceSource else {
 				fatalError("Programmer Error: the app is not configured for InterestingnessPlaceSource")
@@ -69,14 +69,14 @@ internal class MainCoordinator: MainCoordinatorService {
 	]
 
 	internal func navigateToPlaceDetailsScreen(for place: Place) {
-		guard let makePlaceDetailsViewController = placeDetailsViewControllerRegistry[place.uid.placeSourceUID] else {
-			fatalError("ERROR, no placeDetailsViewController registered for placeSourceUID = \(place.uid.placeSourceUID)")
+		guard let makePlaceDetailsViewController = placeDetailsViewControllerRegistry[place.uid.placeSourceUId] else {
+			fatalError("ERROR, no placeDetailsViewController registered for placeSourceUId = \(place.uid.placeSourceUId)")
 		}
 		let placeDetailsViewController = makePlaceDetailsViewController(place)
 		present(placeDetailsViewController)
 	}
 	
 	internal func navigateToTwitterLogin() {
-		ServiceRegistry.twitterService.loginToTwitter(mainController: self)
+		ServiceRegistry.twitterService.loginToTwitter(mainCoordinator: self)
 	}
 }

@@ -7,24 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C1AB86923087F8C008CC085 /* TwitterBearerTokenRequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1AB86823087F8C008CC085 /* TwitterBearerTokenRequestTest.swift */; };
-		4C1AB86A231048E6008CC085 /* TwitterAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */; };
-		4C1AB86B23104909008CC085 /* TwitterAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFCD1C022F86C8F00ADBA21 /* TwitterAPIKey.swift */; };
 		4C24E44422FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */; };
-		4C347CA6231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CA5231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift */; };
 		4C347CA8231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */; };
-		4C347CA9231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */; };
 		4C347CAB231579E2007DC13F /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CAA231579E2007DC13F /* Twitter.swift */; };
-		4C347CAC231579E2007DC13F /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C347CAA231579E2007DC13F /* Twitter.swift */; };
 		4C3CCE392252659E000260F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE382252659E000260F0 /* AppDelegate.swift */; };
 		4C3CCE3B2252659E000260F0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE3A2252659E000260F0 /* MainViewController.swift */; };
 		4C3CCE402252659F000260F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C3CCE3F2252659F000260F0 /* Assets.xcassets */; };
 		4C3CCE432252659F000260F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C3CCE412252659F000260F0 /* LaunchScreen.storyboard */; };
 		4C3CCE4E2252659F000260F0 /* PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE4D2252659F000260F0 /* PlacesTests.swift */; };
 		4C3CCE5C22526F3E000260F0 /* PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE4D2252659F000260F0 /* PlacesTests.swift */; };
-		4C3CCE6922526F8C000260F0 /* CodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE6522526F8C000260F0 /* CodingTests.swift */; };
-		4C3CCE6A22526F8C000260F0 /* NetworkDataJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE6622526F8C000260F0 /* NetworkDataJSONTests.swift */; };
-		4C3CCE6B22526F8C000260F0 /* NetworkDataRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE6722526F8C000260F0 /* NetworkDataRequestTests.swift */; };
 		4C3CCE6E225270E3000260F0 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 4C3CCE6D225270E3000260F0 /* Cartfile */; };
 		4C3CCE8F22527974000260F0 /* LaunchScreen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C3CCE8D22527974000260F0 /* LaunchScreen.jpg */; };
 		4C3CCE9022527974000260F0 /* PlaceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE8E22527974000260F0 /* PlaceAnnotation.swift */; };
@@ -56,16 +47,36 @@
 		4C5793592293627B009D838F /* MKCoordinateRegion+coordinateRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5793582293627B009D838F /* MKCoordinateRegion+coordinateRect.swift */; };
 		4C778E7622636DEC00D682BE /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C778E7522636DEC00D682BE /* Reachability.framework */; };
 		4C778E7822636F7100D682BE /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C778E7722636F7100D682BE /* ReachabilityService.swift */; };
+		4C83AA2F234FADBF00B9F36E /* AppPropertyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA422527A78000260F0 /* AppPropertyService.swift */; };
 		4C8AA9282278F43500FE83CB /* InterestingnessPlaceSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA9272278F43500FE83CB /* InterestingnessPlaceSource.swift */; };
 		4C8AA92A2278FAD000FE83CB /* Flickr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA9292278FAD000FE83CB /* Flickr.swift */; };
 		4C8AA92F227B6F4200FE83CB /* String+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA92E227B6F4100FE83CB /* String+Formatting.swift */; };
 		4C8AA931227C8B3D00FE83CB /* FickrAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA930227C8B3D00FE83CB /* FickrAPIKey.swift */; };
 		4C9B9E3123426EA200CC8591 /* SettingsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E3023426EA200CC8591 /* SettingsDataModel.swift */; };
 		4C9B9E3423427F4500CC8591 /* UserDefaultPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E3223426F6000CC8591 /* UserDefaultPropertyWrapper.swift */; };
-		4CB6A88F233EE824004EEFD8 /* SwifteriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB6A88E233EE824004EEFD8 /* SwifteriOS.framework */; };
-		4CB6A890233EE824004EEFD8 /* SwifteriOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB6A88E233EE824004EEFD8 /* SwifteriOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C9B9ED0234457E600CC8591 /* SwifterAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E9F234424F600CC8591 /* SwifterAuth.swift */; };
+		4C9B9ED12344580C00CC8591 /* SwifterCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9EA4234424F600CC8591 /* SwifterCredential.swift */; };
+		4C9B9ED22344581E00CC8591 /* SwifterJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E9A234424F600CC8591 /* SwifterJSON.swift */; };
+		4C9B9ED32344595500CC8591 /* String++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E8E234424F600CC8591 /* String++.swift */; };
+		4C9B9ED523445A2000CC8591 /* URL++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E9C234424F600CC8591 /* URL++.swift */; };
+		4C9B9ED623445A3900CC8591 /* SwifterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E98234424F600CC8591 /* SwifterError.swift */; };
+		4C9B9ED723445A8100CC8591 /* SwifterClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E87234424F600CC8591 /* SwifterClientProtocol.swift */; };
+		4C9B9ED823445AED00CC8591 /* SwifterHTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E86234424F600CC8591 /* SwifterHTTPRequest.swift */; };
+		4C9B9ED923445B3500CC8591 /* SwifterOAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9EA0234424F600CC8591 /* SwifterOAuthClient.swift */; };
+		4C9B9EDA23445C6000CC8591 /* Operator++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E89234424F600CC8591 /* Operator++.swift */; };
+		4C9B9EDB23445D0900CC8591 /* Dictionary++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E97234424F600CC8591 /* Dictionary++.swift */; };
+		4C9B9EDC23445D2700CC8591 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E8D234424F600CC8591 /* HMAC.swift */; };
+		4C9B9EDD23445D3700CC8591 /* Data++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E85234424F600CC8591 /* Data++.swift */; };
+		4C9B9EDE23445D4D00CC8591 /* SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E9B234424F600CC8591 /* SHA1.swift */; };
+		4C9B9EDF23445D5B00CC8591 /* Int++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E90234424F600CC8591 /* Int++.swift */; };
+		4CA76A2E234FA82200D4BA4F /* AppPropertiesServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA76A2D234FA82200D4BA4F /* AppPropertiesServiceTests.swift */; };
+		4CA76A2F234FA99A00D4BA4F /* URLRoutingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA76A2B234F962F00D4BA4F /* URLRoutingService.swift */; };
+		4CA76A31234FAA9700D4BA4F /* SOAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA522527A78000260F0 /* SOAService.swift */; };
+		4CA76A32234FAAB700D4BA4F /* SettingsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9E3023426EA200CC8591 /* SettingsDataModel.swift */; };
 		4CB6A893233EE862004EEFD8 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6A892233EE862004EEFD8 /* SettingsScreen.swift */; };
 		4CB6A895233FA2A3004EEFD8 /* TwitterPlaceSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6A894233FA2A3004EEFD8 /* TwitterPlaceSource.swift */; };
+		4CBFE15A2344EDD60099ECE6 /* TwitterAppUserAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBFE1582344EDD60099ECE6 /* TwitterAppUserAuthenticatedRequest.swift */; };
+		4CBFE15B2344EDD60099ECE6 /* TwitterAppOnlyAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBFE1592344EDD60099ECE6 /* TwitterAppOnlyAuthenticatedRequest.swift */; };
 		4CCDE172225283A60089BF7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CCDE170225283A60089BF7F /* Main.storyboard */; };
 		4CCDE17B225292830089BF7F /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA022527A77000260F0 /* JSON.swift */; };
 		4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
@@ -73,6 +84,7 @@
 		4CCDE17E225295B20089BF7F /* Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9F22527A77000260F0 /* Querying.swift */; };
 		4CD99D5A229507F1009FA10C /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD99D59229507F1009FA10C /* Bindable.swift */; };
 		4CDC716D229C62E80072467A /* FlickrPlaceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC716C229C62E80072467A /* FlickrPlaceDetailsViewController.swift */; };
+		4CE806352350CC8800D4A138 /* Scanner++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9EA3234424F600CC8591 /* Scanner++.swift */; };
 		4CFC5424229D89D100C86B96 /* IMG_7322.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 4CFC5423229D89D100C86B96 /* IMG_7322.JPG */; };
 		4CFC542722A1878B00C86B96 /* FlickrPhotoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AA92B2278FC4700FE83CB /* FlickrPhotoInfo.swift */; };
 		4CFC542922A53B5E00C86B96 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC542822A53B5E00C86B96 /* MainCoordinator.swift */; };
@@ -103,7 +115,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CB6A890233EE824004EEFD8 /* SwifteriOS.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -162,9 +173,29 @@
 		4C8AA930227C8B3D00FE83CB /* FickrAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FickrAPIKey.swift; sourceTree = "<group>"; };
 		4C9B9E3023426EA200CC8591 /* SettingsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataModel.swift; sourceTree = "<group>"; };
 		4C9B9E3223426F6000CC8591 /* UserDefaultPropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultPropertyWrapper.swift; sourceTree = "<group>"; };
-		4CB6A88E233EE824004EEFD8 /* SwifteriOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwifteriOS.framework; path = Carthage/Build/iOS/SwifteriOS.framework; sourceTree = "<group>"; };
+		4C9B9E85234424F600CC8591 /* Data++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data++.swift"; sourceTree = "<group>"; };
+		4C9B9E86234424F600CC8591 /* SwifterHTTPRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterHTTPRequest.swift; sourceTree = "<group>"; };
+		4C9B9E87234424F600CC8591 /* SwifterClientProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterClientProtocol.swift; sourceTree = "<group>"; };
+		4C9B9E89234424F600CC8591 /* Operator++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operator++.swift"; sourceTree = "<group>"; };
+		4C9B9E8D234424F600CC8591 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
+		4C9B9E8E234424F600CC8591 /* String++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String++.swift"; sourceTree = "<group>"; };
+		4C9B9E90234424F600CC8591 /* Int++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int++.swift"; sourceTree = "<group>"; };
+		4C9B9E97234424F600CC8591 /* Dictionary++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary++.swift"; sourceTree = "<group>"; };
+		4C9B9E98234424F600CC8591 /* SwifterError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterError.swift; sourceTree = "<group>"; };
+		4C9B9E9A234424F600CC8591 /* SwifterJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterJSON.swift; sourceTree = "<group>"; };
+		4C9B9E9B234424F600CC8591 /* SHA1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA1.swift; sourceTree = "<group>"; };
+		4C9B9E9C234424F600CC8591 /* URL++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL++.swift"; sourceTree = "<group>"; };
+		4C9B9E9F234424F600CC8591 /* SwifterAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterAuth.swift; sourceTree = "<group>"; };
+		4C9B9EA0234424F600CC8591 /* SwifterOAuthClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterOAuthClient.swift; sourceTree = "<group>"; };
+		4C9B9EA3234424F600CC8591 /* Scanner++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Scanner++.swift"; sourceTree = "<group>"; };
+		4C9B9EA4234424F600CC8591 /* SwifterCredential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterCredential.swift; sourceTree = "<group>"; };
+		4CA76A2B234F962F00D4BA4F /* URLRoutingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRoutingService.swift; sourceTree = "<group>"; };
+		4CA76A2D234FA82200D4BA4F /* AppPropertiesServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPropertiesServiceTests.swift; sourceTree = "<group>"; };
 		4CB6A892233EE862004EEFD8 /* SettingsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		4CB6A894233FA2A3004EEFD8 /* TwitterPlaceSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterPlaceSource.swift; sourceTree = "<group>"; };
+		4CBFE1582344EDD60099ECE6 /* TwitterAppUserAuthenticatedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterAppUserAuthenticatedRequest.swift; sourceTree = "<group>"; };
+		4CBFE1592344EDD60099ECE6 /* TwitterAppOnlyAuthenticatedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterAppOnlyAuthenticatedRequest.swift; sourceTree = "<group>"; };
+		4CBFE15C23450FC60099ECE6 /* TwitterOAuthRequestTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterOAuthRequestTokenRequest.swift; sourceTree = "<group>"; };
 		4CCDE171225283A60089BF7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4CD99D59229507F1009FA10C /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		4CDC716C229C62E80072467A /* FlickrPlaceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPlaceDetailsViewController.swift; sourceTree = "<group>"; };
@@ -180,7 +211,6 @@
 			files = (
 				4C778E7622636DEC00D682BE /* Reachability.framework in Frameworks */,
 				4C3CCE9A22527A3C000260F0 /* MBProgressHUD.framework in Frameworks */,
-				4CB6A88F233EE824004EEFD8 /* SwifteriOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +282,7 @@
 		4C3CCE6422526F8C000260F0 /* PlacesUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				4CA76A2D234FA82200D4BA4F /* AppPropertiesServiceTests.swift */,
 				4C3CCE6522526F8C000260F0 /* CodingTests.swift */,
 				4C3CCE6622526F8C000260F0 /* NetworkDataJSONTests.swift */,
 				4C3CCE6722526F8C000260F0 /* NetworkDataRequestTests.swift */,
@@ -267,7 +298,6 @@
 			children = (
 				4C3CCE9622527A3C000260F0 /* MBProgressHUD.framework */,
 				4C778E7522636DEC00D682BE /* Reachability.framework */,
-				4CB6A88E233EE824004EEFD8 /* SwifteriOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -300,6 +330,7 @@
 				4C778E7722636F7100D682BE /* ReachabilityService.swift */,
 				4C3CCEA822527A78000260F0 /* ServiceTemplate.swift */,
 				4C3CCEA522527A78000260F0 /* SOAService.swift */,
+				4CA76A2B234F962F00D4BA4F /* URLRoutingService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -349,6 +380,29 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		4C9B9E84234424F600CC8591 /* Swifter */ = {
+			isa = PBXGroup;
+			children = (
+				4C9B9E85234424F600CC8591 /* Data++.swift */,
+				4C9B9E97234424F600CC8591 /* Dictionary++.swift */,
+				4C9B9E8D234424F600CC8591 /* HMAC.swift */,
+				4C9B9E90234424F600CC8591 /* Int++.swift */,
+				4C9B9E89234424F600CC8591 /* Operator++.swift */,
+				4C9B9EA3234424F600CC8591 /* Scanner++.swift */,
+				4C9B9E8E234424F600CC8591 /* String++.swift */,
+				4C9B9E9C234424F600CC8591 /* URL++.swift */,
+				4C9B9E9B234424F600CC8591 /* SHA1.swift */,
+				4C9B9E9F234424F600CC8591 /* SwifterAuth.swift */,
+				4C9B9E87234424F600CC8591 /* SwifterClientProtocol.swift */,
+				4C9B9EA4234424F600CC8591 /* SwifterCredential.swift */,
+				4C9B9E98234424F600CC8591 /* SwifterError.swift */,
+				4C9B9E86234424F600CC8591 /* SwifterHTTPRequest.swift */,
+				4C9B9E9A234424F600CC8591 /* SwifterJSON.swift */,
+				4C9B9EA0234424F600CC8591 /* SwifterOAuthClient.swift */,
+			);
+			path = Swifter;
+			sourceTree = "<group>";
+		};
 		4CDC716A229C60930072467A /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,10 +424,14 @@
 		4CFCD1BF22F86C0700ADBA21 /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
+				4C9B9E84234424F600CC8591 /* Swifter */,
+				4C347CAA231579E2007DC13F /* Twitter.swift */,
 				4CFCD1C022F86C8F00ADBA21 /* TwitterAPIKey.swift */,
+				4CBFE1592344EDD60099ECE6 /* TwitterAppOnlyAuthenticatedRequest.swift */,
+				4CBFE1582344EDD60099ECE6 /* TwitterAppUserAuthenticatedRequest.swift */,
+				4CBFE15C23450FC60099ECE6 /* TwitterOAuthRequestTokenRequest.swift */,
 				4C24E44322FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift */,
 				4C347CA7231306A2007DC13F /* TwitterBearerTokenRequest.swift */,
-				4C347CAA231579E2007DC13F /* Twitter.swift */,
 				4CB6A894233FA2A3004EEFD8 /* TwitterPlaceSource.swift */,
 			);
 			path = Twitter;
@@ -577,34 +635,51 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C9B9ED32344595500CC8591 /* String++.swift in Sources */,
 				4C8AA9282278F43500FE83CB /* InterestingnessPlaceSource.swift in Sources */,
 				4C3CCEBA22527A78000260F0 /* CoordinateRect.swift in Sources */,
+				4C9B9ED523445A2000CC8591 /* URL++.swift in Sources */,
+				4C9B9EDE23445D4D00CC8591 /* SHA1.swift in Sources */,
 				4C8AA92A2278FAD000FE83CB /* Flickr.swift in Sources */,
+				4C9B9EDC23445D2700CC8591 /* HMAC.swift in Sources */,
 				4C3CCEB922527A78000260F0 /* UIView+Anchoring.swift in Sources */,
 				4CB6A895233FA2A3004EEFD8 /* TwitterPlaceSource.swift in Sources */,
 				4C3CCEB422527A78000260F0 /* AppPropertyService.swift in Sources */,
 				4C8AA92F227B6F4200FE83CB /* String+Formatting.swift in Sources */,
 				4CFC542722A1878B00C86B96 /* FlickrPhotoInfo.swift in Sources */,
 				4C3CCEB722527A78000260F0 /* ServiceTemplate.swift in Sources */,
+				4C9B9EDF23445D5B00CC8591 /* Int++.swift in Sources */,
 				4C9B9E3123426EA200CC8591 /* SettingsDataModel.swift in Sources */,
 				4C3CCEB322527A78000260F0 /* NetworkDataRequest.swift in Sources */,
 				4C4EAC7A2298110200CAF188 /* Coordinator.swift in Sources */,
+				4C9B9ED0234457E600CC8591 /* SwifterAuth.swift in Sources */,
 				4C3CCE3B2252659E000260F0 /* MainViewController.swift in Sources */,
 				4C3CCE9022527974000260F0 /* PlaceAnnotation.swift in Sources */,
 				4CFCD1C122F86C8F00ADBA21 /* TwitterAPIKey.swift in Sources */,
+				4CBFE15B2344EDD60099ECE6 /* TwitterAppOnlyAuthenticatedRequest.swift in Sources */,
+				4C9B9ED823445AED00CC8591 /* SwifterHTTPRequest.swift in Sources */,
+				4C9B9ED623445A3900CC8591 /* SwifterError.swift in Sources */,
+				4C9B9ED723445A8100CC8591 /* SwifterClientProtocol.swift in Sources */,
 				4C347CAB231579E2007DC13F /* Twitter.swift in Sources */,
+				4C9B9EDB23445D0900CC8591 /* Dictionary++.swift in Sources */,
+				4C9B9ED923445B3500CC8591 /* SwifterOAuthClient.swift in Sources */,
+				4CE806352350CC8800D4A138 /* Scanner++.swift in Sources */,
 				4C5793552292EC75009D838F /* ButtonBarView.swift in Sources */,
 				4CFC542922A53B5E00C86B96 /* MainCoordinator.swift in Sources */,
 				4C3CCE392252659E000260F0 /* AppDelegate.swift in Sources */,
 				4C5793572292FB22009D838F /* MapView.swift in Sources */,
 				4C9B9E3423427F4500CC8591 /* UserDefaultPropertyWrapper.swift in Sources */,
 				4C24E44422FA0538005FAFE1 /* TwitterAuthenticatedRequest.swift in Sources */,
+				4CBFE15A2344EDD60099ECE6 /* TwitterAppUserAuthenticatedRequest.swift in Sources */,
 				4C3CCEB122527A78000260F0 /* JSON.swift in Sources */,
 				4CB6A893233EE862004EEFD8 /* SettingsScreen.swift in Sources */,
+				4C9B9ED12344580C00CC8591 /* SwifterCredential.swift in Sources */,
 				4CDC716D229C62E80072467A /* FlickrPlaceDetailsViewController.swift in Sources */,
 				4C3CCEB022527A78000260F0 /* Querying.swift in Sources */,
 				4C8AA931227C8B3D00FE83CB /* FickrAPIKey.swift in Sources */,
 				4C3CCEB522527A78000260F0 /* SOAService.swift in Sources */,
+				4C9B9ED22344581E00CC8591 /* SwifterJSON.swift in Sources */,
+				4CA76A2F234FA99A00D4BA4F /* URLRoutingService.swift in Sources */,
 				4C3CCEB622527A78000260F0 /* Places.swift in Sources */,
 				4C347CA8231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */,
 				4C3CCEBB22527A78000260F0 /* UIView+SafeArea.swift in Sources */,
@@ -612,9 +687,11 @@
 				4C3CCEB822527A78000260F0 /* PlacesService.swift in Sources */,
 				4C3CCEB222527A78000260F0 /* Merging.swift in Sources */,
 				4C5793592293627B009D838F /* MKCoordinateRegion+coordinateRect.swift in Sources */,
+				4C9B9EDA23445C6000CC8591 /* Operator++.swift in Sources */,
 				4C3CCEAF22527A78000260F0 /* Initialization.swift in Sources */,
 				4CD99D5A229507F1009FA10C /* Bindable.swift in Sources */,
 				4C4EAC7C229813DE00CAF188 /* Storyboarded.swift in Sources */,
+				4C9B9EDD23445D3700CC8591 /* Data++.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,21 +712,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C347CA6231305E6007DC13F /* TwitterAuthenticatedRequestTest.swift in Sources */,
+				4C83AA2F234FADBF00B9F36E /* AppPropertyService.swift in Sources */,
 				4CCDE17D225295B20089BF7F /* Merging.swift in Sources */,
 				4CCDE17E225295B20089BF7F /* Querying.swift in Sources */,
+				4CA76A32234FAAB700D4BA4F /* SettingsDataModel.swift in Sources */,
+				4CA76A2E234FA82200D4BA4F /* AppPropertiesServiceTests.swift in Sources */,
+				4CA76A31234FAA9700D4BA4F /* SOAService.swift in Sources */,
 				4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */,
-				4C1AB86A231048E6008CC085 /* TwitterAuthenticatedRequest.swift in Sources */,
-				4C1AB86B23104909008CC085 /* TwitterAPIKey.swift in Sources */,
 				4CCDE17B225292830089BF7F /* JSON.swift in Sources */,
-				4C347CAC231579E2007DC13F /* Twitter.swift in Sources */,
-				4C3CCE6B22526F8C000260F0 /* NetworkDataRequestTests.swift in Sources */,
-				4C347CA9231306A2007DC13F /* TwitterBearerTokenRequest.swift in Sources */,
 				4C45F13822563B0800597821 /* NetworkDataRequest.swift in Sources */,
-				4C1AB86923087F8C008CC085 /* TwitterBearerTokenRequestTest.swift in Sources */,
 				4C3CCE5C22526F3E000260F0 /* PlacesTests.swift in Sources */,
-				4C3CCE6922526F8C000260F0 /* CodingTests.swift in Sources */,
-				4C3CCE6A22526F8C000260F0 /* NetworkDataJSONTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,6 +930,7 @@
 				DEVELOPMENT_TEAM = 55PL542ZUV;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				INFOPLIST_FILE = "$(SRCROOT)/PlacesTests/PlacesTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -878,6 +951,7 @@
 				DEVELOPMENT_TEAM = 55PL542ZUV;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				INFOPLIST_FILE = "$(SRCROOT)/PlacesTests/PlacesTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -901,6 +975,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/PlacesUnitTests/PlacesUnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -923,6 +998,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/PlacesUnitTests/PlacesUnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

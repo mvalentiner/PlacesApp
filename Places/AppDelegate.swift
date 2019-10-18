@@ -6,7 +6,6 @@
 //  Copyright © 2019 Heliotropix, LLC. All rights reserved.
 //
 
-import SwifteriOS
 import UIKit
 
 @UIApplicationMain
@@ -14,10 +13,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// This declaration causes ServiceRegistry to be instantiated
 	// and services to be registered prior to application(_ application:, didFinishLaunchingWithOptions:) being called.
 	private let serviceRegistry: ServiceRegistryImplementation = {
-		AppPropertiesServiceImplementation.register()
-		PlacesServiceImplementation.register(using: [InterestingnessPlaceSource()])
+		let appPropertiesService = AppPropertiesServiceImplementation.register()
 		ReachabilityServiceImplementation.register()
-		TwitterServiceImplementation.register()
+		URLRoutingServiceImplementation.register(using: appPropertiesService)
+
+		var urlRoutingService = ServiceRegistry.urlRoutingService
+		let twitterService = TwitterServiceImplementation.register(
+			isActiveFunc: { return appPropertiesService.settingsModel.twitterIsActive }, urlRoutingService: &urlRoutingService)
+
+		PlacesServiceImplementation.register(
+			using: [
+				InterestingnessPlaceSource(),
+				TwitterPlaceSource()
+			],
+			isActiveTable: [
+				InterestingnessPlaceSource.uid : { return appPropertiesService.settingsModel.flickrIsActive },
+				TwitterPlaceSource.uid : twitterService.twitterIsActive
+			])
+
 		return ServiceRegistry
 	}()
 
@@ -46,6 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-		return Swifter.handleOpenURL(url, callbackURL: url)
+		return ServiceRegistry.urlRoutingService.application(application, open: url, options: options)
 	}
 }

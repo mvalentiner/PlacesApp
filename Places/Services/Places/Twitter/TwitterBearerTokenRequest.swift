@@ -20,11 +20,17 @@ import Foundation
 class TwitterBearerTokenRequest: UnauthenticatedJSONRequest {
 	var endpointURL: String = "https://api.twitter.com/oauth2/token"
 
+	private let bearerTokenCredentialsBase64Encoded: String
+
+	init(_ bearerTokenCredentialsBase64Encoded: String) {
+    	self.bearerTokenCredentialsBase64Encoded = bearerTokenCredentialsBase64Encoded
+	}
+
 	func makeRequest(for url: URL) -> URLRequest {
 		var request = URLRequest(url: url)
         request.httpMethod = "POST"
 		var headers = request.allHTTPHeaderFields ?? [:]
-		headers["Authorization"] = "Basic \(Twitter.bearerTokenCredentialsBase64Encoded)"
+		headers["Authorization"] = "Basic \(bearerTokenCredentialsBase64Encoded)"
 		headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8"
 		request.allHTTPHeaderFields = headers
 		request.httpBody = "grant_type=client_credentials".data(using: .utf8)

@@ -13,14 +13,14 @@ struct TwitterPlaceSource: PlaceSource {
 	static let uid = "TWTR"
 
 	// protocol PlaceSource requirements
-	let placeSourceUID: PlaceSourceUID = TwitterPlaceSource.uid
+	let placeSourceUId: PlaceSourceUId = TwitterPlaceSource.uid
 	let placeSourceName = "Twitter"
 
 	//TODO: make private?
 	internal class TwitterPlace: Place {
 		var details: PlaceDetail?
 		var photoURL: String
-		init(uid: PlaceUID, location: CLLocationCoordinate2D, title: String, preview: UIImage? = nil, photoURL: String) {
+		init(uid: PlaceUId, location: CLLocationCoordinate2D, title: String, preview: UIImage? = nil, photoURL: String) {
 			self.photoURL = photoURL
 			super.init(uid: uid, location: location, title: title, preview: preview)
 		}
@@ -39,7 +39,7 @@ struct TwitterPlaceSource: PlaceSource {
 //					return
 //				}
 //				// TODO:  optimize nativePlaceId
-//				let placeUId = PlaceUID(placeSourceUID: self.placeSourceUID, nativePlaceId: flickrPhotoInfo.photoURLString)
+//				let placeUId = PlaceUId(placeSourceUId: self.placeSourceUId, nativePlaceId: flickrPhotoInfo.photoURLString)
 //				let place = FlickrPlace(uid: placeUId, location: flickrPhotoInfo.coordinate, title: flickrPhotoInfo.title,
 //					preview: flickrPhotoInfo.thumbnailImage, photoURL: flickrPhotoInfo.photoURLString)
 //				onCompletionForEach(.success(place))
@@ -47,7 +47,7 @@ struct TwitterPlaceSource: PlaceSource {
 //		}
 	}
 
-	/// Given a PlaceUID, get its PlaceDetails.
+	/// Given a PlaceUId, get its PlaceDetails.
 	func getPlaceDetail(for place: Place, completionHandler: @escaping (Result<PlaceDetail?, Error>) -> Void) {
 //		guard let flickrPlace = place as? FlickrPlace else {
 //			fatalError("Error: \(#function) called with non-FlickrPlace")

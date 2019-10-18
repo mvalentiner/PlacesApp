@@ -7,7 +7,8 @@
 //
 
 import Foundation
-import SwifteriOS
+import SafariServices
+import UIKit
 
 struct Twitter {
 	/*
@@ -34,6 +35,8 @@ struct Twitter {
 		}
 	}
 	internal static let invalidTokenError = Float(89.0)
+
+	@UserDefault("twtrCredential", defaultValue: nil) var twtrCredential: Credential?	//Credential.OAuthAccessToken?
 }
 
 private struct TwitterServiceName {
@@ -49,7 +52,8 @@ extension ServiceRegistryImplementation {
 }
 
 protocol TwitterService: SOAService {
-	func loginToTwitter(mainController: MainCoordinatorService)
+	func isLoggedIn() -> Bool
+	func loginToTwitter(mainCoordinator: MainCoordinatorService)
 }
 
 extension TwitterService {
@@ -59,30 +63,108 @@ extension TwitterService {
 		}
 	}
 
-	func loginToTwitter(mainController: MainCoordinatorService) {
-
+	func loginToTwitter(mainCoordinator: MainCoordinatorService) {
 		let failureHandler: (Error) -> Void = { error in
-//			self.alert(title: "Error", message: error.localizedDescription)
 			print("Error == \(error.localizedDescription)")
 		}
-		let swifter = Swifter(consumerKey: TwitterConsumerAPIKey, consumerSecret: TwitterConsumerAPISecretKey)
-//print("accessToken == \(String(describing: swifter.client.credential?.accessToken))")
-		let url = URL(string: "helioplaces://twitterAuthorizeSuccess")!
-		swifter.authorize(withCallback: url, presentingFrom: mainController.rootController.topViewController, success: { _, _ in
-//print("accessToken == \(String(describing: swifter.client.credential?.accessToken))")
-			mainController.popToRootController()
-		}, failure: failureHandler)
+		let callbackUrl = URL(string: "helioplaces://twitterservice/AuthorizeSuccess")!
+		let swifterAuth = SwifterAuth(consumerKey: TwitterConsumerAPIKey, consumerSecret: TwitterConsumerAPISecretKey)
+		swifterAuth.authorize(withCallback: callbackUrl, presentingFrom: mainCoordinator.rootController.topViewController, forceLogin: false, safariDelegate: nil,
+				success: { accessToken, _ in
+					var twtr = Twitter()
+					twtr.twtrCredential = swifterAuth.client.credential
+					let settingsModel = SettingsDataModel()
+					settingsModel.twitterIsActive = true
+					mainCoordinator.popToRootController()
+					mainCoordinator.navigateToInfoScreen()
+				},
+				failure: failureHandler)
 	}
+
+	func loginToTwitterNEW(mainCoordinator: MainCoordinatorService) {
+		// POST oauth / request_token -> GET oauth/authorize -> POST oauth / access_token
+		// Obtain OAuthRequestToken
+//		TwitterOAuthRequestTokenRequest().getToken() { result in
+//			switch (result) {
+//			case .failure(let error):
+//				print("error = \(error)")
+//				break
+//			case .success(let token):
+				//print("token = \(token)")
+				//				let forceLogin = ""	//forceLogin ? "&force_login=true" : ""
+				//				let query = "oauth/authorize?oauth_token=\(token)\(forceLogin)"
+				//				let queryUrl = URL(string: query, relativeTo: URL(string: "https://api.twitter.com/")!)!.absoluteURL
+				//				UIApplication.shared.open(queryUrl, options: [:], completionHandler: nil)
+//				TwitterOAuthAuthorizeRequest().load { result in
+//					switch (result) {
+//					case .failure(let error):
+//						print("error = \(error)")
+//						break
+//					case .success(let token):
+//						TwitterOAuthAccessTokenRequest().load { result in
+//							switch (result) {
+//							case .failure(let error):
+//								print("error = \(error)")
+//								break
+//							case .success(let token):
+//								break
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+	}
+}
+
+extension Notification.Name {
+    static let swifterCallback = Notification.Name(rawValue: "Swifter.CallbackNotificationName")
 }
 
 internal class TwitterServiceImplementation: TwitterService {
-//	// Only define one register function.
-//	static func register() {
-//		TwitterServiceImplementation().register()
-//	}
+	// Register the service.
+	@discardableResult
+	static func register(isActiveFunc: @escaping () -> Bool, urlRoutingService: inout URLRoutingService) -> TwitterServiceImplementation {
+		let service = TwitterServiceImplementation(isActiveFunc, urlRoutingService: &urlRoutingService)
+		service.register()
+		return service
+	}
 
-	// Register the service as a lazy service.
-	static func register() {
-		ServiceRegistry.add(service: SOALazyService(serviceName: TwitterServiceName.serviceName, serviceGetter: { TwitterServiceImplementation() }))
+	func isLoggedIn() -> Bool {
+		return Twitter().twtrCredential != nil
+	}
+	
+	let twitterIsActive: () -> Bool
+	
+	init(_ isActiveFunc: @escaping () -> Bool, urlRoutingService: inout URLRoutingService) {
+		twitterIsActive = isActiveFunc
+		urlRoutingService.add(handler: handleAuthorizeSuccess, for: "twitterservice")
+	}
+	
+	internal func handleAuthorizeSuccess(url: URL, operation: String, parameters : Dictionary<String, String>) -> Bool {
+	
+		guard operation == "AuthorizeSuccess" else {
+			// Unsupported operation.
+			// TODO: handle? log? fatal?
+			return false
+		}
+	
+//		guard let accessToken = parameters["oauth_token"] else {
+//			// Missing token
+//			// TODO: handle? log? fatal?
+//			return false
+//		}
+
+//		var twitter = Twitter()
+//		twitter.twtrAccessToken = accessToken
+
+//		SwifterAuth.handleOpenURL(url, callbackURL: url)
+        let notification = Notification(name: .swifterCallback, object: nil, userInfo: [SwifterAuth.CallbackNotification.optionsURLKey: url])
+        NotificationCenter.default.post(notification)
+
+		return true
 	}
 }
+//parameters.forEach { (key: String, value: String) in
+//	print("key: \(key) == \(value)")
+//}

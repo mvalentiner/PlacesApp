@@ -1,5 +1,5 @@
 //
-//  TwitterAuthenticatedRequest.swift
+//  TwitterAppUserAuthenticatedRequest.swift
 //  Places
 //
 //  Created by Michael Valentiner on 8/6/19.
@@ -8,31 +8,14 @@
 
 import Foundation
 
-protocol TwitterAuthenticatedRequest: UnauthenticatedJSONRequest {
-	var bearerTokenCredentialsBase64Encoded: String { get }
+protocol TwitterAppUserAuthenticatedRequest: UnauthenticatedJSONRequest {
 }
 
-/*
-	From https://developer.twitter.com/en/docs/basics/authentication/overview/application-only#issuing-application-only-requests,
-	Step 3: Authenticate API requests with the bearer token
-		The bearer token may be used to issue requests to API endpoints which support application-only auth. To use the bearer token,
-			construct a normal HTTPS request and include an Authorization header with the value of Bearer <base64 bearer token value from step 2>.
-			Signing is not required.
-		Example request (Authorization header has been wrapped):
-		GET /1.1/statuses/user_timeline.json?count=100&screen_name=twitterapi HTTP/1.1
-		Host: api.twitter.com
-		User-Agent: My Twitter App v1.0.23
-		Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%2FAAAAAAAAAAAA
-							  AAAAAAAA%3DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-		Accept-Encoding: gzip
-*/
-extension TwitterAuthenticatedRequest {
-
+extension TwitterAppUserAuthenticatedRequest {
 	func makeRequest(for url: URL) -> URLRequest {
 		var request = URLRequest(url: url)
         request.httpMethod = "GET"
 		var headers = request.allHTTPHeaderFields ?? [:]
-//		headers["Authorization"] = "Bearer \(Twitter.bearerToken)"
 		headers["Authorization"] = createOAuthHeaderString(method: request.httpMethod!, url: url)
 		headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8"
 		request.allHTTPHeaderFields = headers
@@ -149,83 +132,5 @@ extension TwitterAuthenticatedRequest {
 			parameterString.addingPercentEncoding(withAllowedCharacters: allowedCharacters)!
 //print(#function + "signature == \(signature)")
 		return signature
-	}
-
-	internal func load(onCompletion: @escaping (DecodableRequestResult<JSON>) -> Void) {
-		_load { (dataRequestResult) in
-			switch dataRequestResult {
-			case .failure(let error):
-				print(#function + " .failure(let error) = \(error)")
-				onCompletion(DecodableRequestResult<JSON>.failure(error))
-
-			case .success(let data):
-				self.decodeData(data, onCompletion: onCompletion)
-			}
-		}
-	}
-
-	internal func shouldContinue(withHTTPStatusCode statusCode : Int) -> Bool {
-		guard statusCode == 401 || statusCode == 403 || statusCode < 300 else {
-			return false
-		}
-		return true
-	}
-
-	private func requestTokenAndRetryRequest(onCompletion: @escaping (DecodableRequestResult<JSON>) -> Void) {
-		TwitterBearerTokenRequest(bearerTokenCredentialsBase64Encoded).getToken { (decodableRequestResult) in
-			switch decodableRequestResult {
-			case .success(let token):
-				Twitter.bearerToken = token
-				self.retryRequest { jsonRequestResult in
-					onCompletion(jsonRequestResult)
-				}
-
-			case .failure(let error):
-				onCompletion(DecodableRequestResult<JSON>.failure(error))
-			}
-		}
-	}
-
-	private func retryRequest(onCompletion: @escaping (DecodableRequestResult<JSON>) -> Void) {
-		_load { (dataRequestResult) in
-			switch dataRequestResult {
-			case .failure(let error):
-				print(#function + " .failure(let error) = \(error)")
-				onCompletion(DecodableRequestResult<JSON>.failure(error))
-				return
-			case .success(let data):
-				// Decode the data
-				guard let decodedData = self.decode(data) else {
-					onCompletion(DecodableRequestResult<JSON>.failure(.decodeDataError))
-					return
-				}
-				// Success
-				onCompletion(DecodableRequestResult<JSON>.success(decodedData))
-				return
-			}
-		}
-	}
-
-	private func decodeData(_ data: Data, onCompletion: @escaping (DecodableRequestResult<JSON>) -> Void) {
-		// Decode the data
-		guard let decodedData = self.decode(data) else {
-			onCompletion(DecodableRequestResult<JSON>.failure(.decodeDataError))
-			return
-		}
-		// Successfully decoded the response data
-		// Check for a server error
-		if let errors = decodedData["errors"]?.arrayValue?[0] {
-			// Check if server error is an invalidToken error.
-			guard let errorCode = errors["code"]?.floatValue, errorCode == Twitter.invalidTokenError else {
-				onCompletion(DecodableRequestResult<JSON>.failure(.serverError(errors)))
-				return
-			}
-			// InvalidToken error, so refresh token adn retry.
-			self.requestTokenAndRetryRequest { result in
-				onCompletion(result)
-			}
-		} else {
-			onCompletion(DecodableRequestResult<JSON>.success(decodedData))
-		}
 	}
 }

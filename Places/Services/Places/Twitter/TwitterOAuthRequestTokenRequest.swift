@@ -1,56 +1,79 @@
 //
-//  TwitterAuthenticatedRequest.swift
+//  TwitterOAuthRequestTokenRequest.swift
 //  Places
 //
-//  Created by Michael Valentiner on 8/6/19.
+//  Created by Michael Valentiner on 10/2/19.
 //  Copyright © 2019 Heliotropix, LLC. All rights reserved.
 //
 
 import Foundation
 
-protocol TwitterAuthenticatedRequest: UnauthenticatedJSONRequest {
-	var bearerTokenCredentialsBase64Encoded: String { get }
-}
-
 /*
-	From https://developer.twitter.com/en/docs/basics/authentication/overview/application-only#issuing-application-only-requests,
-	Step 3: Authenticate API requests with the bearer token
-		The bearer token may be used to issue requests to API endpoints which support application-only auth. To use the bearer token,
-			construct a normal HTTPS request and include an Authorization header with the value of Bearer <base64 bearer token value from step 2>.
-			Signing is not required.
-		Example request (Authorization header has been wrapped):
-		GET /1.1/statuses/user_timeline.json?count=100&screen_name=twitterapi HTTP/1.1
-		Host: api.twitter.com
-		User-Agent: My Twitter App v1.0.23
-		Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%2FAAAAAAAAAAAA
-							  AAAAAAAA%3DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-		Accept-Encoding: gzip
+	From: https://developer.twitter.com/en/docs/basics/authentication/overview/3-legged-oauth
+	Step 1: POST oauth / request_token
+	Step 2: GET oauth/authorize
+	Step 3: POST oauth / access_token
+	Step 4: Using these credentials for app-user required requests
+
+	POST oauth / request_token -> GET oauth/authorize -> POST oauth / access_token
 */
-extension TwitterAuthenticatedRequest {
+
+class TwitterOAuthRequestTokenRequest: UnauthenticatedJSONRequest {
+	var endpointURL: String {
+		get { return "https://api.twitter.com/oauth/request_token"}
+	}
+
+	internal func getToken(onCompletion: @escaping (DecodableRequestResult<String>) -> Void) {
+		load { (result) in
+print("result = \(result)")
+			switch result {
+			case .failure(let error):
+				onCompletion(DecodableRequestResult<String>.failure(error))
+				return
+			case .success(let json):
+print("json = \(json)")
+//				public init(queryString: String) {
+//					let attributes = queryString.queryStringParameters
+//
+//					self.key = attributes["oauth_token"]!
+//					self.secret = attributes["oauth_token_secret"]!
+//
+//					self.screenName = attributes["screen_name"]
+//					self.userID = attributes["user_id"]
+//				}
+
+				guard let token = json["access_token"]?.stringValue else {
+					onCompletion(DecodableRequestResult<String>.failure(.decodeDataError))
+					return
+				}
+				onCompletion(DecodableRequestResult<String>.success(token))
+			}
+		}
+	}
 
 	func makeRequest(for url: URL) -> URLRequest {
 		var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+
 		var headers = request.allHTTPHeaderFields ?? [:]
-//		headers["Authorization"] = "Bearer \(Twitter.bearerToken)"
-		headers["Authorization"] = createOAuthHeaderString(method: request.httpMethod!, url: url)
+		headers["Authorization"] = createOAuthHeaderString(method: request.httpMethod!, url: url, callbackUrl: "helioplaces://twitterservice/AuthorizeSuccess")
 		headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8"
 		request.allHTTPHeaderFields = headers
 //print(#function + "headers = \(headers)")
 		return request
 	}
 
-	private func createOAuthHeaderString(method: String, url: URL) -> String {
+	private func createOAuthHeaderString(method: String, url: URL, callbackUrl: String) -> String {
 		var params: [String: String] = [:]
+        params["oauth_callback"] = callbackUrl
 		params["oauth_consumer_key"] = TwitterConsumerAPIKey
 		params["oauth_nonce"] = UUID().uuidString
 		params["oauth_signature_method"] = "HMAC-SHA1"
 		params["oauth_timestamp"] = String(Date().timeIntervalSince1970)
-		params["oauth_token"] = "1158238773878149120-HJTFZLz3oinJI34QyuY5bccmjisGLs"
+//		params["oauth_token"] = "1158238773878149120-HJTFZLz3oinJI34QyuY5bccmjisGLs"
 		params["oauth_version"] = "1.0"
 		params["oauth_signature"] = createSignature(
 			method: method, url: url, requestBody: "", consumerKey: params["oauth_consumer_key"]!,
-			nonce: params["oauth_nonce"]!, timestamp: params["oauth_timestamp"]!, token: params["oauth_token"]!)
+			nonce: params["oauth_nonce"]!, timestamp: params["oauth_timestamp"]!)	//, token: params["oauth_token"]!)
 
 		let allowedCharacters = CharacterSet.letters.union(CharacterSet.decimalDigits).union(CharacterSet(charactersIn: "-._~"))
 //print(#function + "params == \(params)")
@@ -67,6 +90,24 @@ extension TwitterAuthenticatedRequest {
 
 		return headerString
 	}
+    
+//	authorizationParameters["oauth_signature"] = self.oauthSignature(
+//		for: method, url: url, parameters: finalParameters, accessToken: self.credential?.accessToken)
+    func oauthSignature(for method: HTTPMethodType, url: URL, parameters: [String: Any], accessToken token: Credential.OAuthAccessToken?) -> String {
+        let tokenSecret = token?.secret.urlEncodedString() ?? ""
+        let encodedConsumerSecret = self.consumerSecret.urlEncodedString()
+        let signingKey = "\(encodedConsumerSecret)&\(tokenSecret)"
+        let parameterComponents = parameters.urlEncodedQueryString(using: dataEncoding).components(separatedBy: "&").sorted()
+        let parameterString = parameterComponents.joined(separator: "&")
+        let encodedParameterString = parameterString.urlEncodedString()
+        let encodedURL = url.absoluteString.urlEncodedString()
+        let signatureBaseString = "\(method)&\(encodedURL)&\(encodedParameterString)"
+        
+        let key = signingKey.data(using: .utf8)!
+        let msg = signatureBaseString.data(using: .utf8)!
+        let sha1 = HMAC.sha1(key: key, message: msg)!
+        return sha1.base64EncodedString(options: [])
+    }
 
 	/*
 		https://developer.twitter.com/en/docs/basics/authentication/guides/creating-a-signature.html
@@ -77,8 +118,8 @@ extension TwitterAuthenticatedRequest {
 		requestBody: String,
 		consumerKey: String,
 		nonce: String,
-		timestamp: String,
-		token: String) -> String {
+		timestamp: String
+/*		token: String */) -> String {
 
 		//* The base URL is the URL to which the request is directed, minus any query string or hash parameters.
 		let baseUrl: String = { (url: URL) in
@@ -89,13 +130,15 @@ extension TwitterAuthenticatedRequest {
 		}(url)
 
 		//* Gather all of the parameters included in the request.
-		let queryString = url.query ?? ""
-		let components = queryString.components(separatedBy: "&")
-		let queryParams = components.map { (component) -> [String:String] in
-			let keyValue = component.components(separatedBy: "=")
-			return [keyValue[0]:keyValue[1]]
+		var queryParams = [String: String]()
+		if let queryString = url.query {
+			let components = queryString.components(separatedBy: "&")
+			queryParams = components.map { (component) -> [String:String] in
+				let keyValue = component.components(separatedBy: "=")
+				return [keyValue[0]:keyValue[1]]
+			}
+			.first ?? [:]
 		}
-		.first ?? [:]
 
 		/* Collect every oauth_* parameter needs to be included in the signature.
 			These values need to be encoded into a single string which will be used later on. The process to build the string
@@ -110,7 +153,7 @@ extension TwitterAuthenticatedRequest {
 				If there are more key/value pairs remaining, append a ‘&’ character to the output string.
 		*/
 		let oathParams: [String:String] = queryParams.merging(["include_entities": "true", "oauth_consumer_key": consumerKey,
-			"oauth_nonce": nonce, "oauth_signature_method": "HMAC-SHA1", "oauth_timestamp": timestamp, "oauth_token": token,
+			"oauth_nonce": nonce, "oauth_signature_method": "HMAC-SHA1", "oauth_timestamp": timestamp,	// "oauth_token": token,
 			"oauth_version": "1.0"]) { (current, _) in current }
 		let encodedParams = oathParams.compactMapValues { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) }
 		let sortedParams = encodedParams.sorted { (arg0, arg1) -> Bool in arg0.key < arg1.key }
@@ -149,83 +192,5 @@ extension TwitterAuthenticatedRequest {
 			parameterString.addingPercentEncoding(withAllowedCharacters: allowedCharacters)!
 //print(#function + "signature == \(signature)")
 		return signature
-	}
-
-	internal func load(onCompletion: @escaping (DecodableRequestResult<JSON>) -> Void) {
-		_load { (dataRequestResult) in
-			switch dataRequestResult {
-			case .failure(let error):
-				print(#function + " .failure(let error) = \(error)")
-				onCompletion(DecodableRequestResult<JSON>.failure(error))
-
-			case .success(let data):
-				self.decodeData(data, onCompletion: onCompletion)
-			}
-		}
-	}
-
-	internal func shouldContinue(withHTTPStatusCode statusCode : Int) -> Bool {
-		guard statusCode == 401 || statusCode == 403 || statusCode < 300 else {
-			return false
-		}
-		return true
-	}
-
-	private func requestTokenAndRetryRequest(onCompletion: @escaping (DecodableRequestResult<JSON>) -> Void) {
-		TwitterBearerTokenRequest(bearerTokenCredentialsBase64Encoded).getToken { (decodableRequestResult) in
-			switch decodableRequestResult {
-			case .success(let token):
-				Twitter.bearerToken = token
-				self.retryRequest { jsonRequestResult in
-					onCompletion(jsonRequestResult)
-				}
-
-			case .failure(let error):
-				onCompletion(DecodableRequestResult<JSON>.failure(error))
-			}
-		}
-	}
-
-	private func retryRequest(onCompletion: @escaping (DecodableRequestResult<JSON>) -> Void) {
-		_load { (dataRequestResult) in
-			switch dataRequestResult {
-			case .failure(let error):
-				print(#function + " .failure(let error) = \(error)")
-				onCompletion(DecodableRequestResult<JSON>.failure(error))
-				return
-			case .success(let data):
-				// Decode the data
-				guard let decodedData = self.decode(data) else {
-					onCompletion(DecodableRequestResult<JSON>.failure(.decodeDataError))
-					return
-				}
-				// Success
-				onCompletion(DecodableRequestResult<JSON>.success(decodedData))
-				return
-			}
-		}
-	}
-
-	private func decodeData(_ data: Data, onCompletion: @escaping (DecodableRequestResult<JSON>) -> Void) {
-		// Decode the data
-		guard let decodedData = self.decode(data) else {
-			onCompletion(DecodableRequestResult<JSON>.failure(.decodeDataError))
-			return
-		}
-		// Successfully decoded the response data
-		// Check for a server error
-		if let errors = decodedData["errors"]?.arrayValue?[0] {
-			// Check if server error is an invalidToken error.
-			guard let errorCode = errors["code"]?.floatValue, errorCode == Twitter.invalidTokenError else {
-				onCompletion(DecodableRequestResult<JSON>.failure(.serverError(errors)))
-				return
-			}
-			// InvalidToken error, so refresh token adn retry.
-			self.requestTokenAndRetryRequest { result in
-				onCompletion(result)
-			}
-		} else {
-			onCompletion(DecodableRequestResult<JSON>.success(decodedData))
-		}
 	}
 }
