@@ -34,7 +34,7 @@ struct SettingsScreen: View {
 			HStack {
 				Image("twitter")
 					.padding(.leading, 10)
-				if settings.hasTwitterAccessToken {
+				if settings.isLoggedInToTwitter {
 					Toggle(isOn: $settings.twitterIsActive) {
 						Text("Twitter")
 							.font(.headline)

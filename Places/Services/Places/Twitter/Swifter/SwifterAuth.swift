@@ -29,7 +29,11 @@ import SafariServices
 
 typealias TokenSuccessHandler = (Credential.OAuthAccessToken?, URLResponse) -> Void
 typealias FailureHandler = (_ error: Error) -> Void
-typealias JSONSuccessHandler = (SwifterJSON, _ response: HTTPURLResponse) -> Void
+//typealias JSONSuccessHandler = (SwifterJSON, _ response: HTTPURLResponse) -> Void
+
+extension Notification.Name {
+    static let swifterCallback = Notification.Name(rawValue: "Swifter.CallbackNotificationName")
+}
 
 internal class SwifterAuth {
 	
@@ -102,11 +106,8 @@ internal class SwifterAuth {
     }
 
     @discardableResult
-    class func handleOpenURL(_ url: URL, callbackURL: URL) -> Bool {
-        guard url.hasSameUrlScheme(as: callbackURL) else {
-            return false
-        }
-        let notification = Notification(name: .swifterCallback, object: nil, userInfo: [CallbackNotification.optionsURLKey: url])
+    class func handleOpenURL(_ url: URL) -> Bool {
+		let notification = Notification(name: .swifterCallback, object: nil, userInfo: [CallbackNotification.optionsURLKey: url])
         NotificationCenter.default.post(notification)
         return true
     }

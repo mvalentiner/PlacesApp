@@ -51,8 +51,8 @@ protocol PlaceSource {
 
 	var placeSourceName: String  { get }
 		// placeSourceName is a user facing name for the PlaceSource.
-//
-//	var isActive: Bool  { set get }
+
+	func isActive() -> Bool
 
 	func getPlaces(forRegion: CoordinateRect, onCompletionForEach: @escaping (Result<Place?, Error>) -> Void)
 		// Given a region, get the places from PlaceSource located in the region.

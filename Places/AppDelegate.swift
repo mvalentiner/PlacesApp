@@ -13,22 +13,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// This declaration causes ServiceRegistry to be instantiated
 	// and services to be registered prior to application(_ application:, didFinishLaunchingWithOptions:) being called.
 	private let serviceRegistry: ServiceRegistryImplementation = {
+		// App services
 		let appPropertiesService = AppPropertiesServiceImplementation.register()
 		ReachabilityServiceImplementation.register()
 		URLRoutingServiceImplementation.register(using: appPropertiesService)
 
+		// PlaceSource implementation services
 		var urlRoutingService = ServiceRegistry.urlRoutingService
-		let twitterService = TwitterServiceImplementation.register(
-			isActiveFunc: { return appPropertiesService.settingsModel.twitterIsActive }, urlRoutingService: &urlRoutingService)
+		let twitterService = TwitterServiceImplementation.register(with: &urlRoutingService)
 
+		// Place Service injec ted with PlaceSources
 		PlacesServiceImplementation.register(
 			using: [
-				InterestingnessPlaceSource(),
-				TwitterPlaceSource()
-			],
-			isActiveTable: [
-				InterestingnessPlaceSource.uid : { return appPropertiesService.settingsModel.flickrIsActive },
-				TwitterPlaceSource.uid : twitterService.twitterIsActive
+				InterestingnessPlaceSource(settingsModel: appPropertiesService.settingsModel, flickr: Flickr()),
+				TwitterPlaceSource(settingsModel: appPropertiesService.settingsModel)
 			])
 
 		return ServiceRegistry
@@ -59,6 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-		return ServiceRegistry.urlRoutingService.application(application, open: url, options: options)
+		return ServiceRegistry.urlRoutingService.handle(url, options: options)
 	}
 }

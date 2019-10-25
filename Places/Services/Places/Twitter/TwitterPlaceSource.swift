@@ -10,14 +10,26 @@ import CoreLocation
 import UIKit
 
 struct TwitterPlaceSource: PlaceSource {
+	
 	static let uid = "TWTR"
 
-	// protocol PlaceSource requirements
+	/// protocol PlaceSource property requirements
 	let placeSourceUId: PlaceSourceUId = TwitterPlaceSource.uid
 	let placeSourceName = "Twitter"
 
-	//TODO: make private?
-	internal class TwitterPlace: Place {
+	private var settingsModel: TwitterPlaceDataModel
+
+	init(settingsModel: TwitterPlaceDataModel) {
+    	self.settingsModel = settingsModel
+	}
+
+	/// protocol PlaceSource function requirements
+	
+	func isActive() -> Bool {
+		return settingsModel.twitterIsActive
+	}
+
+	private  class TwitterPlace: Place {
 		var details: PlaceDetail?
 		var photoURL: String
 		init(uid: PlaceUId, location: CLLocationCoordinate2D, title: String, preview: UIImage? = nil, photoURL: String) {

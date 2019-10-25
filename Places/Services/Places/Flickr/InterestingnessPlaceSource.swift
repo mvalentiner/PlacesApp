@@ -10,17 +10,28 @@ import CoreLocation
 import UIKit
 
 struct InterestingnessPlaceSource: PlaceSource {
+
 	static let uid = "INTR"
 
-	// protocol PlaceSource requirements
+	/// protocol PlaceSource property requirements
 	let placeSourceUId: PlaceSourceUId = InterestingnessPlaceSource.uid
 	let placeSourceName = "Interestingness"
 
-	// "Inject" Dependencies.
-	private let flickr = Flickr()
+	private var settingsModel: FlickrPlaceDataModel
+	private let flickr: Flickr
 
-	//TODO: make private
-	internal class FlickrPlace: Place {
+	init(settingsModel: FlickrPlaceDataModel, flickr: Flickr) {
+    	self.settingsModel = settingsModel
+		self.flickr = flickr
+	}
+
+	/// protocol PlaceSource function requirements
+
+	func isActive() -> Bool {
+		return settingsModel.flickrIsActive
+	}
+
+	private class FlickrPlace: Place {
 		var details: PlaceDetail?
 		var photoURL: String
 		init(uid: PlaceUId, location: CLLocationCoordinate2D, title: String, preview: UIImage? = nil, photoURL: String) {

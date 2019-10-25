@@ -9,7 +9,16 @@
 import SwiftUI
 import Combine
 
-class SettingsDataModel: ObservableObject {
+protocol FlickrPlaceDataModel {
+    var flickrIsActive: Bool { get set }
+}
+
+protocol TwitterPlaceDataModel {
+    var twitterIsActive: Bool { get set }
+}
+
+/// SettingsDataModel acts as a ViewModel for the SettingsScreen, but it also maintains and acts as a persitent property store for the application for some staate data.
+class SettingsDataModel: ObservableObject, FlickrPlaceDataModel, TwitterPlaceDataModel {
 
 	@Published var flickrIsActive: Bool = UserDefaults.standard.bool(forKey: "flickrIsActive") {
 		didSet {
@@ -23,5 +32,6 @@ class SettingsDataModel: ObservableObject {
 		}
 	}
 	
-	var hasTwitterAccessToken: Bool = false
+	// Transient, non-persistent state for the Settings UI.
+	var isLoggedInToTwitter: Bool = false
 }

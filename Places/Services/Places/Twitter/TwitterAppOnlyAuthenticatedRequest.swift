@@ -10,6 +10,7 @@ import Foundation
 
 protocol TwitterAppOnlyAuthenticatedRequest: UnauthenticatedJSONRequest {
 	var bearerTokenCredentialsBase64Encoded: String { get }
+	var bearerToken: String { get set }
 }
 
 /*
@@ -31,7 +32,7 @@ extension TwitterAppOnlyAuthenticatedRequest {
 		var request = URLRequest(url: url)
         request.httpMethod = "GET"
 		var headers = request.allHTTPHeaderFields ?? [:]
-		headers["Authorization"] = "Bearer \(Twitter.bearerToken)"
+		headers["Authorization"] = "Bearer \(bearerToken)"
 		headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8"
 		request.allHTTPHeaderFields = headers
 //print(#function + "headers = \(headers)")

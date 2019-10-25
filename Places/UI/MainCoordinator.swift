@@ -51,8 +51,7 @@ internal class MainCoordinator: MainCoordinatorService {
 	/// Navigation
 	internal func navigateToInfoScreen() {
 		let settingsModel = ServiceRegistry.appPropertiesService.settingsModel
-
-		settingsModel.hasTwitterAccessToken = ServiceRegistry.twitterService.isLoggedIn()
+		settingsModel.isLoggedInToTwitter = ServiceRegistry.twitterService.isLoggedIn()
 
 		let settingsScreenView = SettingsScreen(mainController: self).environmentObject(settingsModel)
 		let hostingController = UIHostingController(rootView: settingsScreenView)

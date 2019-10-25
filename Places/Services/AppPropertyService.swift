@@ -51,7 +51,7 @@ extension AppPropertiesService {
             return getPropertyListString(forKey: "CFBundleVersion")
         }
     }
-	
+
 	internal var appCustomURLSchemes: [String] {
 		guard let customURLTypes = bundle.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [Dictionary<String, Any>] else {
 			fatalError("Error: No plist entry for CFBundleURLTypes")

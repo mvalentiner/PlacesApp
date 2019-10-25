@@ -32,7 +32,6 @@ protocol PlacesService: SOAService {
 	func getPlaceDetail(for: Place, completionHandler: @escaping (Result<PlaceDetail?, Error>) -> Void)
 
 	var placeSources: [PlaceSourceUId: PlaceSource] { get }
-	func isPlaceSourceActive(forId: PlaceSourceUId) -> Bool
 }
 
 /// PlacesService Service protocol requirement
@@ -48,7 +47,7 @@ extension PlacesService {
 extension PlacesService {
 	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach: @escaping (Result<Place?, Error>) -> Void) {
 		placeSources.values.forEach { (placeSource) in
-			guard isPlaceSourceActive(forId: placeSource.placeSourceUId) else {
+			guard placeSource.isActive() else {
 				onCompletionForEach(Result.success(nil))
 				return
 			}
@@ -72,27 +71,17 @@ extension PlacesService {
 
 /// PlacesServiceImplementation
 internal class PlacesServiceImplementation: PlacesService {
-	static func register(using placeSources: [PlaceSource], isActiveTable: [PlaceSourceUId : () -> Bool]) {
-		ServiceRegistry.add(service: PlacesServiceImplementation(placeSources: placeSources, isActiveTable: isActiveTable))
+	static func register(using placeSources: [PlaceSource]) {
+		ServiceRegistry.add(service: PlacesServiceImplementation(placeSources: placeSources))
 	}
 	
 	internal var placeSources: [PlaceSourceUId: PlaceSource] = [:]
-
-	private var isActiveTable: [PlaceSourceUId : () -> Bool]
-
-	func isPlaceSourceActive(forId id: PlaceSourceUId) -> Bool {
-		guard let isActive = isActiveTable[id] else {
-			fatalError("Unknown PlaceSourceId == \(id)")
-		}
-		return isActive()
-	}
 
 	/*
 		A PlacesServiceImplementation is initiialized with an array of PlaceSources and a Dictionary associating a PlaceSourceId
 		with a function whose value indicates whether the PlaceSource is active or not.
 	*/
-	init(placeSources: [PlaceSource], isActiveTable: [PlaceSourceUId : () -> Bool]) {
-		self.isActiveTable = isActiveTable
+	init(placeSources: [PlaceSource]) {
 		placeSources.forEach { (placeSource) in
 			self.placeSources[placeSource.placeSourceUId] = placeSource
 		}

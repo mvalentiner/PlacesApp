@@ -9,6 +9,16 @@
 import Foundation
 import UIKit
 
+//* Signature of a custom url handling function. The return value indicates whether handler successfully handled the operation.
+typealias CustomURLHandler = (_: URL, _: String, _: Dictionary<String, String>) -> Bool
+typealias CustomURLOperation = String
+
+protocol URLRoutingService: SOAService {
+	func handle(_ url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool
+	mutating func add(handler: @escaping CustomURLHandler, for handlerName: CustomURLOperation)
+	var routingTable: Dictionary<CustomURLOperation, CustomURLHandler> { get set }
+}
+
 private struct URLRoutingServiceName {
 	static let serviceName = "URLRoutingService"
 }
@@ -19,16 +29,6 @@ extension ServiceRegistryImplementation {
 			return serviceWith(name: URLRoutingServiceName.serviceName) as! URLRoutingService	// Intentional force unwrapping
 		}
 	}
-}
-
-//* Signature of a custom url handling function. The return value indicates whether handler successfully handled the operation.
-typealias CustomURLHandler = (_: URL, _: String, _: Dictionary<String, String>) -> Bool
-typealias CustomURLOperation = String
-
-protocol URLRoutingService: SOAService {
-	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool
-	mutating func add(handler: @escaping CustomURLHandler, for handlerName: CustomURLOperation)
-	var routingTable: Dictionary<CustomURLOperation, CustomURLHandler> { get set }
 }
 
 extension URLRoutingService {
@@ -66,7 +66,7 @@ internal class URLRoutingServiceImplementation: URLRoutingService {
 	internal var routingTable: Dictionary<CustomURLOperation, CustomURLHandler> = [:]
 
 	// This function takes a custom url and executes the action associated with the url.
-	internal func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+	internal func handle(_ url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
 		// Sanity check: make sure this url's scheme is a scheme we support.
 		guard let scheme = url.scheme, appPropertiesService.appCustomURLSchemes.contains(scheme) else {
 			// Missing or unknown scheme.
@@ -87,7 +87,7 @@ internal class URLRoutingServiceImplementation: URLRoutingService {
 
 		let operation: String
 		if let firstSlash = path.firstIndex(of: "/") {
-			operation = String(components.path.prefix(upTo: firstSlash))
+			operation = String(path.prefix(upTo: firstSlash))
 		} else {
 			operation = String(path)
 		}
