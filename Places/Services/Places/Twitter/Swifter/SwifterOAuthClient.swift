@@ -41,7 +41,7 @@ internal class OAuthClient: SwifterClientProtocol  {
     var consumerKey: String
     var consumerSecret: String
     
-    var credential: Credential?
+    var credential: SwifterCredential?
     
     let dataEncoding: String.Encoding = .utf8
     
@@ -54,8 +54,8 @@ internal class OAuthClient: SwifterClientProtocol  {
         self.consumerKey = consumerKey
         self.consumerSecret = consumerSecret
         
-        let credentialAccessToken = Credential.OAuthAccessToken(key: accessToken, secret: accessTokenSecret)
-        self.credential = Credential(accessToken: credentialAccessToken)
+        let credentialAccessToken = SwifterCredential.OAuthAccessToken(key: accessToken, secret: accessTokenSecret)
+        self.credential = SwifterCredential(accessToken: credentialAccessToken)
     }
     
     func get(_ path: String,
@@ -183,7 +183,7 @@ print("request == \(request)")
         return "OAuth " + headerComponents.joined(separator: ", ")
     }
     
-    func oauthSignature(for method: HTTPMethodType, url: URL, parameters: [String: Any], accessToken token: Credential.OAuthAccessToken?) -> String {
+    func oauthSignature(for method: HTTPMethodType, url: URL, parameters: [String: Any], accessToken token: SwifterCredential.OAuthAccessToken?) -> String {
         let tokenSecret = token?.secret.urlEncodedString() ?? ""
         let encodedConsumerSecret = self.consumerSecret.urlEncodedString()
         let signingKey = "\(encodedConsumerSecret)&\(tokenSecret)"

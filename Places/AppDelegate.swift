@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		PlacesServiceImplementation.register(
 			using: [
 				InterestingnessPlaceSource(settingsModel: appPropertiesService.settingsModel, flickr: Flickr()),
-				TwitterPlaceSource(settingsModel: appPropertiesService.settingsModel)
+				TwitterPlaceSource(settingsModel: appPropertiesService.settingsModel, twitterService: twitterService)
 			])
 
 		return ServiceRegistry

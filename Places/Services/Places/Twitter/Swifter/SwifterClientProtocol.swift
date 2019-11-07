@@ -27,7 +27,7 @@ import Foundation
 
 public protocol SwifterClientProtocol {
     
-    var credential: Credential? { get set }
+    var credential: SwifterCredential? { get set }
     
     @discardableResult
     func get(_ path: String,

@@ -18,9 +18,11 @@ struct TwitterPlaceSource: PlaceSource {
 	let placeSourceName = "Twitter"
 
 	private var settingsModel: TwitterPlaceDataModel
+	private let twitterService: TwitterService
 
-	init(settingsModel: TwitterPlaceDataModel) {
+	init(settingsModel: TwitterPlaceDataModel, twitterService: TwitterService) {
     	self.settingsModel = settingsModel
+    	self.twitterService = twitterService
 	}
 
 	/// protocol PlaceSource function requirements
@@ -29,34 +31,29 @@ struct TwitterPlaceSource: PlaceSource {
 		return settingsModel.twitterIsActive
 	}
 
-	private  class TwitterPlace: Place {
-		var details: PlaceDetail?
-		var photoURL: String
-		init(uid: PlaceUId, location: CLLocationCoordinate2D, title: String, preview: UIImage? = nil, photoURL: String) {
-			self.photoURL = photoURL
-			super.init(uid: uid, location: location, title: title, preview: preview)
-		}
-	}
+// TODO: make a struct
+//	private class TwitterPlace: Place {
+//		var details: PlaceDetail?
+//		var photoURL: String
+//		init(uid: PlaceUId, location: CLLocationCoordinate2D, title: String, preview: UIImage? = nil, photoURL: String) {
+//			self.photoURL = photoURL
+//			super.init(uid: uid, location: location, title: title, preview: preview)
+//		}
+//	}
 
 	/// Given a region, get the places from PlaceSource located in the region.
 	func getPlaces(forRegion region: CoordinateRect, onCompletionForEach: @escaping (Result<Place?, Error>) -> Void) {
-//		self.flickr.requestPhotoAnnotations(forSearchText: "", withLocationBottomLeft: region.bottomLeft, andLocationTopRight: region.topRight,
-//				maximumNumberOfPhotos: 100, page: 0) { result in
-//			switch result {
-//			case .failure(let error):
-//				onCompletionForEach(.failure(error))
-//			case .success(let flickrPhotoInfo):
-//				guard let flickrPhotoInfo = flickrPhotoInfo else {
-//					onCompletionForEach(.success(nil))
-//					return
-//				}
-//				// TODO:  optimize nativePlaceId
-//				let placeUId = PlaceUId(placeSourceUId: self.placeSourceUId, nativePlaceId: flickrPhotoInfo.photoURLString)
-//				let place = FlickrPlace(uid: placeUId, location: flickrPhotoInfo.coordinate, title: flickrPhotoInfo.title,
-//					preview: flickrPhotoInfo.thumbnailImage, photoURL: flickrPhotoInfo.photoURLString)
-//				onCompletionForEach(.success(place))
-//			}
-//		}
+		twitterService.getTweets(forLocationBottomLeft: region.bottomLeft, locationTopRight: region.topRight, maximumNumberOfPhotos: 100,page: 0) { result in
+			switch result {
+			case .failure(let error):
+				onCompletionForEach(.failure(error))
+			case .success(let tweetInfo):
+				let placeUId = PlaceUId(placeSourceUId: self.placeSourceUId, nativePlaceId: tweetInfo.placeId)
+//TODO: review tweetInfo
+				let place = Place(uid: placeUId, location: tweetInfo.coordinate, title: tweetInfo.title, preview: nil)
+				onCompletionForEach(.success(place))
+			}
+		}
 	}
 
 	/// Given a PlaceUId, get its PlaceDetails.

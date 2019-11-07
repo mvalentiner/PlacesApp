@@ -77,13 +77,12 @@ class MainViewController: UIViewController, Storyboarded, CLLocationManagerDeleg
 
 			self.requestMapPlacesAndUpdateAnnotations()
 		}
-		
-		self.requestMapPlacesAndUpdateAnnotations()
-	}
+			}
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 		navigationController?.isNavigationBarHidden = true
+		self.requestMapPlacesAndUpdateAnnotations()
 	}
 
     override func viewWillDisappear(_ animated: Bool) {

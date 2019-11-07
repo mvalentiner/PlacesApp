@@ -9,6 +9,8 @@
 import Foundation
 
 protocol TwitterAppUserAuthenticatedRequest: UnauthenticatedJSONRequest {
+	var oauthConsumerKey: String { get }
+	var twitterCredential: SwifterCredential { get }
 }
 
 extension TwitterAppUserAuthenticatedRequest {
@@ -25,7 +27,7 @@ extension TwitterAppUserAuthenticatedRequest {
 
 	private func createOAuthHeaderString(method: String, url: URL) -> String {
 		var params: [String: String] = [:]
-		params["oauth_consumer_key"] = TwitterConsumerAPIKey
+		params["oauth_consumer_key"] = oauthConsumerKey	//TwitterConsumerAPIKey
 		params["oauth_nonce"] = UUID().uuidString
 		params["oauth_signature_method"] = "HMAC-SHA1"
 		params["oauth_timestamp"] = String(Date().timeIntervalSince1970)

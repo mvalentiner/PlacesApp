@@ -27,7 +27,7 @@ import Foundation
 import UIKit
 import SafariServices
 
-typealias TokenSuccessHandler = (Credential.OAuthAccessToken?, URLResponse) -> Void
+typealias TokenSuccessHandler = (SwifterCredential.OAuthAccessToken?, URLResponse) -> Void
 typealias FailureHandler = (_ error: Error) -> Void
 //typealias JSONSuccessHandler = (SwifterJSON, _ response: HTTPURLResponse) -> Void
 
@@ -82,7 +82,7 @@ internal class SwifterAuth {
 					
 					self.postOAuthAccessToken(with: requestToken,
 						success: { accessToken, response in
-							self.client.credential = Credential(accessToken: accessToken!)
+							self.client.credential = SwifterCredential(accessToken: accessToken!)
 							success?(accessToken!, response)
 						},
 						failure: failure)
@@ -118,12 +118,12 @@ internal class SwifterAuth {
         
         self.client.post(path, baseURL: .oauth, parameters: parameters, uploadProgress: nil, downloadProgress: nil, success: { data, response in
             let responseString = String(data: data, encoding: .utf8)!
-            let accessToken = Credential.OAuthAccessToken(queryString: responseString)
+            let accessToken = SwifterCredential.OAuthAccessToken(queryString: responseString)
             success(accessToken, response)
         }, failure: failure)
     }
     
-    func postOAuthAccessToken(with requestToken: Credential.OAuthAccessToken, success: @escaping TokenSuccessHandler, failure: FailureHandler?) {
+    func postOAuthAccessToken(with requestToken: SwifterCredential.OAuthAccessToken, success: @escaping TokenSuccessHandler, failure: FailureHandler?) {
         if let verifier = requestToken.verifier {
             let path =  "oauth/access_token"
             let parameters = ["oauth_token": requestToken.key, "oauth_verifier": verifier]
@@ -131,7 +131,7 @@ internal class SwifterAuth {
             self.client.post(path, baseURL: .oauth, parameters: parameters, uploadProgress: nil, downloadProgress: nil, success: { data, response in
                 
                 let responseString = String(data: data, encoding: .utf8)!
-                let accessToken = Credential.OAuthAccessToken(queryString: responseString)
+                let accessToken = SwifterCredential.OAuthAccessToken(queryString: responseString)
                 success(accessToken, response)
                 
                 }, failure: failure)

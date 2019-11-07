@@ -38,7 +38,7 @@ extension ReachabilityService {
 
 	var isReachable: Bool {
 		get {
-			return reachability.connection != .none
+			return reachability.connection != .unavailable
 		}
 	}
 	
@@ -63,6 +63,10 @@ class ReachabilityServiceImplementation: ReachabilityService {
 
 	internal let reachability: Reachability = {
 		let googlePublicDNS = "8.8.8.8"	//"www.google.com"
-		return Reachability(hostname: googlePublicDNS)!	// Intentional forced unwrap
+		do {
+			return try Reachability(hostname: googlePublicDNS)
+		} catch {
+			fatalError()
+		}
 	}()
 }

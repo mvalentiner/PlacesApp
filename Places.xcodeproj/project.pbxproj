@@ -79,6 +79,7 @@
 		4CCDE17C2252957D0089BF7F /* Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9E22527A77000260F0 /* Initialization.swift */; };
 		4CCDE17D225295B20089BF7F /* Merging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCEA122527A77000260F0 /* Merging.swift */; };
 		4CCDE17E225295B20089BF7F /* Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3CCE9F22527A77000260F0 /* Querying.swift */; };
+		4CCF7F7B23686C43002515D9 /* TwitterAppUserAuthenticatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCF7F7923686C43002515D9 /* TwitterAppUserAuthenticatedRequest.swift */; };
 		4CD99D5A229507F1009FA10C /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD99D59229507F1009FA10C /* Bindable.swift */; };
 		4CDC716D229C62E80072467A /* FlickrPlaceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC716C229C62E80072467A /* FlickrPlaceDetailsViewController.swift */; };
 		4CE806352350CC8800D4A138 /* Scanner++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B9EA3234424F600CC8591 /* Scanner++.swift */; };
@@ -188,6 +189,7 @@
 		4CB6A892233EE862004EEFD8 /* SettingsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		4CB6A894233FA2A3004EEFD8 /* TwitterPlaceSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterPlaceSource.swift; sourceTree = "<group>"; };
 		4CCDE171225283A60089BF7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4CCF7F7923686C43002515D9 /* TwitterAppUserAuthenticatedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterAppUserAuthenticatedRequest.swift; sourceTree = "<group>"; };
 		4CD99D59229507F1009FA10C /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		4CDC716C229C62E80072467A /* FlickrPlaceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPlaceDetailsViewController.swift; sourceTree = "<group>"; };
 		4CFC5423229D89D100C86B96 /* IMG_7322.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_7322.JPG; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 		4CFCD1BF22F86C0700ADBA21 /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
+				4CCF7F7923686C43002515D9 /* TwitterAppUserAuthenticatedRequest.swift */,
 				4C9B9E84234424F600CC8591 /* Swifter */,
 				4C347CAA231579E2007DC13F /* Twitter.swift */,
 				4CFCD1C022F86C8F00ADBA21 /* TwitterAPIKey.swift */,
@@ -654,6 +657,7 @@
 				4C3CCE392252659E000260F0 /* AppDelegate.swift in Sources */,
 				4C5793572292FB22009D838F /* MapView.swift in Sources */,
 				4C9B9E3423427F4500CC8591 /* UserDefaultPropertyWrapper.swift in Sources */,
+				4CCF7F7B23686C43002515D9 /* TwitterAppUserAuthenticatedRequest.swift in Sources */,
 				4C3CCEB122527A78000260F0 /* JSON.swift in Sources */,
 				4CB6A893233EE862004EEFD8 /* SettingsScreen.swift in Sources */,
 				4C9B9ED12344580C00CC8591 /* SwifterCredential.swift in Sources */,

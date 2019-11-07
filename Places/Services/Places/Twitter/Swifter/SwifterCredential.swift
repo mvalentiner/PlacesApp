@@ -29,7 +29,7 @@ import Foundation
 import Accounts
 #endif
 
-public class Credential: Codable {
+public class SwifterCredential: Codable {
     
     public struct OAuthAccessToken: Codable {
         

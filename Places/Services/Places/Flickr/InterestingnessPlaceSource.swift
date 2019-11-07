@@ -52,7 +52,7 @@ struct InterestingnessPlaceSource: PlaceSource {
 					onCompletionForEach(.success(nil))
 					return
 				}
-				// TODO:  optimize nativePlaceId
+// TODO:  optimize nativePlaceId
 				let placeUId = PlaceUId(placeSourceUId: self.placeSourceUId, nativePlaceId: flickrPhotoInfo.photoURLString)
 				let place = FlickrPlace(uid: placeUId, location: flickrPhotoInfo.coordinate, title: flickrPhotoInfo.title,
 					preview: flickrPhotoInfo.thumbnailImage, photoURL: flickrPhotoInfo.photoURLString)
